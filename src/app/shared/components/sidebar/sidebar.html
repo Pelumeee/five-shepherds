@@ -1,0 +1,21 @@
+<aside class="w-[20rem] fixed h-full flex flex-col gap-6 border border-[#E7E5E4]">
+  <div class="flex items-center gap-2 h-19 px-10 border-b border-[#E7E5E4]">
+    <img src="logo.png" alt="" class="w-8 h-9" />
+    <span class="text-[#D2AE7E] font-bold text-lg uppercase">Five Shepherds</span>
+  </div>
+  <nav class="flex flex-col gap-1">
+    @for (item of navItems; track item.route) {
+      <a
+        [routerLink]="item.route"
+        routerLinkActive="active"
+        [routerLinkActiveOptions]="{ exact: item.route === '/' }"
+        class="flex items-center gap-4 py-5 px-10 transition-colors hover:bg-[#F5F5F5]"
+      >
+        <app-sidebar-icon [name]="item.icon" />
+        <span class="text-[#57534D]">
+          {{ item.label }}
+        </span>
+      </a>
+    }
+   </nav>
+</aside>

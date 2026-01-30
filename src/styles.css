@@ -5,3 +5,14 @@ body {
   min-height: 100vh;
   font-family: 'Poppins', sans-serif;
 }
+
+a.active {
+  background: #fff7f1;
+  border-right: 4px solid #f4c58a;
+}
+a.active span {
+  color: #a0610e;
+}
+a.active svg path {
+  fill: #a0610e;
+}
