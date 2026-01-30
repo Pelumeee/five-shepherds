@@ -1,0 +1,38 @@
+<div>
+  <h1 class="text-[#292524] font-medium text-xl">Welcome back, Oluwapelumi 👋🏼</h1>
+  <span class="text-[#57534D] font-light leading-6"
+    >Here’s what’s been happening with your store</span
+  >
+  <div class="mt-10 grid md:grid-cols-4 gap-8">
+    <app-cta-cards
+      title="Start selling faster"
+      description="Pick a category and quickly add any product — it only takes a minute."
+      btnText="Add Products"
+      btnBg="#338AF3"
+    ></app-cta-cards>
+    <app-cta-cards
+      title="Work better, together"
+      description="Invite teammates to manage inventory and track sales."
+      btnText="Invite teammate"
+      btnBg="#FF854B"
+    ></app-cta-cards>
+  </div>
+
+  <div class="mt-10 grid md:grid-cols-4 gap-8">
+    @for (item of summaryItems; track item.name) {
+      <app-summary-cards
+        name="{{ item.name }}"
+        text="{{ item.text }}"
+        value="{{ item.value }}"
+      ></app-summary-cards>
+    }
+  </div>
+  <div class="w-full h-[6px] bg-[#E7E5E4] my-10"></div>
+  <h2 class="text-[#292524] font-medium text-xl">Overview</h2>
+  <div class="grid grid-cols-4 gap-8 mt-10">
+    <div class="h-[30rem] bg-white col-span-3 rounded-lg"></div>
+    <div class="h-[30rem] bg-white rounded-lg"></div>
+    <div class="h-[30rem] bg-white col-span-2 rounded-lg"></div>
+    <div class="h-[30rem] bg-white col-span-2 rounded-lg"></div>
+  </div>
+</div>
