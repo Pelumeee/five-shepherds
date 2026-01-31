@@ -18,7 +18,7 @@ export class Sidebar {
   navItems: NavItem[] = [
     { label: 'Dashboard', route: '/', icon: 'dashboard' },
     { label: 'Inventory', route: '/inventory', icon: 'inventory' },
-    { label: 'Orders', route: '/orders', icon: 'orders' },
+    { label: 'Orders', route: '/order', icon: 'orders' },
     { label: 'Analytics', route: '/analytics', icon: 'analytics' },
   ];
 }
