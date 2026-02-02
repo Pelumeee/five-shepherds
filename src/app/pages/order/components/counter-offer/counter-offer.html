@@ -1,4 +1,4 @@
-<dialog open class="fixed inset-0 m-auto border-none outline-none p-0 bg-transparent">
+<dialog open class="fixed inset-0 m-auto border-none outline-none p-0 bg-transparent z-10">
   <div class="bg-white rounded-xl p-6 w-100 2xl:w-150">
     <div class="flex items-start justify-between mb-3">
       <div>
@@ -83,10 +83,13 @@
         >
           Cancel
         </button>
-        <button class="w-full max-w-30 bg-[#2793E9] py-2.5 rounded text-white font-medium cursor-pointer">
+        <button
+          class="w-full max-w-30 bg-[#2793E9] py-2.5 rounded text-white font-medium cursor-pointer"
+        >
           Send
         </button>
       </div>
     </form>
   </div>
 </dialog>
+<div class="backdrop"></div>

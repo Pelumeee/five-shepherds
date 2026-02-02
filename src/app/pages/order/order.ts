@@ -5,7 +5,6 @@ import { CounterOffer } from "./components/counter-offer/counter-offer";
   selector: 'app-order',
   imports: [CounterOffer],
   templateUrl: './order.html',
-  styleUrl: './order.css',
 })
 export class Order {
 

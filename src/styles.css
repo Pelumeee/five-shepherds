@@ -16,6 +16,11 @@ a.active span {
 a.active svg path {
   fill: #a0610e;
 }
-dialog::backdrop {
-  background: rgba(0, 0, 0, 0.55);
+.backdrop {
+  background-color: rgba(0, 0, 0, 0.6);
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100vh;
 }

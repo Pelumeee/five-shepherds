@@ -5,7 +5,6 @@ import { SummaryCardsIcon } from '../summary-cards-icon/summary-cards-icon';
   selector: 'app-summary-cards',
   imports: [SummaryCardsIcon],
   templateUrl: './summary-cards.html',
-  styleUrl: './summary-cards.css',
 })
 export class SummaryCards {
   name = input<string>();

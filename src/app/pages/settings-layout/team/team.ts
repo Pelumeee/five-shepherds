@@ -1,10 +1,10 @@
 import { Component } from '@angular/core';
 
 @Component({
-  selector: 'app-auth',
+  selector: 'app-team',
   imports: [],
-  templateUrl: './auth.html',
+  templateUrl: './team.html',
 })
-export class Auth {
+export class Team {
 
 }

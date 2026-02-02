@@ -4,7 +4,6 @@ import { Component, input } from '@angular/core';
   selector: 'app-cta-cards',
   imports: [],
   templateUrl: './cta-cards.html',
-  styleUrl: './cta-cards.css',
 })
 export class CtaCards {
   title = input<string>();

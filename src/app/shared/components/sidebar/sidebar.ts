@@ -12,7 +12,6 @@ interface NavItem {
   selector: 'app-sidebar',
   imports: [RouterLink, RouterLinkActive, SidebarIcon],
   templateUrl: './sidebar.html',
-  styleUrl: './sidebar.css',
 })
 export class Sidebar {
   navItems: NavItem[] = [

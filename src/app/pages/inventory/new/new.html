@@ -1,1 +1,60 @@
-<p>new works!</p>
+<div>
+  <a routerLink="../" class="flex items-center gap-2">
+    <svg width="13" height="10" viewBox="0 0 13 10" fill="none" xmlns="http://www.w3.org/2000/svg">
+      <path
+        d="M2.875 5.46917L5.25 7.84417C5.41667 8.01083 5.49653 8.20528 5.48958 8.4275C5.48264 8.64972 5.40278 8.84417 5.25 9.01083C5.08333 9.1775 4.88542 9.26431 4.65625 9.27125C4.42708 9.27819 4.22917 9.19833 4.0625 9.03167L0.25 5.21917C0.0833333 5.0525 0 4.85806 0 4.63583C0 4.41361 0.0833333 4.21917 0.25 4.0525L4.0625 0.24C4.22917 0.0733333 4.42708 -0.00652778 4.65625 0.000416667C4.88542 0.00736111 5.08333 0.0941667 5.25 0.260833C5.40278 0.4275 5.48264 0.621944 5.48958 0.844167C5.49653 1.06639 5.41667 1.26083 5.25 1.4275L2.875 3.8025H12.1667C12.4028 3.8025 12.6007 3.88236 12.7604 4.04208C12.9201 4.20181 13 4.39972 13 4.63583C13 4.87194 12.9201 5.06986 12.7604 5.22958C12.6007 5.38931 12.4028 5.46917 12.1667 5.46917H2.875Z"
+        fill="#57534D"
+      />
+    </svg>
+    <span class="text-sm font-medium text-[#3F3F46]">Back to Inventory</span>
+  </a>
+  <div class="my-10">
+    <h1 class="text-[#292524] font-medium text-lg">Add product</h1>
+    <span class="text-[#57534D] font-light leading-6">Search and select from our catalog</span>
+  </div>
+
+  <div class="bg-white rounded-md p-6">
+    <h1 class="text-[#44403B] font-medium text-sm">Search product catalog</h1>
+    <div class="flex items-center justify-between my-4">
+      <div class="bg-white py-2 px-4 flex items-center gap-2 border border-[#E7E5E4] w-[50%]">
+        <svg
+          width="10"
+          height="10"
+          viewBox="0 0 18 18"
+          fill="none"
+          xmlns="http://www.w3.org/2000/svg"
+        >
+          <path
+            d="M6.5 13C4.68333 13 3.14583 12.3708 1.8875 11.1125C0.629167 9.85417 0 8.31667 0 6.5C0 4.68333 0.629167 3.14583 1.8875 1.8875C3.14583 0.629167 4.68333 0 6.5 0C8.31667 0 9.85417 0.629167 11.1125 1.8875C12.3708 3.14583 13 4.68333 13 6.5C13 7.23333 12.8833 7.925 12.65 8.575C12.4167 9.225 12.1 9.8 11.7 10.3L17.3 15.9C17.4833 16.0833 17.575 16.3167 17.575 16.6C17.575 16.8833 17.4833 17.1167 17.3 17.3C17.1167 17.4833 16.8833 17.575 16.6 17.575C16.3167 17.575 16.0833 17.4833 15.9 17.3L10.3 11.7C9.8 12.1 9.225 12.4167 8.575 12.65C7.925 12.8833 7.23333 13 6.5 13ZM6.5 11C7.75 11 8.8125 10.5625 9.6875 9.6875C10.5625 8.8125 11 7.75 11 6.5C11 5.25 10.5625 4.1875 9.6875 3.3125C8.8125 2.4375 7.75 2 6.5 2C5.25 2 4.1875 2.4375 3.3125 3.3125C2.4375 4.1875 2 5.25 2 6.5C2 7.75 2.4375 8.8125 3.3125 9.6875C4.1875 10.5625 5.25 11 6.5 11Z"
+            fill="#5F6368"
+          />
+        </svg>
+        <input
+          type="text"
+          class="w-full bg-inherit focus:outline-none text-sm text-[#9CA3AF]"
+          placeholder="Search by product name, SKU, or order ID..."
+        />
+      </div>
+      <div class="flex items-center gap-5">
+        <select
+          name=""
+          id=""
+          class="bg-white focus:outline-none text-sm text-[#9CA3AF] py-2 px-24 w-full border border-[#E7E5E4]"
+        >
+          <option value="">All categories</option>
+          <option value="">Electronics</option>
+          <option value="">Fashion</option>
+          <option value="">Beauty</option>
+          <option value="">Sports</option>
+        </select>
+      </div>
+    </div>
+  </div>
+
+  <div class="min-h-[40vh] flex flex-col items-center justify-center my-10">
+    <h1 class="text-[#292524] font-medium text-sm">Start by searching for a product</h1>
+    <span class="text-[#57534D] font-light leading-6 text-xs"
+      >Use the search bar above to find products from our catalog.</span
+    >
+  </div>
+</div>

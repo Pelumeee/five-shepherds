@@ -7,7 +7,6 @@ import { Header } from "../../shared/components/header/header";
   selector: 'app-layout',
   imports: [Sidebar, Header, RouterOutlet],
   templateUrl: './layout.html',
-  styleUrl: './layout.css',
 })
 
 export class Layout {

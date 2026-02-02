@@ -4,7 +4,6 @@ import { Component } from '@angular/core';
   selector: 'app-counter-offer',
   imports: [],
   templateUrl: './counter-offer.html',
-  styleUrl: './counter-offer.css',
 })
 export class CounterOffer {
 

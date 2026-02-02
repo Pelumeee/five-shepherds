@@ -12,7 +12,6 @@ interface SummaryCard {
   selector: 'app-dashboard',
   imports: [CtaCards, SummaryCards],
   templateUrl: './dashboard.html',
-  styleUrl: './dashboard.css',
 })
 export class Dashboard {
   summaryItems: SummaryCard[] = [
