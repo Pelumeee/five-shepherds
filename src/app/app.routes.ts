@@ -13,6 +13,21 @@ export const routes: Routes = [
       {
         path: 'inventory',
         loadComponent: () => import('./pages/inventory/inventory').then((m) => m.Inventory),
+        children: [
+          {
+            path: '',
+            loadComponent: () => import('./pages/inventory/details/details').then((m) => m.Details),
+          },
+          {
+            path: 'new',
+            loadComponent: () => import('./pages/inventory/new/new').then((m) => m.New),
+          },
+          // {
+          //   path: ':id',
+          //   loadComponent: () =>
+          //     import('./pages/inventory/details/details').then((m) => m.InventoryDetails),
+          // },
+        ],
       },
       {
         path: 'order',
