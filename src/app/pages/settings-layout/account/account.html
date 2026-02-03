@@ -1,1 +1,57 @@
-<p>account works!</p>
+<div class="bg-white p-6 rounded-md">
+  <div class="flex items-center justify-between">
+    <div>
+      <h2 class="text-[#292524] font-medium">Profile information</h2>
+      <span class="text-[#57534D] font-light leading-6"
+        >Update your personal information and account details</span
+      >
+    </div>
+    <button
+      class="py-2 px-6 border border-[#E7E5E4] rounded-md flex items-center gap-3 cursor-pointer"
+    >
+      <svg
+        width="15"
+        height="15"
+        viewBox="0 0 15 15"
+        fill="none"
+        xmlns="http://www.w3.org/2000/svg"
+      >
+        <path
+          d="M1.66667 13.3333H2.85417L11 5.1875L9.8125 4L1.66667 12.1458V13.3333ZM0.833333 15C0.597222 15 0.399306 14.9201 0.239583 14.7604C0.0798611 14.6007 0 14.4028 0 14.1667V12.1458C0 11.9236 0.0416667 11.7118 0.125 11.5104C0.208333 11.309 0.326389 11.1319 0.479167 10.9792L11 0.479167C11.1667 0.326389 11.3507 0.208333 11.5521 0.125C11.7535 0.0416667 11.9653 0 12.1875 0C12.4097 0 12.625 0.0416667 12.8333 0.125C13.0417 0.208333 13.2222 0.333333 13.375 0.5L14.5208 1.66667C14.6875 1.81944 14.809 2 14.8854 2.20833C14.9618 2.41667 15 2.625 15 2.83333C15 3.05556 14.9618 3.26736 14.8854 3.46875C14.809 3.67014 14.6875 3.85417 14.5208 4.02083L4.02083 14.5208C3.86806 14.6736 3.69097 14.7917 3.48958 14.875C3.28819 14.9583 3.07639 15 2.85417 15H0.833333ZM10.3958 4.60417L9.8125 4L11 5.1875L10.3958 4.60417Z"
+          fill="#79716B"
+        />
+      </svg>
+      <span class="text-[#79716B] font-light leading-6 text-sm">Edit</span>
+    </button>
+  </div>
+  <div class="flex gap-5 my-5">
+    <div class="w-28 h-28 rounded-md border border-[#0000001A]"></div>
+    <div class="w-full grid grid-cols-2 gap-6">
+      <div class="flex flex-col gap-1">
+        <label for="" class="text-sm font-medium text-[#292524]">Full name</label>
+        <input
+          type="text"
+          class="p-3 border border-[#E7E5E4] rounded text-xs focus:outline-none text-[#57534D]"
+          placeholder="Chibuike Okorie"
+          readonly
+        />
+      </div>
+      <div class="flex flex-col gap-1">
+        <label for="" class="text-sm font-medium text-[#292524]">Email address</label>
+        <input
+          type="text"
+          class="p-3 border border-[#E7E5E4] rounded text-xs focus:outline-none text-[#57534D]"
+          placeholder="iamactive@gmail.com"
+          readonly
+        />
+      </div>
+      <div class="">
+        <p class="text-sm font-medium text-[#292524] mb-1">Role</p>
+        <span
+          class="inline-block px-3 py-2 bg-[#DCF6FD] rounded-md text-[#1E6381] font-medium text-xs"
+          >Admin</span
+        >
+      </div>
+    </div>
+  </div>
+</div>

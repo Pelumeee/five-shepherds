@@ -33,6 +33,26 @@ export const routes: Routes = [
         path: 'order',
         loadComponent: () => import('./pages/order/order').then((m) => m.Order),
       },
+      {
+        path: 'settings',
+        loadComponent: () =>
+          import('./pages/settings-layout/settings-layout').then((m) => m.SettingsLayout),
+        children: [
+          {
+            path: '',
+            loadComponent: () =>
+              import('./pages/settings-layout/account/account').then((m) => m.Account),
+          },
+          {
+            path: 'team',
+            loadComponent: () => import('./pages/settings-layout/team/team').then((m) => m.Team),
+          },
+          {
+            path: 'preferences',
+            loadComponent: () => import('./pages/settings-layout/preferences/preferences').then((m) => m.Preferences),
+          },
+        ],
+      },
     ],
   },
   //   {

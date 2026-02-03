@@ -1,1 +1,43 @@
-<p>preferences works!</p>
+<div class="bg-white p-6 rounded-md">
+  <h2 class="text-[#292524] font-medium">Notifications</h2>
+  <span class="text-[#57534D] font-light leading-6"
+    >Configure how you receive alerts and updates</span
+  >
+  <div class="flex flex-col gap-4 mt-10">
+    @for (notification of notifications; track notification.id) {
+      <app-notification [notisObj]="notification"></app-notification>
+    }
+  </div>
+</div>
+
+<div class="bg-white p-6 rounded-md mt-8">
+  <div>
+    <h2 class="text-[#292524] font-medium">General preferences</h2>
+    <span class="text-[#57534D] font-light leading-6"
+      >Configure language and currency settings</span
+    >
+  </div>
+  <div class="w-full grid grid-cols-2 gap-6 my-8">
+    <div class="flex flex-col gap-1">
+      <label for="" class="text-sm font-medium text-[#292524]">Currency</label>
+      <select
+        name=""
+        id=""
+        class="w-full p-3 border border-[#E7E5E4] rounded text-xs focus:outline-none text-[#57534D]"
+      >
+        <option value="Naira">Nigerian Naira (₦)</option>
+      </select>
+   
+    </div>
+    <div class="flex flex-col gap-1">
+      <label for="" class="text-sm font-medium text-[#292524]">Language</label>
+      <select
+        name=""
+        id=""
+        class="w-full p-3 border border-[#E7E5E4] rounded text-xs focus:outline-none text-[#57534D]"
+      >
+        <option value="English">English</option>
+      </select>
+    </div>
+  </div>
+</div>

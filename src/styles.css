@@ -6,15 +6,22 @@ body {
   font-family: 'Poppins', sans-serif;
 }
 
-a.active {
+nav a.active {
   background: #fff7f1;
   border-right: 4px solid #f4c58a;
 }
-a.active span {
+nav a.active span {
   color: #a0610e;
 }
-a.active svg path {
+
+nav a.active svg path {
   fill: #a0610e;
+}
+
+
+#settings a.active {
+  color: #a0610e;
+  border-bottom: 2px solid #a0610e;
 }
 .backdrop {
   background-color: rgba(0, 0, 0, 0.6);

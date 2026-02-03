@@ -1,0 +1,16 @@
+@if (notisObj()) {
+  <div class="flex items-center justify-between">
+    <div>
+      <p class="text-[#292524] font-medium">
+        {{ notisObj()!.title }}
+      </p>
+      <span class="text-[#79716B] font-light leading-6 text-sm">
+        {{ notisObj()!.description }}
+      </span>
+    </div>
+    <app-toggle-input
+      [enabled]="notisObj()!.isEnabled"
+      (enabledChange)="toggleEnabled($event)"
+    ></app-toggle-input>
+  </div>
+}

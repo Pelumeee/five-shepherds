@@ -1,0 +1,9 @@
+<label class="relative inline-flex items-center cursor-pointer">
+  <input type="checkbox"  class="sr-only peer" [checked]="enabled()" (change)="toggle()" />
+
+  <div class="w-16 h-6 rounded-full transition-colors bg-[#E7E5E4] peer-checked:bg-[#A0610E] peer-disabled:opacity-50 peer-disabled:cursor-not-allowed"></div>
+
+  <div
+    class="absolute left-1 top-1 w-4 h-4 bg-white rounded-full transition-transform peer-checked:translate-x-10"
+  ></div>
+</label>
