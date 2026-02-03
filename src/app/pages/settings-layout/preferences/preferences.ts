@@ -8,6 +8,8 @@ interface NotificationSetting {
   isEnabled: boolean;
 }
 
+
+
 @Component({
   selector: 'app-preferences',
   imports: [Notification],
