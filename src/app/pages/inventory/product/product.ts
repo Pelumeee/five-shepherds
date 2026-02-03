@@ -4,6 +4,6 @@ import { RouterLink } from "@angular/router";
 @Component({
   selector: 'app-new',
   imports: [RouterLink],
-  templateUrl: './new.html',
+  templateUrl: './product.html',
 })
-export class New {}
+export class Product {}
