@@ -53,14 +53,15 @@ export const routes: Routes = [
           },
           {
             path: 'preferences',
-            loadComponent: () => import('./pages/settings-layout/preferences/preferences').then((m) => m.Preferences),
+            loadComponent: () =>
+              import('./pages/settings-layout/preferences/preferences').then((m) => m.Preferences),
           },
         ],
       },
     ],
   },
-  //   {
-  //     path: 'auth',
-  //     loadComponent: () => import('./auth/login.component'),
-  //   },
+  {
+    path: 'auth',
+    loadComponent: () => import('./pages/auth/auth').then((m) => m.Auth),
+  },
 ];

@@ -1,1 +1,51 @@
-<p>auth works!</p>
+<main class="bg-[#F5F2F0] min-h-screen flex items-center justify-center">
+  <div
+    class="bg-white border border-[#EBE1DA] rounded-xl md:p-6 3xl:p-10 p-4 w-[90%] md:max-w-md 3xl:max-w-xl"
+  >
+    <div class="flex items-center justify-center gap-2 mb-10">
+      <img src="logo.png" alt="" class="w-8 h-9" />
+      <span class="text-[#D2AE7E] font-bold text-lg uppercase">Five Shepherds</span>
+    </div>
+    <form (ngSubmit)="handleSignIn()" class="flex flex-col">
+      <div class="flex flex-col mb-4">
+        <label
+          for="last_name"
+          class="font-medium 3xl:3xl:text-sm md:text-xs text-sm text-[#012912] leading-6 mb-1.5"
+          >Email address</label
+        >
+        <input
+          autocomplete="off"
+          type="email"
+          name="email"
+          id="email"
+          placeholder="john@mail.com"
+          [(ngModel)]="email"
+          class="py-2 3xl:text-sm md:text-xs text-sm px-3 rounded text-[#98A2B3] border border-[#E5E7EB] focus:outline-none bg-[#fefefe]"
+        />
+      </div>
+      <div class="flex flex-col">
+        <label
+          for="last_name"
+          class="font-medium 3xl:3xl:text-sm md:text-xs text-sm text-[#012912] leading-6 mb-1.5"
+          >Password</label
+        >
+        <input
+          autocomplete="off"
+          type="password"
+          name="password"
+          id="password"
+          placeholder="xxxxxxxxxxxxxxxx"
+          [(ngModel)]="password"
+          class="py-2 3xl:text-sm md:text-xs text-sm px-3 rounded text-[#98A2B3] border border-[#E5E7EB] focus:outline-none bg-[#fefefe]"
+        />
+      </div>
+
+      <button
+        type="submit"
+        class="text-white text-center text-xs bg-[#2793E9] py-2.5 rounded-md transition hover:bg-[#2793E9]/70 mt-10 outline-none cursor-pointer"
+      >
+        Continue
+      </button>
+    </form>
+  </div>
+</main>
