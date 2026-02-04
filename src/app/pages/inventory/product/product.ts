@@ -1,9 +1,13 @@
-import { Component } from '@angular/core';
-import { RouterLink } from "@angular/router";
+import { Component, signal, computed } from '@angular/core';
+import { RouterLink } from '@angular/router';
 
 @Component({
   selector: 'app-new',
   imports: [RouterLink],
   templateUrl: './product.html',
 })
-export class Product {}
+export class Product {
+  inputValue = signal('');
+
+  isTyping = computed(() => this.inputValue().length >= 3);
+}

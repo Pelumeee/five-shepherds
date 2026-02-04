@@ -31,6 +31,7 @@
         </svg>
         <input
           type="text"
+          (input)="inputValue.set($event.target.value)"
           class="w-full bg-inherit focus:outline-none text-sm text-[#9CA3AF]"
           placeholder="Search by product name, SKU, or order ID..."
         />
@@ -51,10 +52,22 @@
     </div>
   </div>
 
-  <div class="min-h-[40vh] flex flex-col items-center justify-center my-10">
-    <h1 class="text-[#292524] font-medium text-sm">Start by searching for a product</h1>
-    <span class="text-[#57534D] font-light leading-6 text-xs"
-      >Use the search bar above to find products from our catalog.</span
-    >
-  </div>
+  @if (isTyping()) {
+    <div class="bg-white rounded-md p-6 my-10">
+      <h1 class="text-[#292524] font-medium text-lg">Search Results (0)</h1>
+      <div class="min-h-[40vh] flex flex-col items-center justify-center">
+        <h1 class="text-[#292524] font-medium">No products found matching your search.</h1>
+        <span class="text-[#57534D] font-light leading-6 text-sm"
+          >Try different keywords or check the category filter.</span
+        >
+      </div>
+    </div>
+  } @else {
+    <div class="min-h-[40vh] flex flex-col items-center justify-center my-10">
+      <h1 class="text-[#292524] font-medium">Start by searching for a product</h1>
+      <span class="text-[#57534D] font-light leading-6 text-sm"
+        >Use the search bar above to find products from our catalog.</span
+      >
+    </div>
+  }
 </div>

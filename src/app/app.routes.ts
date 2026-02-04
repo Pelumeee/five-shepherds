@@ -22,6 +22,10 @@ export const routes: Routes = [
             path: 'product',
             loadComponent: () => import('./pages/inventory/product/product').then((m) => m.Product),
           },
+          {
+            path: 'new',
+            loadComponent: () => import('./pages/inventory/new/new').then((m) => m.New),
+          },
           // {
           //   path: ':id',
           //   loadComponent: () =>

@@ -14,7 +14,7 @@ interface Notis {
   templateUrl: './notification.html',
 })
 export class Notification {
-  notisObj = input<Notis>();
+  notisObj = input.required<Notis>();
   notisChange = output<Notis>();
 
   toggleEnabled(enabled: boolean) {
