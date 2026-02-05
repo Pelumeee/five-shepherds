@@ -6,6 +6,10 @@
       <img src="logo.png" alt="" class="w-8 h-9" />
       <span class="text-[#D2AE7E] font-bold text-lg uppercase">Five Shepherds</span>
     </div>
+    <div class="grid grid-cols-2 gap-3 mb-3">
+      <button (click)="setMode(true)" [class.isActive]="isLogin()" class="tab-btn">Sign In</button>
+      <button (click)="setMode(false)" [class.isActive]="!isLogin()" class="tab-btn">Sign Up</button>
+    </div>
     <form (ngSubmit)="handleSignIn()" class="flex flex-col">
       <div class="flex flex-col mb-4">
         <label
@@ -44,7 +48,7 @@
         type="submit"
         class="text-white text-center text-xs bg-[#2793E9] py-2.5 rounded-md transition hover:bg-[#2793E9]/70 mt-10 outline-none cursor-pointer"
       >
-        Continue
+        {{ isLogin() ? 'Sign in' : 'Sign up' }}
       </button>
     </form>
   </div>

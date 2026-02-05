@@ -1,4 +1,4 @@
-import { Component, inject } from '@angular/core';
+import { Component, inject, signal } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { AuthService } from '../../core/services/auth';
 
@@ -14,6 +14,12 @@ export class Auth {
   password = '';
   error = '';
   loading = false;
+
+  isLogin = signal(true);
+
+  setMode(value: boolean) {
+    this.isLogin.set(value);
+  }
 
   async handleSignIn() {
     this.loading = true;
