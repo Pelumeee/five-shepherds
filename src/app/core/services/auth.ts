@@ -10,7 +10,6 @@ import { FirebaseError } from 'firebase/app';
 import { Firebase } from '../../core/services/firebase';
 
 @Injectable({ providedIn: 'root' })
-
 export class AuthService {
   private firebase = inject(Firebase);
 
@@ -18,6 +17,7 @@ export class AuthService {
     try {
       return await signInWithEmailAndPassword(this.firebase.auth, email, password);
     } catch (err) {
+      console.log('this sis coming from the sign In method in the service' + err);
       throw this.normalizeError(err);
     }
   }

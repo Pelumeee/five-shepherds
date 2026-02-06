@@ -1,5 +1,5 @@
-import { Component } from '@angular/core';
-import { CounterOffer } from "./components/counter-offer/counter-offer";
+import { Component, signal } from '@angular/core';
+import { CounterOffer } from './components/counter-offer/counter-offer';
 
 @Component({
   selector: 'app-order',
@@ -7,5 +7,5 @@ import { CounterOffer } from "./components/counter-offer/counter-offer";
   templateUrl: './order.html',
 })
 export class Order {
-
+  showCounterOffer = signal(false);
 }

@@ -12,7 +12,7 @@ export class Auth {
 
   email = '';
   password = '';
-  error = '';
+  error = signal('');
   loading = signal(false);
 
   isLogin = signal(true);
@@ -23,12 +23,12 @@ export class Auth {
 
   async handleAuth() {
     if (!this.email || !this.password) {
-      this.error = 'Email and password are required.';
+      this.error.set('Email and password are required.');
       return;
     }
 
     this.loading.set(true);
-    this.error = '';
+    this.error.set('');
 
     try {
       if (this.isLogin()) {
@@ -38,10 +38,11 @@ export class Auth {
       }
     } catch (err: unknown) {
       if (err instanceof Error) {
-        this.error = this.mapError(err.message);
-        console.log(err);
+        this.error.set(this.mapError(err.message));
+        this.resetError();
       } else {
-        this.error = 'Authentication failed...';
+        this.error.set('Authentication failed...');
+        this.resetError();
       }
     } finally {
       this.loading.set(false);
@@ -50,14 +51,26 @@ export class Auth {
 
   private mapError(code: string): string {
     switch (code) {
-      case 'auth/user-not-found':
-        return 'No account found with this email.';
-      case 'auth/wrong-password':
-        return 'Incorrect password.';
+      case 'auth/invalid-credential':
+        return 'Invalid email or password.';
+      case 'auth/user-disabled':
+        return 'This account has been disabled.';
+      case 'auth/too-many-requests':
+        return 'Too many attempts. Try again later.';
       case 'auth/email-already-in-use':
-        return 'Email already registered.';
+        return 'This email is already registered.';
+      case 'auth/weak-password':
+        return 'Password must be at least 6 characters.';
+      case 'auth/invalid-email':
+        return 'Please enter a valid email address.';
       default:
         return 'Authentication failed.';
     }
+  }
+
+  resetError() {
+    setTimeout(() => {
+      this.error.set('');
+    }, 1000);
   }
 }
