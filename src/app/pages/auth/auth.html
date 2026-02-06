@@ -8,9 +8,11 @@
     </div>
     <div class="grid grid-cols-2 gap-3 mb-3">
       <button (click)="setMode(true)" [class.isActive]="isLogin()" class="tab-btn">Sign In</button>
-      <button (click)="setMode(false)" [class.isActive]="!isLogin()" class="tab-btn">Sign Up</button>
+      <button (click)="setMode(false)" [class.isActive]="!isLogin()" class="tab-btn">
+        Sign Up
+      </button>
     </div>
-    <form (ngSubmit)="handleSignIn()" class="flex flex-col">
+    <form (ngSubmit)="handleAuth()" class="flex flex-col">
       <div class="flex flex-col mb-4">
         <label
           for="last_name"
@@ -46,9 +48,17 @@
 
       <button
         type="submit"
-        class="text-white text-center text-xs bg-[#2793E9] py-2.5 rounded-md transition hover:bg-[#2793E9]/70 mt-10 outline-none cursor-pointer"
+        [disabled]="loading()"
+        class="flex items-center justify-center gap-2 text-white text-xs bg-[#2793E9] py-2.5 rounded-md transition hover:bg-[#2793E9]/70 mt-10 disabled:opacity-60"
       >
-        {{ isLogin() ? 'Sign in' : 'Sign up' }}
+        @if (loading()) {
+          <span
+            class="h-3 w-3 animate-spin rounded-full border-2 border-white border-t-transparent"
+          ></span>
+          <span>Please wait…</span>
+        } @else {
+          {{ isLogin() ? 'Sign in' : 'Sign up' }}
+        }
       </button>
     </form>
   </div>

@@ -13,7 +13,7 @@ export class Auth {
   email = '';
   password = '';
   error = '';
-  loading = false;
+  loading = signal(false);
 
   isLogin = signal(true);
 
@@ -21,16 +21,30 @@ export class Auth {
     this.isLogin.set(value);
   }
 
-  async handleSignIn() {
-    this.loading = true;
+  async handleAuth() {
+    if (!this.email || !this.password) {
+      this.error = 'Email and password are required.';
+      return;
+    }
+
+    this.loading.set(true);
     this.error = '';
 
     try {
-      await this.auth.signIn(this.email, this.password);
-    } catch (err: any) {
-      this.error = this.mapError(err.message);
+      if (this.isLogin()) {
+        await this.auth.signIn(this.email, this.password);
+      } else {
+        await this.auth.signUp(this.email, this.password);
+      }
+    } catch (err: unknown) {
+      if (err instanceof Error) {
+        this.error = this.mapError(err.message);
+        console.log(err);
+      } else {
+        this.error = 'Authentication failed...';
+      }
     } finally {
-      this.loading = false;
+      this.loading.set(false);
     }
   }
 
