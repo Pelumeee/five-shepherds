@@ -10,6 +10,7 @@ import { AuthService } from '../../core/services/auth';
 export class Auth {
   private auth = inject(AuthService);
 
+  name = '';
   email = '';
   password = '';
   error = signal('');
@@ -22,8 +23,11 @@ export class Auth {
   }
 
   async handleAuth() {
-    if (!this.email || !this.password) {
+    if (this.isLogin() && (!this.email || !this.password)) {
       this.error.set('Email and password are required.');
+      return;
+    } else if (this.isLogin() === false && (!this.email || !this.password || !this.name)) {
+      this.error.set('Please fill all fields!');
       return;
     }
 
@@ -34,7 +38,8 @@ export class Auth {
       if (this.isLogin()) {
         await this.auth.signIn(this.email, this.password);
       } else {
-        await this.auth.signUp(this.email, this.password);
+        const newUser = await this.auth.signUp(this.email, this.password, this.name);
+        console.log(newUser);
       }
     } catch (err: unknown) {
       if (err instanceof Error) {

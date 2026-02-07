@@ -13,6 +13,24 @@
       </button>
     </div>
     <form (ngSubmit)="handleAuth()" class="flex flex-col">
+      @if (!isLogin()) {
+        <div class="flex flex-col mb-4">
+          <label
+            for="last_name"
+            class="font-medium 3xl:3xl:text-sm md:text-xs text-sm text-[#012912] leading-6 mb-1.5"
+            >Name</label
+          >
+          <input
+            autocomplete="off"
+            type="email"
+            name="email"
+            id="email"
+            placeholder="johnDoe"
+            [(ngModel)]="name"
+            class="py-2 3xl:text-sm md:text-xs text-sm px-3 rounded text-[#98A2B3] border border-[#E5E7EB] focus:outline-none bg-[#fefefe]"
+          />
+        </div>
+      }
       <div class="flex flex-col mb-4">
         <label
           for="last_name"
@@ -45,7 +63,7 @@
           class="py-2 3xl:text-sm md:text-xs text-sm px-3 rounded text-[#98A2B3] border border-[#E5E7EB] focus:outline-none bg-[#fefefe]"
         />
       </div>
-      <span class="text-xs text-center italic text-red-500">{{error()}}</span>
+      <span class="inline-block mt-2 text-xs text-center italic text-red-500">{{ error() }}</span>
 
       <button
         type="submit"

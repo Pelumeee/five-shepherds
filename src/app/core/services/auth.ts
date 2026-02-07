@@ -8,10 +8,12 @@ import {
 import { FirebaseError } from 'firebase/app';
 
 import { Firebase } from '../../core/services/firebase';
+import { User } from '../../core/services/user';
 
 @Injectable({ providedIn: 'root' })
 export class AuthService {
   private firebase = inject(Firebase);
+  private user = inject(User);
 
   async signIn(email: string, password: string): Promise<UserCredential> {
     try {
@@ -22,9 +24,17 @@ export class AuthService {
     }
   }
 
-  async signUp(email: string, password: string): Promise<UserCredential> {
+  async signUp(email: string, password: string, name: string): Promise<UserCredential> {
     try {
-      return await createUserWithEmailAndPassword(this.firebase.auth, email, password);
+      const userCredential = await createUserWithEmailAndPassword(
+        this.firebase.auth,
+        email,
+        password,
+      );
+
+      await this.user.createUser(userCredential.user.uid, userCredential.user.email!, name);
+      return userCredential;
+      
     } catch (err) {
       throw this.normalizeError(err);
     }
