@@ -2,6 +2,7 @@ import { Injectable, inject } from '@angular/core';
 import { doc, setDoc, getDoc, serverTimestamp } from 'firebase/firestore';
 
 import { Firebase } from '../../core/services/firebase';
+import { AppUser } from '../../shared/models/appUser';
 
 @Injectable({
   providedIn: 'root',
@@ -14,6 +15,7 @@ export class User {
     const ref = doc(this.firebase.firestore, 'users', uid);
 
     await setDoc(ref, {
+      uid,
       name,
       email,
       role: 'user',
@@ -21,9 +23,8 @@ export class User {
     });
   }
 
-  async getUser(uid: string) {
+  async getUser(uid: string): Promise<AppUser | null> {
     const snap = await getDoc(doc(this.firebase.firestore, 'users', uid));
-
-    return snap.exists() ? snap.data() : null;
+    return snap.exists() ? (snap.data() as AppUser) : null;
   }
 }

@@ -24,7 +24,7 @@ export class AuthService {
     }
   }
 
-  async signUp(email: string, password: string, name: string): Promise<UserCredential> {
+  async signUp(email: string, password: string, name: string): Promise<void> {
     try {
       const userCredential = await createUserWithEmailAndPassword(
         this.firebase.auth,
@@ -33,8 +33,6 @@ export class AuthService {
       );
 
       await this.user.createUser(userCredential.user.uid, userCredential.user.email!, name);
-      return userCredential;
-      
     } catch (err) {
       throw this.normalizeError(err);
     }

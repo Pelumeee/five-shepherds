@@ -38,8 +38,7 @@ export class Auth {
       if (this.isLogin()) {
         await this.auth.signIn(this.email, this.password);
       } else {
-        const newUser = await this.auth.signUp(this.email, this.password, this.name);
-        console.log(newUser);
+        await this.auth.signUp(this.email, this.password, this.name);
       }
     } catch (err: unknown) {
       if (err instanceof Error) {
