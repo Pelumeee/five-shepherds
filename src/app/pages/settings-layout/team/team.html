@@ -15,21 +15,23 @@
   <div class="grid grid-cols-3 py-6 border border-[#E7E5E4] rounded-md my-10">
     <div class="flex flex-col items-center justify-center border-r border-[#E7E5E4]">
       <span class="text-[#57534D] font-light leading-6">Team members</span>
-      <h2 class="text-[#292524] font-medium text-lg">3</h2>
+      <h2 class="text-[#292524] font-medium text-lg">{{users().length}}</h2>
     </div>
     <div class="flex flex-col items-center justify-center border-r border-[#E7E5E4]">
       <span class="text-[#57534D] font-light leading-6">Active</span>
-      <h2 class="text-[#292524] font-medium text-lg">2</h2>
+      <h2 class="text-[#292524] font-medium text-lg">{{users().length}}</h2>
     </div>
     <div class="flex flex-col items-center justify-center">
       <span class="text-[#57534D] font-light leading-6">Pending</span>
-      <h2 class="text-[#292524] font-medium text-lg">1</h2>
+      <h2 class="text-[#292524] font-medium text-lg">0</h2>
     </div>
   </div>
 
   <div class="flex flex-col gap-4">
-    <app-team-card></app-team-card>
-    <app-team-card></app-team-card>
-    <app-team-card></app-team-card>
+
+    @for(user of users(); track user.email){
+      <app-team-card [user]="user"></app-team-card>
+    }
+
   </div>
 </div>
