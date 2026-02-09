@@ -1,6 +1,7 @@
 import { Component, inject, signal } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { AuthService } from '../../core/services/auth';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-auth',
@@ -9,6 +10,7 @@ import { AuthService } from '../../core/services/auth';
 })
 export class Auth {
   private auth = inject(AuthService);
+  router = inject(Router);
 
   name = '';
   email = '';
@@ -40,6 +42,7 @@ export class Auth {
       } else {
         await this.auth.signUp(this.email, this.password, this.name);
       }
+      this.router.navigate(['/']);
     } catch (err: unknown) {
       if (err instanceof Error) {
         this.error.set(this.mapError(err.message));
