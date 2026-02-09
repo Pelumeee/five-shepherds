@@ -1,6 +1,7 @@
-import { Component } from '@angular/core';
+import { Component, inject } from '@angular/core';
 import { CtaCards } from './components/cta-cards/cta-cards';
-import { SummaryCards } from "./components/summary-cards/summary-cards";
+import { SummaryCards } from './components/summary-cards/summary-cards';
+import { Session } from '../../core/services/session';
 
 interface SummaryCard {
   name: string;
@@ -14,6 +15,12 @@ interface SummaryCard {
   templateUrl: './dashboard.html',
 })
 export class Dashboard {
+  session = inject(Session);
+
+  get userName() {
+    return this.session.user()?.name;
+  }
+
   summaryItems: SummaryCard[] = [
     { name: 'products', text: 'Total products', value: '156' },
     { name: 'orders', text: 'Pending orders', value: '20' },

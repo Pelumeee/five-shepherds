@@ -9,7 +9,7 @@ import { Session } from '../../../core/services/session';
 })
 export class Header {
   showMenu = signal<boolean>(false);
-
+  
   session = inject(Session);
 
   get userName() {

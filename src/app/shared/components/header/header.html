@@ -35,9 +35,9 @@
     </div>
     <div (click)="toggleSubMenu()" class="relative flex items-center gap-5 cursor-pointer">
       <div
-        class="flex items-center justify-center text-center bg-[#3D98F2] w-9 h-9 rounded-[50%] text-white font-semibold"
+        class="flex items-center justify-center text-center bg-[#3D98F2] w-9 h-9 rounded-[50%] text-white font-semibold uppercase"
       >
-        CO
+        {{ userName!.slice(0, 2) }}
       </div>
       <span class="text-[#1F2937] font-medium">{{ userName }}</span>
       <svg

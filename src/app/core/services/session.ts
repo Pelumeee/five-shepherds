@@ -7,7 +7,6 @@ import { AppUser } from '../../shared/models/appUser';
 @Injectable({
   providedIn: 'root',
 })
-
 export class Session {
   private firebase = inject(Firebase);
   private users = inject(User);
