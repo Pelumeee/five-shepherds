@@ -1,5 +1,6 @@
-import { Component } from '@angular/core';
-import { RouterLink, RouterLinkActive, RouterOutlet } from "@angular/router";
+import { Component, inject, computed } from '@angular/core';
+import { RouterLink, RouterLinkActive, RouterOutlet } from '@angular/router';
+import { Session } from '../../core/services/session';
 
 @Component({
   selector: 'app-settings-layout',
@@ -7,5 +8,9 @@ import { RouterLink, RouterLinkActive, RouterOutlet } from "@angular/router";
   templateUrl: './settings-layout.html',
 })
 export class SettingsLayout {
+  session = inject(Session);
 
+  showTeamMembers = computed(() => {
+    return this.session.user()?.role === 'admin';
+  });
 }

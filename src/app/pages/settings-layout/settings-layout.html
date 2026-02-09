@@ -11,9 +11,11 @@
       class="text-[#57534D] leading-6 text-sm py-2"
       >Account</a
     >
-    <a routerLink="./team" routerLinkActive="active" class="text-[#57534D] leading-6 text-sm py-2"
-      >Team</a
-    >
+    @if (showTeamMembers()) {
+      <a routerLink="./team" routerLinkActive="active" class="text-[#57534D] leading-6 text-sm py-2"
+        >Team</a
+      >
+    }
     <a
       routerLink="./preferences"
       routerLinkActive="active"

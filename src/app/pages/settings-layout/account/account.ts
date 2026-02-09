@@ -1,4 +1,5 @@
-import { Component } from '@angular/core';
+import { Component, inject } from '@angular/core';
+import { Session } from '../../../core/services/session';
 
 @Component({
   selector: 'app-account',
@@ -6,5 +7,9 @@ import { Component } from '@angular/core';
   templateUrl: './account.html',
 })
 export class Account {
+  session = inject(Session);
 
+  get user() {
+    return this.session.user;
+  }
 }

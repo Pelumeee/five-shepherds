@@ -32,7 +32,7 @@
         <input
           type="text"
           class="p-3 border border-[#E7E5E4] rounded text-xs focus:outline-none text-[#57534D]"
-          placeholder="Chibuike Okorie"
+          placeholder="{{ user()!.name }}"
           readonly
         />
       </div>
@@ -41,15 +41,15 @@
         <input
           type="text"
           class="p-3 border border-[#E7E5E4] rounded text-xs focus:outline-none text-[#57534D]"
-          placeholder="iamactive@gmail.com"
+          placeholder="{{ user()!.email }}"
           readonly
         />
       </div>
       <div class="">
         <p class="text-sm font-medium text-[#292524] mb-1">Role</p>
         <span
-          class="inline-block px-3 py-2 bg-[#DCF6FD] rounded-md text-[#1E6381] font-medium text-xs"
-          >Admin</span
+          class="inline-block px-3 py-2 bg-[#DCF6FD] rounded-md text-[#1E6381] font-medium text-xs capitalize"
+          >{{ user()!.role }}</span
         >
       </div>
     </div>
