@@ -1,0 +1,61 @@
+<dialog open class="fixed inset-0 m-auto border-none outline-none p-0 bg-transparent z-30">
+  <div class="bg-white rounded-xl p-6 w-100 2xl:w-120">
+    <div class="flex items-start justify-between mb-3">
+      <div>
+        <h2 class="text-[#292524] font-medium">Add team member</h2>
+        <span class="text-[#57534D] font-light leading-6 text-sm"
+          >Invite a new team member to your store. They will receive an email invitation.</span
+        >
+      </div>
+      <button (click)="handleCloseForm()" class="cursor-pointer focus:outline-none">
+        <app-close-icon> </app-close-icon>
+      </button>
+    </div>
+
+    <form class="flex flex-col gap-5">
+      <div class="flex flex-col gap-1">
+        <label for="full_name" class="text-sm font-medium text-[#292524]">Full name</label>
+        <input
+          type="text"
+          name="full_name"
+          class="p-2 border border-[#E7E5E4] rounded text-xs focus:outline-none text-[#A6A09B]"
+          placeholder="Enter your counter price"
+        />
+      </div>
+      <div class="flex flex-col gap-1">
+        <label for="email" class="text-sm font-medium text-[#292524]">Email</label>
+        <input
+          type="text"
+          name="email"
+          class="p-2 border border-[#E7E5E4] rounded text-xs focus:outline-none text-[#A6A09B]"
+          placeholder="Enter your counter price"
+        />
+      </div>
+      <div class="flex flex-col gap-1">
+        <label for="role" class="text-sm font-medium text-[#292524]">Role</label>
+        <select
+          name="role"
+          id="role"
+          class="p-2 border border-[#E7E5E4] rounded text-xs focus:outline-none text-[#A6A09B]"
+        >
+          <option value="user">Inventory only</option>
+          <option value="admin">Inventory & Sales</option>
+        </select>
+      </div>
+
+      <div class="flex items-center justify-end gap-6 mt-6">
+        <button
+          class="w-full max-w-30 bg-inherit py-2.5 rounded text-[#57534D] text-sm font-medium cursor-pointer border border-[#E7E5E4]"
+        >
+          Cancel
+        </button>
+        <button
+          class="w-full max-w-30 bg-[#2793E9] py-2.5 rounded text-white text-sm font-medium cursor-pointer"
+        >
+          Submit
+        </button>
+      </div>
+    </form>
+  </div>
+</dialog>
+<div class="backdrop"></div>
