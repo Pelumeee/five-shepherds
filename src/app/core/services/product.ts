@@ -1,4 +1,4 @@
-import { Injectable, inject } from '@angular/core';
+import { Injectable, inject, signal } from '@angular/core';
 import { addDoc, collection, doc, serverTimestamp, setDoc } from 'firebase/firestore';
 
 import axios from 'axios';
@@ -22,6 +22,8 @@ export class ProductService {
 
   private cloudName = environment.cloudinary.cloudName;
   private uploadPreset = environment.cloudinary.unsignedPreset;
+
+  productSavedSuccessFully = signal(false);
 
   async uploadProductImage(file: File): Promise<string> {
     const url = `https://api.cloudinary.com/v1_1/${this.cloudName}/upload`;

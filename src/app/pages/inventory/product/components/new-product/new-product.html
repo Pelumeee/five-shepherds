@@ -104,14 +104,15 @@
           type="submit"
           class="flex items-center justify-center gap-2 bg-[#2793E9] py-2.5 rounded-md transition hover:bg-[#2793E9]/70 mt-10 disabled:opacity-60 cursor-pointer"
         >
-          @if (isLoading()) {
+          @if (isLoading() && !isSuccess()) {
             <span
               class="h-3 w-3 animate-spin rounded-full border-2 border-white border-t-transparent"
             ></span>
           }
+
           <span class="text-white text-xs font-medium">
-            {{ isLoading() ? 'Saving...' : 'Save product' }}</span
-          >
+            {{ buttonText }}
+          </span>
         </button>
         <button
           [disabled]="isLoading()"

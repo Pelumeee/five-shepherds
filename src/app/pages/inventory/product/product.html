@@ -94,6 +94,6 @@
   }
 </div>
 
-@if (isShowProductForm()) {
+@if (isShowProductForm() && !productService.productSavedSuccessFully()) {
   <app-new-product (closeForm)="closeProductForm()"></app-new-product>
 }
