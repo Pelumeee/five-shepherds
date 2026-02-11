@@ -31,23 +31,27 @@ export class NewProduct {
     this.selectedImage = input.files[0];
   }
 
-  handleFormSubmission() {
+  async handleFormSubmission() {
     if (!this.productName || !this.sku || !this.description || !this.selectedImage) {
       alert('All fields are required');
       return;
     }
+    
     this.isLoading.set(true);
 
-    this.productService.createProduct(
-      {
-        name: this.productName,
-        sku: this.sku,
-        description: this.description,
-        unit: this.unit,
-        status: this.status,
-      },
-      this.selectedImage,
-    );
+    try {
+      const savedProduct = await this.productService.createProduct(
+        {
+          name: this.productName,
+          sku: this.sku,
+          description: this.description,
+          unit: this.unit,
+          status: this.status,
+        },
+        this.selectedImage,
+      );
+      console.log(savedProduct);
+    } catch (err) {}
   }
 
   handleCloseForm() {

@@ -1,8 +1,10 @@
 import { Injectable, inject } from '@angular/core';
-import { addDoc, collection, serverTimestamp } from 'firebase/firestore';
-import { ref, uploadBytes, getDownloadURL } from 'firebase/storage';
+import { addDoc, collection, doc, serverTimestamp, setDoc } from 'firebase/firestore';
+
+import axios from 'axios';
 
 import { Firebase } from '../../core/services/firebase';
+import { environment } from '../../../environments/environment';
 
 export interface ProductPayload {
   name: string;
@@ -12,40 +14,37 @@ export interface ProductPayload {
   status: 'active' | 'inactive';
 }
 
-
-
-
-
-//five_shepherds_products
-
 @Injectable({
   providedIn: 'root',
 })
-
 export class ProductService {
+  private firebase = inject(Firebase);
 
-  private firebase = inject(Firebase)
+  private cloudName = environment.cloudinary.cloudName;
+  private uploadPreset = environment.cloudinary.unsignedPreset;
 
-  private async uploadProductImage(file: File, sku: string): Promise<string> {
-    const filePath = `products/${sku}/${Date.now()}_${file.name}`;
-    const storageRef = ref(this.firebase.storage, filePath);
+  async uploadProductImage(file: File): Promise<string> {
+    const url = `https://api.cloudinary.com/v1_1/${this.cloudName}/upload`;
+    const formData = new FormData();
+    formData.append('file', file);
+    formData.append('upload_preset', this.uploadPreset);
 
-    await uploadBytes(storageRef, file);
-    return getDownloadURL(storageRef);
+    const res = await axios.post(url, formData);
+    return res.data.secure_url;
   }
 
-  async createProduct(productData: ProductPayload, imageFile?: File) {
-    let imageUrl: string | null = null;
+  async createProduct(productData: ProductPayload, imageFile?: File): Promise<string> {
+    const imageUrl = imageFile ? await this.uploadProductImage(imageFile) : null;
 
-    if (imageFile) {
-      imageUrl = await this.uploadProductImage(imageFile, productData.sku);
-    }
+    const ref = doc(this.firebase.firestore, 'products', productData.sku);
 
-    return addDoc(collection(this.firebase.firestore, 'products'), {
+    await setDoc(ref, {
       ...productData,
       imageUrl,
       createdAt: serverTimestamp(),
       updatedAt: serverTimestamp(),
     });
+
+    return ref.id;
   }
 }
