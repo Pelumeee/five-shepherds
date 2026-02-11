@@ -39,10 +39,11 @@ export class Auth {
     try {
       if (this.isLogin()) {
         await this.auth.signIn(this.email, this.password);
+        // this.router.navigate(['/']);
       } else {
         await this.auth.signUp(this.email, this.password, this.name);
+        this.router.navigate(['/']);
       }
-      this.router.navigate(['/']);
     } catch (err: unknown) {
       if (err instanceof Error) {
         this.error.set(this.mapError(err.message));

@@ -9,17 +9,19 @@ import { FirebaseError } from 'firebase/app';
 
 import { Firebase } from '../../core/services/firebase';
 import { User } from '../../core/services/user';
+import { Router } from '@angular/router';
 
 @Injectable({ providedIn: 'root' })
 export class AuthService {
   private firebase = inject(Firebase);
   private user = inject(User);
+  private router = inject(Router);
 
-  async signIn(email: string, password: string): Promise<UserCredential> {
+  async signIn(email: string, password: string): Promise<void> {
     try {
-      return await signInWithEmailAndPassword(this.firebase.auth, email, password);
+      await signInWithEmailAndPassword(this.firebase.auth, email, password);
+      await this.router.navigate(['/']);
     } catch (err) {
-      console.log('this sis coming from the sign In method in the service' + err);
       throw this.normalizeError(err);
     }
   }
@@ -39,7 +41,8 @@ export class AuthService {
   }
 
   async logout(): Promise<void> {
-    return signOut(this.firebase.auth);
+    await signOut(this.firebase.auth);
+    await this.router.navigate(['/auth'], { replaceUrl: true });
   }
 
   private normalizeError(err: unknown): Error {

@@ -76,7 +76,7 @@
 
             <span class="text-[#44403B] text-sm hover:font-medium transition">Settings</span>
           </a>
-          <a routerLink="/auth" class="flex items-center gap-3">
+          <button (click)="logout()" class="flex items-center gap-3 cursor-pointer">
             <svg
               width="15"
               height="15"
@@ -91,7 +91,7 @@
             </svg>
 
             <span class="text-[#44403B] text-sm hover:font-medium transition">Logout</span>
-          </a>
+          </button>
         </div>
       }
     </div>

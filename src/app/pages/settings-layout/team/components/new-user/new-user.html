@@ -12,28 +12,31 @@
       </button>
     </div>
 
-    <form class="flex flex-col gap-5">
+    <form (ngSubmit)="handleFormSubmission()" class="flex flex-col gap-5">
       <div class="flex flex-col gap-1">
         <label for="full_name" class="text-sm font-medium text-[#292524]">Full name</label>
         <input
+          [(ngModel)]="fullName"
           type="text"
           name="full_name"
           class="p-2 border border-[#E7E5E4] rounded text-xs focus:outline-none text-[#A6A09B]"
-          placeholder="Enter your counter price"
+          placeholder="John Doe"
         />
       </div>
       <div class="flex flex-col gap-1">
         <label for="email" class="text-sm font-medium text-[#292524]">Email</label>
         <input
+          [(ngModel)]="email"
           type="text"
           name="email"
           class="p-2 border border-[#E7E5E4] rounded text-xs focus:outline-none text-[#A6A09B]"
-          placeholder="Enter your counter price"
+          placeholder="john@gmail.com"
         />
       </div>
       <div class="flex flex-col gap-1">
         <label for="role" class="text-sm font-medium text-[#292524]">Role</label>
         <select
+          [(ngModel)]="role"
           name="role"
           id="role"
           class="p-2 border border-[#E7E5E4] rounded text-xs focus:outline-none text-[#A6A09B]"
@@ -43,8 +46,14 @@
         </select>
       </div>
 
+      @if (error()) {
+        <p class="text-sm text-center text-red-500 italic">{{ errorText() }}</p>
+      }
+
       <div class="flex items-center justify-end gap-6 mt-6">
         <button
+          type="button"
+          (click)="handleCloseForm()"
           class="w-full max-w-30 bg-inherit py-2.5 rounded text-[#57534D] text-sm font-medium cursor-pointer border border-[#E7E5E4]"
         >
           Cancel

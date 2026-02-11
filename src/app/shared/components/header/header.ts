@@ -1,6 +1,7 @@
 import { Component, signal, inject } from '@angular/core';
 import { RouterLink } from '@angular/router';
 import { Session } from '../../../core/services/session';
+import { AuthService } from '../../../core/services/auth';
 
 @Component({
   selector: 'app-header',
@@ -9,8 +10,9 @@ import { Session } from '../../../core/services/session';
 })
 export class Header {
   showMenu = signal<boolean>(false);
-  
+
   session = inject(Session);
+  auth = inject(AuthService);
 
   get userName() {
     return this.session.user()?.name;
@@ -18,6 +20,10 @@ export class Header {
 
   get isAdmin() {
     return this.session.user()?.role === 'admin';
+  }
+
+  logout() {
+    this.auth.logout();
   }
 
   toggleSubMenu() {
