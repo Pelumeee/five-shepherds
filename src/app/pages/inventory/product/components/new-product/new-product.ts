@@ -1,6 +1,7 @@
-import { Component, signal, output } from '@angular/core';
+import { Component, signal, output, inject } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { CloseIcon } from '../../../../../shared/components/close-icon/close-icon';
+import { ProductPayload, ProductService } from '../../../../../core/services/product';
 
 @Component({
   selector: 'app-new-product',
@@ -8,7 +9,12 @@ import { CloseIcon } from '../../../../../shared/components/close-icon/close-ico
   templateUrl: './new-product.html',
 })
 export class NewProduct {
+  productService = inject(ProductService);
   closeForm = output();
+
+  isLoading = signal(false);
+
+
 
   error = signal(false);
   errorText = signal('');
@@ -16,16 +22,28 @@ export class NewProduct {
   productName = '';
   sku = '';
   description = '';
-  unit = '';
+  unit: ProductPayload['unit'] = 'pcs';
   status: 'active' | 'inactive' = 'active';
   selectedImage!: File;
 
-  handleFormSubmission() {}
   onImageSelected(event: Event) {
     const input = event.target as HTMLInputElement;
     if (!input.files || input.files.length === 0) return;
 
     this.selectedImage = input.files[0];
+  }
+
+  handleFormSubmission() {
+    this.productService.createProduct(
+      {
+        name: this.productName,
+        sku: this.sku,
+        description: this.description,
+        unit: this.unit,
+        status: this.status,
+      },
+      this.selectedImage,
+    );
   }
 
   handleCloseForm() {
