@@ -14,8 +14,6 @@ export class NewProduct {
 
   isLoading = signal(false);
 
-
-
   error = signal(false);
   errorText = signal('');
 
@@ -34,6 +32,12 @@ export class NewProduct {
   }
 
   handleFormSubmission() {
+    if (!this.productName || !this.sku || !this.description || !this.selectedImage) {
+      alert('All fields are required');
+      return;
+    }
+    this.isLoading.set(true);
+
     this.productService.createProduct(
       {
         name: this.productName,

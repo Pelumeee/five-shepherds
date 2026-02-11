@@ -31,6 +31,14 @@ button.isActive {
   color: #a0610e;
   border-bottom: 2px solid #a0610e;
 }
+
+label:has(+ input:required)::after,
+label:has(+ select:required)::after,
+label:has(+ textarea:required)::after {
+  content: ' *';
+  color: red;
+  font-weight: bold;
+}
 .backdrop {
   background-color: rgba(0, 0, 0, 0.6);
   position: fixed;

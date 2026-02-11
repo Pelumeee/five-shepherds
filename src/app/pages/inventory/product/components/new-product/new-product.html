@@ -45,6 +45,7 @@
           rows="3"
           class="p-2 border border-[#E7E5E4] rounded text-xs focus:outline-none text-[#292524]"
           placeholder="Iphone 15promax 128gb"
+          required
         ></textarea>
       </div>
 
@@ -81,6 +82,7 @@
       <div class="flex flex-col gap-1">
         <label for="image" class="text-sm font-medium text-[#292524]"> Product image </label>
         <input
+          required
           type="file"
           accept="image/*"
           (change)="onImageSelected($event)"
@@ -100,14 +102,14 @@
         <button
           [disabled]="isLoading()"
           type="submit"
-          class="w-full bg-[#2793E9] py-2.5 rounded cursor-pointer"
+          class="flex items-center justify-center gap-2 bg-[#2793E9] py-2.5 rounded-md transition hover:bg-[#2793E9]/70 mt-10 disabled:opacity-60 cursor-pointer"
         >
           @if (isLoading()) {
             <span
               class="h-3 w-3 animate-spin rounded-full border-2 border-white border-t-transparent"
             ></span>
           }
-          <span class="text-white text-sm font-medium">
+          <span class="text-white text-xs font-medium">
             {{ isLoading() ? 'Saving...' : 'Save product' }}</span
           >
         </button>
@@ -115,7 +117,7 @@
           [disabled]="isLoading()"
           type="button"
           (click)="handleCloseForm()"
-          class="w-full bg-inherit py-2.5 rounded text-[#57534D] text-sm font-medium cursor-pointer border border-[#E7E5E4]"
+          class="w-full bg-inherit py-2.5 rounded text-[#57534D] text-xs font-medium cursor-pointer border border-[#E7E5E4]"
         >
           Cancel
         </button>
