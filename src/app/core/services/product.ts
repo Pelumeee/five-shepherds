@@ -5,6 +5,7 @@ import axios from 'axios';
 
 import { Firebase } from '../../core/services/firebase';
 import { environment } from '../../../environments/environment';
+import { ProductCategory } from '../.././constants/product-category';
 
 export interface ProductPayload {
   name: string;
@@ -12,6 +13,8 @@ export interface ProductPayload {
   description?: string;
   unit: 'pcs' | 'kg' | 'ltr';
   status: 'active' | 'inactive';
+  category: ProductCategory;
+  brandName: string;
 }
 
 @Injectable({
@@ -22,7 +25,6 @@ export class ProductService {
 
   private cloudName = environment.cloudinary.cloudName;
   private uploadPreset = environment.cloudinary.unsignedPreset;
-
 
   newlyCreatedProductSku = signal('');
 

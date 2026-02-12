@@ -1,11 +1,13 @@
 import { Component, inject, signal } from '@angular/core';
 import { ActivatedRoute, RouterLink } from '@angular/router';
+import { TitleCasePipe } from '@angular/common';
+
 import { Notification } from '../../settings-layout/preferences/components/notification/notification';
 import { ProductService } from '../../../core/services/product';
 
 @Component({
   selector: 'app-new',
-  imports: [Notification, RouterLink],
+  imports: [Notification, RouterLink, TitleCasePipe],
   templateUrl: './new.html',
 })
 export class New {

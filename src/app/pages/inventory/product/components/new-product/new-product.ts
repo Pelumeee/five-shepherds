@@ -29,7 +29,7 @@ export class NewProduct {
   productName = '';
   brandName = '';
   sku = '';
-  category: ProductCategory | null = null;
+  category: ProductCategory = 'electronics';
   description = '';
   unit: ProductPayload['unit'] = 'pcs';
   status: 'active' | 'inactive' = 'active';
@@ -42,20 +42,26 @@ export class NewProduct {
     this.selectedImage = input.files[0];
   }
 
-  requiredFields = {
-    productName: this.productName,
-    sku: this.sku,
-    description: this.description,
-    image: this.selectedImage,
-    brand: this.brandName,
-    category: this.category,
-  };
+  validateRequiredFields() {
+    const requiredFields = {
+      productName: this.productName,
+      sku: this.sku,
+      description: this.description,
+      image: this.selectedImage,
+      brandName: this.brandName,
+      category: this.category,
+    };
+
+    if (Object.values(requiredFields).some((v) => v == null || v === '')) {
+      alert('All fields are required');
+      return false;
+    }
+
+    return true;
+  }
 
   async handleFormSubmission() {
-    if (Object.values(this.requiredFields).some((v) => v == null || v === '')) {
-      alert('All fields are required');
-      return;
-    }
+    if (!this.validateRequiredFields()) return;
 
     this.isLoading.set(true);
 
@@ -67,6 +73,8 @@ export class NewProduct {
           description: this.description,
           unit: this.unit,
           status: this.status,
+          category: this.category,
+          brandName: this.brandName,
         },
         this.selectedImage,
       );

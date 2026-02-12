@@ -51,10 +51,10 @@
         <div class="flex flex-col gap-1">
           <label for="unit" class="text-sm font-medium text-[#292524]"> Category </label>
           <select [(ngModel)]="category" name="category" required class="add-prd-input">
-            <option [ngValue]="null" disabled>Select category</option>
+            <option [value]="" disabled>Select category</option>
 
             @for (cat of productCategory; track cat.value) {
-              <option [ngValue]="cat.value">{{ cat.label }}</option>
+              <option [value]="cat.value">{{ cat.label }}</option>
             }
           </select>
         </div>

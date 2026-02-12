@@ -42,7 +42,11 @@
       </div>
       <div class="">
         <p class="text-[#44403B] font-medium">{{ selectedProduct()!.name }}</p>
-        <span class="text-[#A6A09B] font-light leading-6 text-sm">Samsung • Electronics</span>
+        <span class="text-[#A6A09B] font-light leading-6 text-sm"
+          >{{ selectedProduct()!.brandName | titlecase }} • {{
+            selectedProduct()!.category | titlecase
+          }}</span
+        >
         <p class="text-[#79716B] text-xs">
           {{ selectedProduct()!.description }}
         </p>
@@ -94,6 +98,7 @@
             type="text"
             class="p-2 border border-[#E7E5E4] rounded text-xs focus:outline-none text-[#A6A09B]"
             placeholder="SAM-128-FG"
+            [value]="selectedProduct()!.sku"
             readonly
           />
         </div>

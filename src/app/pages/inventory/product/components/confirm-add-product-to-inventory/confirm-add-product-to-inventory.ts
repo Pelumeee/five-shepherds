@@ -20,6 +20,7 @@ export class ConfirmAddProductToInventory {
   }
 
   handleClick() {
+    this.flow.finish();
     this.click.emit();
   }
 }
