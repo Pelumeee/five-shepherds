@@ -1,0 +1,25 @@
+<dialog open class="fixed inset-0 m-auto border-none outline-none p-0 bg-transparent z-30">
+  <div class="bg-white rounded-xl p-6 w-100 2xl:w-120">
+    <div>
+      <h2 class="text-[#292524] font-medium">Configure product</h2>
+      <p class="text-sm font-light">Will you like to add product to inventory?</p>
+    </div>
+    <div class="flex flex-col gap-4">
+      <button
+        (click)="handleClick()"
+        type="submit"
+        class="flex items-center justify-center gap-2 bg-[#2793E9] py-2.5 rounded-md transition hover:bg-[#2793E9]/70 mt-10 disabled:opacity-60 cursor-pointer"
+      >
+        <span class="text-white text-xs font-medium"> Yes </span>
+      </button>
+      <button
+        type="button"
+        (click)="handleCloseForm()"
+        class="w-full bg-inherit py-2.5 rounded text-[#57534D] text-xs font-medium cursor-pointer border border-[#E7E5E4]"
+      >
+        Cancel
+      </button>
+    </div>
+  </div>
+</dialog>
+<div class="backdrop"></div>

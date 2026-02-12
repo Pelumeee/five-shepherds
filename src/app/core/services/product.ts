@@ -1,5 +1,5 @@
 import { Injectable, inject, signal } from '@angular/core';
-import { addDoc, collection, doc, serverTimestamp, setDoc } from 'firebase/firestore';
+import { addDoc, getDoc, doc, serverTimestamp, setDoc } from 'firebase/firestore';
 
 import axios from 'axios';
 
@@ -23,7 +23,8 @@ export class ProductService {
   private cloudName = environment.cloudinary.cloudName;
   private uploadPreset = environment.cloudinary.unsignedPreset;
 
-  productSavedSuccessFully = signal(false);
+
+  newlyCreatedProductSku = signal('');
 
   async uploadProductImage(file: File): Promise<string> {
     const url = `https://api.cloudinary.com/v1_1/${this.cloudName}/upload`;
@@ -46,7 +47,14 @@ export class ProductService {
       createdAt: serverTimestamp(),
       updatedAt: serverTimestamp(),
     });
-
+    this.newlyCreatedProductSku.set(productData.sku);
     return ref.id;
+  }
+
+  async getProductBySku(sku: string): Promise<Product | null> {
+    const ref = doc(this.firebase.firestore, 'products', sku);
+    const snap = await getDoc(ref);
+
+    return snap.exists() ? (snap.data() as Product) : null;
   }
 }

@@ -37,17 +37,14 @@
   </div>
   <div class="bg-[#DBEAFE] p-4 rounded-md">
     <div class="bg-white rounded-md p-2.5 flex gap-5">
-      <div class="h-24 w-24 shrink-0 border border-[#E7E5E4] rounded-md"></div>
+      <div class="h-24 w-24 shrink-0 border border-[#E7E5E4] rounded-md">
+        <img [src]="selectedProduct()!.imageUrl" alt="" class="w-full h-full object-cover" />
+      </div>
       <div class="">
-        <p class="text-[#44403B] font-medium">Samsung Galaxy S24 Ultra</p>
+        <p class="text-[#44403B] font-medium">{{ selectedProduct()!.name }}</p>
         <span class="text-[#A6A09B] font-light leading-6 text-sm">Samsung • Electronics</span>
         <p class="text-[#79716B] text-xs">
-          The Galaxy S24 Ultra combines sleek design with powerhouse performance. Featuring a
-          stunning 6.8” QHD+ Dynamic AMOLED 2X display, pro-grade quad camera system with 200MP main
-          sensor, and Galaxy AI tools for smarter productivity, it’s built for work, play, and
-          everything in between. Powered by the Snapdragon® 8 Gen 3 chip and a massive all-day
-          battery, the S24 Ultra delivers speed, efficiency, and cutting-edge innovation in one
-          premium package.
+          {{ selectedProduct()!.description }}
         </p>
       </div>
     </div>

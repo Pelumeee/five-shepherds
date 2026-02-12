@@ -3,6 +3,8 @@ import { FormsModule } from '@angular/forms';
 import { CloseIcon } from '../../../../../shared/components/close-icon/close-icon';
 import { ProductPayload, ProductService } from '../../../../../core/services/product';
 import { ToastService } from '../../../../../core/services/toast';
+import { ProductCreationFlowService } from '../../../../../core/services/product-creation-flow-service';
+import { PRODUCT_CATEGORIES, ProductCategory } from '../../../../../constants/product-category';
 
 @Component({
   selector: 'app-new-product',
@@ -11,6 +13,7 @@ import { ToastService } from '../../../../../core/services/toast';
 })
 export class NewProduct {
   productService = inject(ProductService);
+  flow = inject(ProductCreationFlowService);
   toast = inject(ToastService);
 
   closeForm = output();
@@ -20,9 +23,13 @@ export class NewProduct {
 
   error = signal(false);
   errorText = signal('');
+  productCategory = PRODUCT_CATEGORIES;
 
+  // Form Inputs
   productName = '';
+  brandName = '';
   sku = '';
+  category: ProductCategory | null = null;
   description = '';
   unit: ProductPayload['unit'] = 'pcs';
   status: 'active' | 'inactive' = 'active';
@@ -35,8 +42,17 @@ export class NewProduct {
     this.selectedImage = input.files[0];
   }
 
+  requiredFields = {
+    productName: this.productName,
+    sku: this.sku,
+    description: this.description,
+    image: this.selectedImage,
+    brand: this.brandName,
+    category: this.category,
+  };
+
   async handleFormSubmission() {
-    if (!this.productName || !this.sku || !this.description || !this.selectedImage) {
+    if (Object.values(this.requiredFields).some((v) => v == null || v === '')) {
       alert('All fields are required');
       return;
     }
@@ -56,7 +72,7 @@ export class NewProduct {
       );
       this.isSuccess.set(true);
       this.toast.show('Product created successfully', 'success');
-      this.productService.productSavedSuccessFully.set(true);
+      this.flow.productCreated();
     } catch (err) {
       this.toast.show('Failed to create product', 'error');
     } finally {
@@ -68,7 +84,7 @@ export class NewProduct {
   }
 
   handleCloseForm() {
-    this.closeForm.emit();
+    this.flow.reset();
   }
 
   get buttonText() {

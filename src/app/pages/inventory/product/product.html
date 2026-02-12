@@ -61,7 +61,7 @@
           >Try different keywords or check the category filter.</span
         >
         <button
-        (click)="showProductForm()"
+          (click)="flow.startCreate()"
           class="bg-[#2793E9] text-white text-sm px-6 py-2.5 rounded flex items-center gap-2 hover:bg-[#1E73C5] transition-colors cursor-pointer mt-4"
         >
           <svg
@@ -94,6 +94,9 @@
   }
 </div>
 
-@if (isShowProductForm() && !productService.productSavedSuccessFully()) {
-  <app-new-product (closeForm)="closeProductForm()"></app-new-product>
+@if (flow.step() === 'create') {
+  <app-new-product></app-new-product>
+}
+@if (flow.step() === 'confirmInventory') {
+  <app-confirm-add-product-to-inventory (click)="navigateToAddInventotyPage()" />
 }

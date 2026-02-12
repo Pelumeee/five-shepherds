@@ -4,6 +4,9 @@
 .tab-btn {
   @apply py-2 border border-[#E5E7EB] rounded-md text-center text-xs font-medium cursor-pointer;
 }
+.add-prd-input {
+  @apply p-2 border border-[#E7E5E4] rounded text-xs focus:outline-none text-[#292524];
+}
 
 body {
   min-height: 100vh;

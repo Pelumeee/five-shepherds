@@ -17,23 +17,47 @@
           [(ngModel)]="productName"
           type="text"
           name="name"
-          class="p-2 border border-[#E7E5E4] rounded text-xs focus:outline-none text-[#292524]"
+          class="add-prd-input"
           placeholder="iPhone 15 Pro"
           required
         />
       </div>
-
-      <!-- SKU -->
       <div class="flex flex-col gap-1">
-        <label for="sku" class="text-sm font-medium text-[#292524]"> SKU </label>
+        <label for="name" class="text-sm font-medium text-[#292524]"> Brand name </label>
         <input
-          [(ngModel)]="sku"
+          [(ngModel)]="brandName"
           type="text"
-          name="sku"
-          class="p-2 border border-[#E7E5E4] rounded text-xs focus:outline-none text-[#292524]"
-          placeholder="IP15-PRO-256"
+          name="name"
+          class="add-prd-input"
+          placeholder="Apple"
           required
         />
+      </div>
+
+      <div class="grid grid-cols-2 gap-4">
+        <!-- SKU -->
+        <div class="flex flex-col gap-1">
+          <label for="sku" class="text-sm font-medium text-[#292524]"> SKU </label>
+          <input
+            [(ngModel)]="sku"
+            type="text"
+            name="sku"
+            class="add-prd-input"
+            placeholder="IP15-PRO-256"
+            required
+          />
+        </div>
+        <!-- Category -->
+        <div class="flex flex-col gap-1">
+          <label for="unit" class="text-sm font-medium text-[#292524]"> Category </label>
+          <select [(ngModel)]="category" name="category" required class="add-prd-input">
+            <option [ngValue]="null" disabled>Select category</option>
+
+            @for (cat of productCategory; track cat.value) {
+              <option [ngValue]="cat.value">{{ cat.label }}</option>
+            }
+          </select>
+        </div>
       </div>
 
       <!-- Description -->
@@ -43,40 +67,33 @@
           [(ngModel)]="description"
           name="description"
           rows="3"
-          class="p-2 border border-[#E7E5E4] rounded text-xs focus:outline-none text-[#292524]"
+          class="add-prd-input"
           placeholder="Iphone 15promax 128gb"
           required
         ></textarea>
       </div>
 
-      <!-- Unit -->
-      <div class="flex flex-col gap-1">
-        <label for="unit" class="text-sm font-medium text-[#292524]"> Unit </label>
-        <select
-          [(ngModel)]="unit"
-          name="unit"
-          class="p-2 border border-[#E7E5E4] rounded text-xs focus:outline-none text-[#292524]"
-          required
-        >
-          <option value="" disabled selected>Select unit</option>
-          <option value="pcs">Pieces</option>
-          <option value="kg">Kilograms</option>
-          <option value="ltr">Litres</option>
-        </select>
-      </div>
+      <div class="grid grid-cols-2 gap-4">
+        <div class="flex flex-col gap-1">
+          <label for="unit" class="text-sm font-medium text-[#292524]"> Unit </label>
+          <select [(ngModel)]="unit" name="unit" class="add-prd-input" required>
+            <option value="" disabled selected>Select unit</option>
+            <option value="pcs">Pieces</option>
+            <option value="kg">Kilograms</option>
+            <option value="ltr">Litres</option>
+          </select>
+        </div>
 
-      <!-- Status -->
-      <div class="flex flex-col gap-1">
-        <label for="status" class="text-sm font-medium text-[#292524]"> Status </label>
-        <select
-          [(ngModel)]="status"
-          name="status"
-          class="p-2 border border-[#E7E5E4] rounded text-xs focus:outline-none text-[#292524]"
-        >
-          <option value="active">Active</option>
-          <option value="inactive">Inactive</option>
-        </select>
+        <!-- Status -->
+        <div class="flex flex-col gap-1">
+          <label for="status" class="text-sm font-medium text-[#292524]"> Status </label>
+          <select [(ngModel)]="status" name="status" class="add-prd-input">
+            <option value="active">Active</option>
+            <option value="inactive">Inactive</option>
+          </select>
+        </div>
       </div>
+      <!-- Unit -->
 
       <!-- Product Image -->
       <div class="flex flex-col gap-1">
@@ -86,7 +103,7 @@
           type="file"
           accept="image/*"
           (change)="onImageSelected($event)"
-          class="p-2 border border-[#E7E5E4] rounded text-xs focus:outline-none text-[#292524]"
+          class="add-prd-input"
         />
       </div>
 
