@@ -40,6 +40,11 @@ export class InventoryService {
 
   async createInventory(payload: InventoryPayload): Promise<string> {
     const ref = doc(this.firebase.firestore, 'inventory', payload.sku);
+    const snap = await getDoc(ref);
+
+    if (snap.exists()) {
+      throw new Error('Inventory already exists for this product');
+    }
 
     await setDoc(ref, {
       ...payload,

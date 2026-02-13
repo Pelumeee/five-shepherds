@@ -1,5 +1,5 @@
 import { Component, inject, signal } from '@angular/core';
-import { ActivatedRoute, RouterLink } from '@angular/router';
+import { ActivatedRoute, RouterLink, Router } from '@angular/router';
 import { TitleCasePipe } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 
@@ -15,6 +15,7 @@ import { InventoryPayload, InventoryService } from '../../../core/services/inven
 })
 export class New {
   private route = inject(ActivatedRoute);
+  private router = inject(Router);
   private productService = inject(ProductService);
   private inventoryService = inject(InventoryService);
   toast = inject(ToastService);
@@ -58,8 +59,17 @@ export class New {
       barCode: this.barCode,
       imageUrl: this.imageUrl(),
     };
-    const savedInventory = await this.inventoryService.createInventory(payLoad);
-    console.log(savedInventory);
+
+    try {
+      const savedInventory = await this.inventoryService.createInventory(payLoad);
+      this.toast.show('Inventory added successfully', 'success');
+      setTimeout(() => {
+        this.router.navigate(['/inventory']);
+      }, 500);
+    } catch (error) {
+      console.error(error);
+      this.toast.show('Failed to add inventory', 'error');
+    }
   }
 
   testObj = {
