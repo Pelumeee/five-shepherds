@@ -55,7 +55,6 @@ export class InventoryService {
     return ref.id;
   }
 
-  /* ================= GET ONE ================= */
   async getInventoryBySku(sku: string): Promise<InventoryPayload | null> {
     const ref = doc(this.firebase.firestore, 'inventory', sku);
     const snap = await getDoc(ref);
@@ -63,7 +62,6 @@ export class InventoryService {
     return snap.exists() ? (snap.data() as InventoryPayload) : null;
   }
 
-  /* ================= GET ALL ================= */
   async getAllInventory(): Promise<InventoryPayload[]> {
     const ref = collection(this.firebase.firestore, 'inventory');
     const snap = await getDocs(ref);
@@ -71,7 +69,6 @@ export class InventoryService {
     return snap.docs.map((doc) => doc.data() as InventoryPayload);
   }
 
-  /* ================= UPDATE ================= */
   async updateInventory(sku: string, updates: Partial<InventoryPayload>): Promise<void> {
     const ref = doc(this.firebase.firestore, 'inventory', sku);
 

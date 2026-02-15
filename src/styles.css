@@ -51,3 +51,12 @@ label:has(+ textarea:required)::after {
   height: 100vh;
   z-index: 20;
 }
+
+#inventory_stock_status.inStock {
+  background: #f0fdf4;
+  border-color: #b9f8cf;
+}
+
+#inventory_stock_status.inStock span {
+  color: #008236;
+}

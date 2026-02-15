@@ -1,11 +1,12 @@
-import { Component } from '@angular/core';
+import { NgClass } from '@angular/common';
+import { Component, signal } from '@angular/core';
 
 @Component({
   selector: 'app-inventory-card',
-  imports: [],
+  imports: [NgClass],
   templateUrl: './inventory-card.html',
-  styleUrl: './inventory-card.css',
 })
-export class InventoryCard {
 
+export class InventoryCard {
+  quantity = signal(6);
 }
