@@ -2,16 +2,17 @@ import { Component, inject, signal } from '@angular/core';
 import { RouterLink } from '@angular/router';
 import { InventoryCard } from '../components/inventory-card/inventory-card';
 import { InventoryPayload, InventoryService } from '../../../core/services/inventory';
+import { DetailsSkeletonLoader } from "./components/details-skeleton-loader/details-skeleton-loader";
 
 @Component({
   selector: 'app-details',
-  imports: [RouterLink, InventoryCard],
+  imports: [RouterLink, InventoryCard, DetailsSkeletonLoader],
   templateUrl: './details.html',
 })
 export class Details {
   private inventory = inject(InventoryService);
 
-  loading = signal(false);
+  isLoading = signal(false);
   totalInventory = signal<InventoryPayload[]>([]);
 
   constructor() {
@@ -19,7 +20,7 @@ export class Details {
   }
 
   private async loadInventory() {
-    this.loading.set(true);
+    this.isLoading.set(true);
 
     try {
       const data = await this.inventory.getAllInventory();
@@ -27,7 +28,7 @@ export class Details {
     } catch (error) {
       console.error(error);
     } finally {
-      this.loading.set(false);
+      this.isLoading.set(false);
     }
   }
 }
