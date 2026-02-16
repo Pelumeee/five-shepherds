@@ -22,6 +22,7 @@ import { Firebase } from '../../core/services/firebase';
 // }
 
 export interface InventoryPayload {
+  productName: string;
   sku: string;
   quantity: number;
   unit: 'pcs' | 'kg' | 'ltr';

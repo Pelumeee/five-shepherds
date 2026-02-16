@@ -50,7 +50,9 @@
 
         <div>
           <span class="text-sm font-light text-[#79716B]">Total asset value</span>
-          <h2 class="text-2xl font-semibold text-[#44403B] mt-2">₦3,500,000</h2>
+          <h2 class="text-2xl font-semibold text-[#44403B] mt-2">
+            {{ totalWorth() | currency: 'NGN' : 'symbol' : '1.0-0' }}
+          </h2>
         </div>
       </div>
       <div class="col-span-4 flex flex-col bg-white p-8 gap-4 rounded-xl">
@@ -163,8 +165,10 @@
           </div>
         </div>
       </div>
-      <div class="grid grid-cols-5 mt-10">
-        <app-inventory-card />
+      <div class="grid grid-cols-5 mt-10 gap-6">
+        @for (inventory of totalInventory(); track inventory.sku) {
+          <app-inventory-card [inventoryObject]="inventory" />
+        }
       </div>
     </div>
   </div>

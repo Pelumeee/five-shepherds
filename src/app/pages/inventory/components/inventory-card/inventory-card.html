@@ -1,33 +1,37 @@
 <div class="bg-white rounded-xl p-3">
-  <div class="w-full bg-[#EFEBE4] rounded-lg h-60"></div>
+  <div class="w-full bg-[#EFEBE4] rounded-lg h-60">
+    <img [src]="inventoryObject()!.imageUrl" alt="" class="w-full h-full object-contain" />
+  </div>
   <div class="mt-4">
     <div class="flex items-center justify-between gap-2">
-      <h2 class="text-[#57534D] text-sm font-medium">Iphone 15 promax</h2>
-      <span class="text-[#44403B] text-sm font-medium">₦1,200,000</span>
+      <h2 class="text-[#57534D] text-sm font-medium">{{ inventoryObject()!.productName }}</h2>
+      <span class="text-[#44403B] text-sm font-medium">{{
+        inventoryObject()!.costPrice | currency: 'NGN' : 'symbol' : '1.0-0'
+      }}</span>
     </div>
-    <span class="text-[#79716B] text-xs">IPH15PM-256</span>
+    <span class="text-[#79716B] text-xs">{{ inventoryObject()!.sku }}</span>
     <div class="flex items-center justify-between gap-3 mt-3">
       <div
         [ngClass]="{
-          'bg-[#F0FDF4] border-[#B9F8CF]': quantity() >= 5,
-          'bg-[#FFF7ED] border-[#FFD6A8]': quantity() <= 5 && quantity() > 0,
-          'bg-[#FEF3F2] border-[#FFC9C9]': quantity() < 1,
+          'bg-[#F0FDF4] border-[#B9F8CF]': stockStatus() === 'in',
+          'bg-[#FFF7ED] border-[#FFD6A8]': stockStatus() === 'low',
+          'bg-[#FEF3F2] border-[#FFC9C9]': stockStatus() === 'out',
         }"
         class="w-[70%] py-1.5 px-3 rounded-md border flex items-center justify-between"
       >
         <span
           [ngClass]="{
-            'text-[#008236]': quantity() >= 5,
-            'text-[#CA3500]': quantity() <= 5 && quantity() > 0,
-            'text-[#B42318]': quantity() < 1,
+            'text-[#008236]': stockStatus() === 'in',
+            'text-[#CA3500]': stockStatus() === 'low',
+            'text-[#B42318]': stockStatus() === 'out',
           }"
           class="text-sm font-medium"
-          >In stock</span
+          >{{ stockLabel() }}</span
         >
         <div
           class="flex items-center justify-center px-4 py-1 text-sm rounded-md border border-[#E7E5E4] bg-white"
         >
-          10
+          {{ quantity() }}
         </div>
       </div>
       <button
