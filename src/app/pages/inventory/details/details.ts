@@ -44,4 +44,29 @@ export class Details {
       return sum + quantity * price;
     }, 0);
   });
+
+  stockStats = computed(() => {
+    const inventory = this.totalInventory() ?? [];
+
+    let inStock = 0;
+    let lowStock = 0;
+    let outStock = 0;
+
+    inventory.forEach((item) => {
+      const qty = Number(item.quantity) || 0;
+
+      if (qty >= 5) inStock++;
+      else if (qty > 0) lowStock++;
+      else outStock++;
+    });
+
+    const total = inStock + lowStock + outStock;
+
+    return {
+      inStock,
+      lowStock,
+      outStock,
+      total,
+    };
+  });
 }

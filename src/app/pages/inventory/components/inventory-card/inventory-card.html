@@ -6,7 +6,7 @@
     <div class="flex items-center justify-between gap-2">
       <h2 class="text-[#57534D] text-sm font-medium">{{ inventoryObject()!.productName }}</h2>
       <span class="text-[#44403B] text-sm font-medium">{{
-        inventoryObject()!.costPrice | currency: 'NGN' : 'symbol' : '1.0-0'
+        inventoryObject()!.costPrice | currency: '₦' : 'symbol' : '1.0-0'
       }}</span>
     </div>
     <span class="text-[#79716B] text-xs">{{ inventoryObject()!.sku }}</span>

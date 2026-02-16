@@ -1,5 +1,13 @@
 import { Injectable, inject, signal } from '@angular/core';
-import { addDoc, getDoc, doc, serverTimestamp, setDoc } from 'firebase/firestore';
+import {
+  collection,
+  getDoc,
+  getDocs,
+  doc,
+  serverTimestamp,
+  setDoc,
+  Timestamp,
+} from 'firebase/firestore';
 
 import axios from 'axios';
 
@@ -15,6 +23,12 @@ export interface ProductPayload {
   status: 'active' | 'inactive';
   category: ProductCategory;
   brandName: string;
+}
+
+export interface Product extends ProductPayload {
+  imageUrl?: string;
+  createdAt: Timestamp;
+  updatedAt: Timestamp;
 }
 
 @Injectable({
@@ -51,6 +65,13 @@ export class ProductService {
     });
     this.newlyCreatedProductSku.set(productData.sku);
     return ref.id;
+  }
+
+  async getAllProduct(): Promise<Product[]> {
+    const ref = collection(this.firebase.firestore, 'products');
+    const snap = await getDocs(ref);
+
+    return snap.docs.map((doc) => doc.data() as Product);
   }
 
   async getProductBySku(sku: string): Promise<Product | null> {

@@ -1,0 +1,14 @@
+<div class="bg-white rounded-md p-2.5 flex gap-5">
+  <div class="h-24 w-24 shrink-0 border border-[#E7E5E4] rounded-md bg-[#EFEBE4]">
+    <img [src]="product()!.imageUrl" alt="" class="w-full h-full object-contain" />
+  </div>
+  <div class="">
+    <p class="text-[#44403B] font-medium">{{ product()!.name }}</p>
+    <span class="text-[#A6A09B] font-light leading-6 text-sm"
+      >{{ product()!.brandName | titlecase }} • {{ product()!.category | titlecase }}</span
+    >
+    <p class="text-[#79716B] text-xs">
+      {{ product()!.description }}
+    </p>
+  </div>
+</div>
