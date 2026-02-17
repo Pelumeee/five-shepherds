@@ -142,7 +142,11 @@
           </select>
           <div class="bg-white p-1 rounded-md flex items-center gap-1">
             <button
-              class="flex items-center gap-1 py-2 px-6 bg-[#ECE7DF] rounded-md focus:outline-none cursor-pointer"
+              (click)="view.set('grid')"
+              [class.bg-[#ECE7DF]]="view() === 'grid'"
+              class="flex items-center gap-1 py-2 px-6 rounded-md focus:outline-none cursor-pointer"
+              [class.text-[#A0610E]]="view() === 'grid'"
+              [class.text-[#57534D]]="view() !== 'grid'"
             >
               <svg
                 width="15"
@@ -153,13 +157,21 @@
               >
                 <path
                   d="M1.66667 6.66667C1.20833 6.66667 0.815972 6.50347 0.489583 6.17708C0.163194 5.85069 0 5.45833 0 5V1.66667C0 1.20833 0.163194 0.815972 0.489583 0.489583C0.815972 0.163194 1.20833 0 1.66667 0H5C5.45833 0 5.85069 0.163194 6.17708 0.489583C6.50347 0.815972 6.66667 1.20833 6.66667 1.66667V5C6.66667 5.45833 6.50347 5.85069 6.17708 6.17708C5.85069 6.50347 5.45833 6.66667 5 6.66667H1.66667ZM1.66667 15C1.20833 15 0.815972 14.8368 0.489583 14.5104C0.163194 14.184 0 13.7917 0 13.3333V10C0 9.54167 0.163194 9.14931 0.489583 8.82292C0.815972 8.49653 1.20833 8.33333 1.66667 8.33333H5C5.45833 8.33333 5.85069 8.49653 6.17708 8.82292C6.50347 9.14931 6.66667 9.54167 6.66667 10V13.3333C6.66667 13.7917 6.50347 14.184 6.17708 14.5104C5.85069 14.8368 5.45833 15 5 15H1.66667ZM10 6.66667C9.54167 6.66667 9.14931 6.50347 8.82292 6.17708C8.49653 5.85069 8.33333 5.45833 8.33333 5V1.66667C8.33333 1.20833 8.49653 0.815972 8.82292 0.489583C9.14931 0.163194 9.54167 0 10 0H13.3333C13.7917 0 14.184 0.163194 14.5104 0.489583C14.8368 0.815972 15 1.20833 15 1.66667V5C15 5.45833 14.8368 5.85069 14.5104 6.17708C14.184 6.50347 13.7917 6.66667 13.3333 6.66667H10ZM10 15C9.54167 15 9.14931 14.8368 8.82292 14.5104C8.49653 14.184 8.33333 13.7917 8.33333 13.3333V10C8.33333 9.54167 8.49653 9.14931 8.82292 8.82292C9.14931 8.49653 9.54167 8.33333 10 8.33333H13.3333C13.7917 8.33333 14.184 8.49653 14.5104 8.82292C14.8368 9.14931 15 9.54167 15 10V13.3333C15 13.7917 14.8368 14.184 14.5104 14.5104C14.184 14.8368 13.7917 15 13.3333 15H10ZM1.66667 5H5V1.66667H1.66667V5ZM10 5H13.3333V1.66667H10V5ZM10 13.3333H13.3333V10H10V13.3333ZM1.66667 13.3333H5V10H1.66667V13.3333Z"
-                  fill="#A0610E"
+                  fill="currentColor"
                 />
               </svg>
-              <span class="text-[#A0610E] font-medium text-sm">Grid</span>
+              <span
+                [class.text-[#A0610E]]="view() === 'grid'"
+                class="text-[#79716B] font-medium text-sm"
+                >Grid</span
+              >
             </button>
             <button
+              (click)="view.set('list')"
+              [class.bg-[#ECE7DF]]="view() === 'list'"
               class="flex items-center py-2 px-6 gap-1 rounded-md focus:outline-none cursor-pointer"
+              [class.text-[#A0610E]]="view() === 'list'"
+              [class.text-[#57534D]]="view() !== 'list'"
             >
               <svg
                 width="15"
@@ -170,44 +182,60 @@
               >
                 <path
                   d="M4.16667 1.66667C3.93056 1.66667 3.73264 1.58681 3.57292 1.42708C3.41319 1.26736 3.33333 1.06944 3.33333 0.833333C3.33333 0.597222 3.41319 0.399306 3.57292 0.239583C3.73264 0.0798611 3.93056 0 4.16667 0H14.1667C14.4028 0 14.6007 0.0798611 14.7604 0.239583C14.9201 0.399306 15 0.597222 15 0.833333C15 1.06944 14.9201 1.26736 14.7604 1.42708C14.6007 1.58681 14.4028 1.66667 14.1667 1.66667H4.16667ZM4.16667 5C3.93056 5 3.73264 4.92014 3.57292 4.76042C3.41319 4.60069 3.33333 4.40278 3.33333 4.16667C3.33333 3.93056 3.41319 3.73264 3.57292 3.57292C3.73264 3.41319 3.93056 3.33333 4.16667 3.33333H14.1667C14.4028 3.33333 14.6007 3.41319 14.7604 3.57292C14.9201 3.73264 15 3.93056 15 4.16667C15 4.40278 14.9201 4.60069 14.7604 4.76042C14.6007 4.92014 14.4028 5 14.1667 5H4.16667ZM4.16667 8.33333C3.93056 8.33333 3.73264 8.25347 3.57292 8.09375C3.41319 7.93403 3.33333 7.73611 3.33333 7.5C3.33333 7.26389 3.41319 7.06597 3.57292 6.90625C3.73264 6.74653 3.93056 6.66667 4.16667 6.66667H14.1667C14.4028 6.66667 14.6007 6.74653 14.7604 6.90625C14.9201 7.06597 15 7.26389 15 7.5C15 7.73611 14.9201 7.93403 14.7604 8.09375C14.6007 8.25347 14.4028 8.33333 14.1667 8.33333H4.16667ZM0.833333 1.66667C0.597222 1.66667 0.399306 1.58681 0.239583 1.42708C0.0798611 1.26736 0 1.06944 0 0.833333C0 0.597222 0.0798611 0.399306 0.239583 0.239583C0.399306 0.0798611 0.597222 0 0.833333 0C1.06944 0 1.26736 0.0798611 1.42708 0.239583C1.58681 0.399306 1.66667 0.597222 1.66667 0.833333C1.66667 1.06944 1.58681 1.26736 1.42708 1.42708C1.26736 1.58681 1.06944 1.66667 0.833333 1.66667ZM0.833333 5C0.597222 5 0.399306 4.92014 0.239583 4.76042C0.0798611 4.60069 0 4.40278 0 4.16667C0 3.93056 0.0798611 3.73264 0.239583 3.57292C0.399306 3.41319 0.597222 3.33333 0.833333 3.33333C1.06944 3.33333 1.26736 3.41319 1.42708 3.57292C1.58681 3.73264 1.66667 3.93056 1.66667 4.16667C1.66667 4.40278 1.58681 4.60069 1.42708 4.76042C1.26736 4.92014 1.06944 5 0.833333 5ZM0.833333 8.33333C0.597222 8.33333 0.399306 8.25347 0.239583 8.09375C0.0798611 7.93403 0 7.73611 0 7.5C0 7.26389 0.0798611 7.06597 0.239583 6.90625C0.399306 6.74653 0.597222 6.66667 0.833333 6.66667C1.06944 6.66667 1.26736 6.74653 1.42708 6.90625C1.58681 7.06597 1.66667 7.26389 1.66667 7.5C1.66667 7.73611 1.58681 7.93403 1.42708 8.09375C1.26736 8.25347 1.06944 8.33333 0.833333 8.33333Z"
-                  fill="#57534D"
+                  fill="currentColor"
                 />
               </svg>
 
-              <span class="text-[#79716B] font-medium text-sm">List</span>
+              <span
+                [class.text-[#A0610E]]="view() === 'list'"
+                class="text-[#79716B] font-medium text-sm"
+                >List</span
+              >
             </button>
           </div>
         </div>
       </div>
-      <div class="grid grid-cols-5 mt-10 gap-6">
-        @for (inventory of totalInventory(); track inventory.sku) {
-          <app-inventory-card [inventoryObject]="inventory" />
+
+      <div class="w-full my-10">
+        @if (view() === 'grid') {
+          <div class="grid grid-cols-5 mt-10 gap-6">
+            @for (inventory of paginatedInventory(); track inventory.sku) {
+              <app-inventory-card [inventoryObject]="inventory" />
+            }
+          </div>
+        } @else {
+          <div class="w-full mt-10">
+            <app-inventory-table [inventoryData]="paginatedInventory()" />
+          </div>
         }
       </div>
 
-      <div class="flex items-center gap-16 mt-10">
+      <!--  PAGINATION  -->
+      <div class="flex items-center gap-16">
         <div class="flex items-center gap-4">
           <h3 class="text-sm font-medium text-[#44403B]">
-            Results 1 - 5 of {{ totalInventory().length }}
+            Results 1 - {{ paginatedInventory().length }} of {{ totalInventory().length }}
           </h3>
           <select
-            name=""
-            id=""
+            (change)="changePageSize($event)"
             class="bg-white focus:outline-none text-sm text-[#9CA3AF] py-2 px-2"
           >
-            <option value="">10</option>
-            <option value="">15</option>
-            <option value="">20</option>
-            <option value="">All</option>
+            <option value="5">5</option>
+            <option value="10">10</option>
+            <option value="15">15</option>
+            <option value="20">20</option>
+            <option value="all">All</option>
           </select>
         </div>
         <div class="flex items-center gap-2">
           <button
-            class="bg-white focus:outline-none text-sm font-medium text-[#44403B] py-2 px-4 rounded-md cursor-pointer flex items-center gap2"
+            (click)="changePage(page() - 1)"
+            [disabled]="page() === 1"
+            class="disabled:opacity-50 disabled:cursor-not-allowed bg-white focus:outline-none py-2 px-4 rounded-md cursor-pointer flex items-center gap-2"
           >
             <svg
-              width="7"
-              height="12"
+              width="5"
+              height="10"
               viewBox="0 0 7 12"
               fill="none"
               xmlns="http://www.w3.org/2000/svg"
@@ -220,7 +248,47 @@
                 stroke-linejoin="round"
               />
             </svg>
-            Previous
+            <span class="text-sm font-medium text-[#44403B]">Previous</span>
+          </button>
+
+          <div class="flex items-center gap-2">
+            @for (p of visiblePages(); track p) {
+              @if (p === '...') {
+                <span class="py-2 px-3 text-sm text-[#9CA3AF]"> ... </span>
+              } @else {
+                <button
+                  (click)="changePage(p)"
+                  class="bg-white focus:outline-none py-2 px-4 rounded-md cursor-pointer text-sm font-medium"
+                  [class.bg-[#ECE7DF]]="page() === p"
+                  [class.text-[#A0610E]]="page() === p"
+                >
+                  {{ p }}
+                </button>
+              }
+            }
+          </div>
+          <button
+            (click)="changePage(page() + 1)"
+            [disabled]="page() === totalPages()"
+            class="disabled:opacity-50 disabled:cursor-not-allowed bg-white focus:outline-none py-2 px-4 rounded-md cursor-pointer flex items-center gap-2"
+          >
+            <span class="text-sm font-medium text-[#44403B]">Next</span>
+            <svg
+              class="rotate-180"
+              width="5"
+              height="10"
+              viewBox="0 0 7 12"
+              fill="none"
+              xmlns="http://www.w3.org/2000/svg"
+            >
+              <path
+                d="M6 11L1 6L6 1"
+                stroke="#44403B"
+                stroke-width="2"
+                stroke-linecap="round"
+                stroke-linejoin="round"
+              />
+            </svg>
           </button>
         </div>
       </div>

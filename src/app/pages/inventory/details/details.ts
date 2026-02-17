@@ -4,10 +4,11 @@ import { CurrencyPipe } from '@angular/common';
 import { InventoryCard } from '../components/inventory-card/inventory-card';
 import { InventoryPayload, InventoryService } from '../../../core/services/inventory';
 import { DetailsSkeletonLoader } from './components/details-skeleton-loader/details-skeleton-loader';
+import { InventoryTable } from "./components/inventory-table/inventory-table";
 
 @Component({
   selector: 'app-details',
-  imports: [RouterLink, InventoryCard, DetailsSkeletonLoader, CurrencyPipe],
+  imports: [RouterLink, InventoryCard, DetailsSkeletonLoader, CurrencyPipe, InventoryTable],
   templateUrl: './details.html',
 })
 export class Details {
@@ -15,6 +16,8 @@ export class Details {
 
   isLoading = signal(false);
   totalInventory = signal<InventoryPayload[]>([]);
+
+  view = signal<'list' | 'grid'>('grid');
 
   constructor() {
     this.loadInventory();
@@ -69,4 +72,65 @@ export class Details {
       total,
     };
   });
+
+  page = signal(1);
+  pageSize = signal(5);
+
+  totalPages = computed(() => Math.ceil(this.totalInventory().length / this.pageSize()));
+
+  paginatedInventory = computed(() => {
+    const start = (this.page() - 1) * this.pageSize();
+    const end = start + this.pageSize();
+
+    return this.totalInventory().slice(start, end);
+  });
+
+  visiblePages = computed(() => {
+    const total = this.totalPages();
+    const current = this.page();
+    const delta = 2;
+
+    const pages: (number | string)[] = [];
+
+    const rangeStart = Math.max(2, current - delta);
+    const rangeEnd = Math.min(total - 1, current + delta);
+
+    pages.push(1);
+
+    if (rangeStart > 2) {
+      pages.push('...');
+    }
+
+    for (let i = rangeStart; i <= rangeEnd; i++) {
+      pages.push(i);
+    }
+
+    if (rangeEnd < total - 1) {
+      pages.push('...');
+    }
+
+    if (total > 1) {
+      pages.push(total);
+    }
+
+    return pages;
+  });
+
+  changePageSize(event: Event) {
+    const value = (event.target as HTMLSelectElement).value;
+
+    if (value === 'all') {
+      this.pageSize.set(this.totalInventory().length);
+    } else {
+      this.pageSize.set(Number(value));
+    }
+
+    this.page.set(1);
+  };
+
+  changePage(p: number | string) {
+    if (typeof p !== 'number') return;
+    if (p < 1 || p > this.totalPages()) return;
+    this.page.set(p);
+  }
 }

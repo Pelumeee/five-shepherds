@@ -10,17 +10,6 @@ import {
 } from 'firebase/firestore';
 import { Firebase } from '../../core/services/firebase';
 
-// export interface Inventory {
-//   sku: string;
-//   quantity: number;
-//   sellingPrice: number;
-//   costPrice?: number;
-//   unit?: 'pcs' | 'kg' | 'ltr';
-//   minStock?: number;
-//   createdAt?: any;
-//   updatedAt?: any;
-// }
-
 export interface InventoryPayload {
   productName: string;
   sku: string;
@@ -31,6 +20,12 @@ export interface InventoryPayload {
   costPrice?: number;
   barCode?: string;
   imageUrl: string;
+  productCategory: string;
+}
+
+export interface InventoryObject extends InventoryPayload {
+  createdAt?: any;
+  updatedAt?: any;
 }
 
 @Injectable({

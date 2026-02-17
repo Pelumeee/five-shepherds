@@ -33,6 +33,7 @@ export class New {
   barCode = '';
   minStock = 1;
   productName = signal('');
+  productCategory = signal('');
 
   async ngOnInit() {
     const sku = this.route.snapshot.queryParamMap.get('sku');
@@ -44,6 +45,7 @@ export class New {
       this.unit.set(product!.unit);
       this.imageUrl.set(product!.imageUrl!);
       this.productName.set(product!.name);
+      this.productCategory.set(product!.category);
     }
   }
 
@@ -65,6 +67,7 @@ export class New {
       costPrice: this.costPrice,
       barCode: this.barCode,
       imageUrl: this.imageUrl(),
+      productCategory: this.productCategory(),
     };
 
     try {

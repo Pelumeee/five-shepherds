@@ -1,6 +1,6 @@
 import { Component, computed, input } from '@angular/core';
 import { NgClass, CurrencyPipe } from '@angular/common';
-import { InventoryPayload } from '../../../../core/services/inventory';
+import { InventoryObject } from '../../../../core/services/inventory';
 
 @Component({
   selector: 'app-inventory-card',
@@ -8,7 +8,7 @@ import { InventoryPayload } from '../../../../core/services/inventory';
   templateUrl: './inventory-card.html',
 })
 export class InventoryCard {
-  inventoryObject = input<InventoryPayload>();
+  inventoryObject = input<InventoryObject>();
 
   quantity = computed(() => this.inventoryObject()?.quantity ?? 0);
 
