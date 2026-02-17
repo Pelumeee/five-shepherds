@@ -1,9 +1,9 @@
-<div class="bg-white rounded-md p-2.5 flex gap-5">
-  <div class="h-24 w-24 shrink-0 border border-[#E7E5E4] rounded-md bg-[#EFEBE4]">
+<div (click)="addToInventory()" class="bg-white rounded-md p-2.5 flex gap-5 cursor-pointer hover:bg-[#F5F5F4] transition-colors duration-200">
+  <div class="h-20 w-20 shrink-0 rounded-md">
     <img [src]="product()!.imageUrl" alt="" class="w-full h-full object-contain" />
   </div>
   <div class="">
-    <p class="text-[#44403B] font-medium">{{ product()!.name }}</p>
+    <p class="text-[#44403B] font-medium text-sm">{{ product()!.name }}</p>
     <span class="text-[#A6A09B] font-light leading-6 text-sm"
       >{{ product()!.brandName | titlecase }} • {{ product()!.category | titlecase }}</span
     >

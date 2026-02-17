@@ -1,6 +1,7 @@
-import { Component, input } from '@angular/core';
-import { Product } from '../../../../../core/services/product';
+import { Component, input, inject } from '@angular/core';
+import { ProductData } from '../../../../../core/services/product';
 import { TitleCasePipe } from '@angular/common';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-product-card',
@@ -8,5 +9,15 @@ import { TitleCasePipe } from '@angular/common';
   templateUrl: './product-card.html',
 })
 export class ProductCard {
-  product = input<Product>();
+  router = inject(Router);
+
+  product = input<ProductData>();
+
+  addToInventory() {
+    this.router.navigate(['/inventory/new'], {
+      queryParams: {
+        sku: this.product()?.sku,
+      },
+    });
+  }
 }

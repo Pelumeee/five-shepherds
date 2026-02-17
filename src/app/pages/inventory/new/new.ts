@@ -7,10 +7,11 @@ import { Notification } from '../../settings-layout/preferences/components/notif
 import { ProductService } from '../../../core/services/product';
 import { ToastService } from '../../../core/services/toast';
 import { InventoryPayload, InventoryService } from '../../../core/services/inventory';
+import { Spinner } from "../../../shared/components/spinner/spinner";
 
 @Component({
   selector: 'app-new',
-  imports: [Notification, RouterLink, TitleCasePipe, FormsModule],
+  imports: [Notification, RouterLink, TitleCasePipe, FormsModule, Spinner],
   templateUrl: './new.html',
 })
 export class New {
@@ -21,6 +22,7 @@ export class New {
   toast = inject(ToastService);
 
   selectedProduct = signal<Product | null>(null);
+  issavingInventory = signal(false);
 
   sku = signal('');
   unit = signal<InventoryPayload['unit'] | null>(null);
@@ -51,6 +53,8 @@ export class New {
       return;
     }
 
+    this.issavingInventory.set(true);
+
     const payLoad: InventoryPayload = {
       productName: this.productName(),
       sku: this.sku(),
@@ -64,14 +68,15 @@ export class New {
     };
 
     try {
-      const savedInventory = await this.inventoryService.createInventory(payLoad);
+      await this.inventoryService.createInventory(payLoad);
       this.toast.show('Inventory added successfully', 'success');
       setTimeout(() => {
+        this.issavingInventory.set(false);
         this.router.navigate(['/inventory']);
       }, 500);
-    } catch (error) {
-      console.error(error);
-      this.toast.show('Failed to add inventory', 'error');
+    } catch (error: string | any) {
+      this.issavingInventory.set(false);
+      this.toast.show(error.message || error, 'error');
     }
   }
 

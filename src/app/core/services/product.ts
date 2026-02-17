@@ -25,7 +25,7 @@ export interface ProductPayload {
   brandName: string;
 }
 
-export interface Product extends ProductPayload {
+export interface ProductData extends ProductPayload {
   imageUrl?: string;
   createdAt: Timestamp;
   updatedAt: Timestamp;
@@ -67,17 +67,17 @@ export class ProductService {
     return ref.id;
   }
 
-  async getAllProduct(): Promise<Product[]> {
+  async getAllProduct(): Promise<ProductData[]> {
     const ref = collection(this.firebase.firestore, 'products');
     const snap = await getDocs(ref);
 
-    return snap.docs.map((doc) => doc.data() as Product);
+    return snap.docs.map((doc) => doc.data() as ProductData);
   }
 
-  async getProductBySku(sku: string): Promise<Product | null> {
+  async getProductBySku(sku: string): Promise<ProductData | null> {
     const ref = doc(this.firebase.firestore, 'products', sku);
     const snap = await getDoc(ref);
 
-    return snap.exists() ? (snap.data() as Product) : null;
+    return snap.exists() ? (snap.data() as ProductData) : null;
   }
 }

@@ -14,7 +14,7 @@
       <span class="text-[#57534D] font-light leading-6">Set your pricing and stock details</span>
     </div>
     <button
-    (click)="addProdInventory()"
+      (click)="addProdInventory()"
       class="bg-[#2793E9] text-white text-sm px-6 py-2.5 rounded flex items-center gap-2 hover:bg-[#1E73C5] transition-colors cursor-pointer"
     >
       <svg
@@ -197,3 +197,7 @@
     </div>
   </div>
 </div>
+
+@if (issavingInventory()) {
+  <app-spinner />
+}
