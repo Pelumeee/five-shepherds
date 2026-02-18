@@ -4,7 +4,6 @@ type ProductFlowStep = 'idle' | 'create' | 'confirmInventory' | 'done';
 @Injectable({
   providedIn: 'root',
 })
-
 export class ProductCreationFlowService {
   step = signal<ProductFlowStep>('idle');
 

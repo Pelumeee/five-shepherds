@@ -5,6 +5,7 @@
   >
   <div class="mt-10 grid md:grid-cols-4 gap-8">
     <app-cta-cards
+      (clicked)="redirectToCreateProduct()"
       title="Start selling faster"
       description="Pick a category and quickly add any product — it only takes a minute."
       btnText="Add Products"
@@ -36,3 +37,4 @@
     <div class="h-[30rem] bg-white col-span-2 rounded-lg"></div>
   </div>
 </div>
+

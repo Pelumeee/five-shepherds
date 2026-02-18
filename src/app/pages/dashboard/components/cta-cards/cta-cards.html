@@ -2,6 +2,7 @@
   <h2 class="text-[#FAFAF9] font-semibold leading-7">{{ title() }}</h2>
   <p class="text-[#F5F5F4] mt-2 text-sm">{{ description() }}</p>
   <button
+  (click)="handleClick()"
     class="mt-4 bg-white text-[#292524] rounded-3xl px-4 py-2 text-sm font-semibold cursor-pointer"
   >
     {{ btnText() }}

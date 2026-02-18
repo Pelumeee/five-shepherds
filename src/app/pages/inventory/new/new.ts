@@ -15,6 +15,7 @@ import { SkeletonLoader } from "./components/skeleton-loader/skeleton-loader";
   imports: [Notification, RouterLink, TitleCasePipe, FormsModule, Spinner, SkeletonLoader],
   templateUrl: './new.html',
 })
+
 export class New {
   private route = inject(ActivatedRoute);
   private router = inject(Router);
@@ -86,7 +87,7 @@ export class New {
     }
   }
 
-  async addProdInventory() {
+  async addInventory() {
     if (!this.sellingPrice || !this.quantity) {
       this.toast.show('Please fill required inputs', 'error');
       return;
