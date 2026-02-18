@@ -25,12 +25,13 @@ export const routes: Routes = [
           {
             path: 'new',
             loadComponent: () => import('./pages/inventory/new/new').then((m) => m.New),
+            data: { mode: 'new' },
           },
-          // {
-          //   path: ':id',
-          //   loadComponent: () =>
-          //     import('./pages/inventory/details/details').then((m) => m.InventoryDetails),
-          // },
+          {
+            path: 'edit',
+            loadComponent: () => import('./pages/inventory/new/new').then((m) => m.New),
+            data: { mode: 'edit' },
+          },
         ],
       },
       {

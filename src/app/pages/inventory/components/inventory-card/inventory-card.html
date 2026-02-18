@@ -6,7 +6,7 @@
     <div class="flex items-center justify-between gap-2">
       <h2 class="text-[#57534D] text-sm font-medium">{{ inventoryObject()!.productName }}</h2>
       <span class="text-[#44403B] text-sm font-medium">{{
-        inventoryObject()!.costPrice | currency: '₦' : 'symbol' : '1.0-0'
+        inventoryObject()!.sellingPrice | currency: '₦' : 'symbol' : '1.0-0'
       }}</span>
     </div>
     <span class="text-[#79716B] text-xs">{{ inventoryObject()!.sku }}</span>
@@ -15,6 +15,7 @@
         <app-stock-badge [quantity]="inventoryObject()!.quantity"></app-stock-badge>
       </div>
       <button
+        (click)="nagivateToEdit()"
         class="flex items-center justify-center py-4 px-4 rounded-md border border-[#E7E5E4] cursor-pointer"
       >
         <svg

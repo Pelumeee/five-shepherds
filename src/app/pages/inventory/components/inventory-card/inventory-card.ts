@@ -1,4 +1,6 @@
-import { Component, computed, input } from '@angular/core';
+import { Component, computed, input, inject } from '@angular/core';
+import { Router } from '@angular/router';
+
 import { CurrencyPipe } from '@angular/common';
 import { InventoryObject } from '../../../../core/services/inventory';
 import { StockBadge } from '../../details/components/stock-badge/stock-badge';
@@ -9,6 +11,7 @@ import { StockBadge } from '../../details/components/stock-badge/stock-badge';
   templateUrl: './inventory-card.html',
 })
 export class InventoryCard {
+  route = inject(Router);
   inventoryObject = input<InventoryObject>();
 
   quantity = computed(() => this.inventoryObject()?.quantity ?? 0);
@@ -28,4 +31,12 @@ export class InventoryCard {
     if (qty <= 5) return 'low';
     return 'in';
   });
+
+  nagivateToEdit() {
+    this.route.navigate(['/inventory/edit'], {
+      queryParams: {
+        sku: this.inventoryObject()?.sku,
+      },
+    });
+  }
 }

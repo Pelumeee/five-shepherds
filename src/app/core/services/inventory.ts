@@ -1,5 +1,6 @@
 import { Injectable, inject } from '@angular/core';
 import {
+  deleteDoc,
   doc,
   getDoc,
   getDocs,
@@ -31,6 +32,7 @@ export interface InventoryObject extends InventoryPayload {
 @Injectable({
   providedIn: 'root',
 })
+
 export class InventoryService {
   firebase = inject(Firebase);
 
@@ -72,5 +74,10 @@ export class InventoryService {
       ...updates,
       updatedAt: serverTimestamp(),
     });
+  }
+
+  async deleteInventory(sku: string): Promise<void> {
+    const ref = doc(this.firebase.firestore, 'inventory', sku);
+    await deleteDoc(ref);
   }
 }

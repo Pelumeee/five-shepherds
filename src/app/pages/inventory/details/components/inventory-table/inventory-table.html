@@ -51,7 +51,12 @@
           </td>
 
           <td class="px-6 py-2 text-right">
-            <button class="text-gray-500 hover:text-gray-700 cursor-pointer">•••</button>
+            <button
+              (click)="nagivateToEdit(item)"
+              class="text-gray-500 hover:text-gray-700 cursor-pointer"
+            >
+              •••
+            </button>
           </td>
         </tr>
       } @empty {

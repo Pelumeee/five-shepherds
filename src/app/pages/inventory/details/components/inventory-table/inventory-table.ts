@@ -1,4 +1,6 @@
-import { Component, input, computed } from '@angular/core';
+import { Component, input, computed, inject } from '@angular/core';
+import { Router } from '@angular/router';
+
 import { DecimalPipe, TitleCasePipe, DatePipe } from '@angular/common';
 import { InventoryObject } from '../../../../../core/services/inventory';
 import { StockBadge } from '../stock-badge/stock-badge';
@@ -9,6 +11,8 @@ import { StockBadge } from '../stock-badge/stock-badge';
   templateUrl: './inventory-table.html',
 })
 export class InventoryTable {
+  route = inject(Router);
+
   inventoryData = input<InventoryObject[]>();
 
   quantity = computed(() => this.inventoryData()?.[0]?.quantity ?? 0);
@@ -28,4 +32,12 @@ export class InventoryTable {
     if (qty <= 5) return 'low';
     return 'in';
   });
+
+  nagivateToEdit(item: InventoryObject) {
+    this.route.navigate(['/inventory/edit'], {
+      queryParams: {
+        sku: item.sku,
+      },
+    });
+  }
 }
