@@ -1,10 +1,11 @@
 import { Component, input, computed } from '@angular/core';
-import { DecimalPipe, TitleCasePipe, DatePipe, NgClass } from '@angular/common';
+import { DecimalPipe, TitleCasePipe, DatePipe } from '@angular/common';
 import { InventoryObject } from '../../../../../core/services/inventory';
+import { StockBadge } from '../stock-badge/stock-badge';
 
 @Component({
   selector: 'app-inventory-table',
-  imports: [TitleCasePipe, DecimalPipe, DatePipe, NgClass],
+  imports: [TitleCasePipe, DecimalPipe, DatePipe, StockBadge],
   templateUrl: './inventory-table.html',
 })
 export class InventoryTable {

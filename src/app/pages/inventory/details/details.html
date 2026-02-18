@@ -117,28 +117,20 @@
           </svg>
           <input
             type="text"
+            (input)="handleInventorySearch($event)"
             class="w-full bg-inherit focus:outline-none text-sm text-[#9CA3AF]"
             placeholder="Search by product name, SKU, or order ID..."
           />
         </div>
         <div class="flex items-center gap-5">
           <select
-            name=""
-            id=""
+            (change)="changeStockFilter($event)"
             class="bg-white focus:outline-none text-sm text-[#9CA3AF] py-2 px-5"
           >
-            <option value="">Date</option>
-          </select>
-          <select
-            name=""
-            id=""
-            class="bg-white focus:outline-none text-sm text-[#9CA3AF] py-2 px-5"
-          >
-            <option value="">Status</option>
-            <option value="">Pending</option>
-            <option value="">Accepted</option>
-            <option value="">Countered</option>
-            <option value="">Rejected</option>
+            <option value="all">All</option>
+            <option value="in">In stock</option>
+            <option value="low">Low stock</option>
+            <option value="out">Out of stock</option>
           </select>
           <div class="bg-white p-1 rounded-md flex items-center gap-1">
             <button
@@ -201,6 +193,18 @@
           <div class="grid grid-cols-5 mt-10 gap-6">
             @for (inventory of paginatedInventory(); track inventory.sku) {
               <app-inventory-card [inventoryObject]="inventory" />
+            } @empty {
+              <div class="col-span-5 flex flex-col items-center justify-center py-16 text-gray-400">
+                @if (isInventoryEmpty()) {
+                  <span class="text-sm font-medium text-gray-500"> No products yet </span>
+                  <span class="text-xs"> Start by adding your first inventory item </span>
+                }
+
+                @if (isFilteredEmpty()) {
+                  <span class="text-sm font-medium text-gray-500"> No results found </span>
+                  <span class="text-xs"> Try adjusting your search or filters </span>
+                }
+              </div>
             }
           </div>
         } @else {
@@ -214,7 +218,7 @@
       <div class="flex items-center gap-16">
         <div class="flex items-center gap-4">
           <h3 class="text-sm font-medium text-[#44403B]">
-            Results 1 - {{ paginatedInventory().length }} of {{ totalInventory().length }}
+            Results 1 - {{ paginatedInventory().length }} of {{ paginatedInventory().length }}
           </h3>
           <select
             (change)="changePageSize($event)"

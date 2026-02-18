@@ -12,12 +12,10 @@
       </tr>
     </thead>
 
-    <!-- Body -->
     <tbody class="divide-y divide-gray-200 bg-white">
       @for (item of inventoryData(); track item.sku) {
         <tr class="hover:bg-gray-50 transition">
-          <!-- Product -->
-          <td class="px-6 py-4 flex items-center gap-3">
+          <td class="px-6 py-2 flex items-center gap-3">
             <div class="w-10 h-10 rounded bg-gray-200">
               <img
                 [src]="item.imageUrl"
@@ -25,58 +23,44 @@
                 class="w-full h-full object-contain"
               />
             </div>
-            <span class="font-medium text-gray-800">
+            <span class="font-medium text-gray-800 text-xs">
               {{ item.productName }}
             </span>
           </td>
 
-          <!-- SKU -->
-          <td class="px-6 py-4 text-gray-500">
+          <td class="px-6 py-2 text-gray-500 text-xs">
             {{ item.sku }}
           </td>
 
-          <!-- Category -->
-          <td class="px-6 py-4 text-gray-500">
+          <td class="px-6 py-2 text-gray-500 text-xs">
             {{ item.productCategory | titlecase }}
           </td>
 
-          <!-- Price -->
-          <td class="px-6 py-4 font-medium text-gray-800">₦{{ item.sellingPrice | number }}</td>
+          <td class="px-6 py-2 font-medium text-gray-800 text-xs">
+            ₦{{ item.sellingPrice | number }}
+          </td>
 
-          <!-- Date -->
-          <td class="px-6 py-4 text-gray-500">
+          <td class="px-6 py-2 text-gray-500 text-xs">
             {{ item.createdAt?.toDate() | date: 'mediumDate' }}
           </td>
 
-          <td class="px-6 py-4">
-            <div
-              [ngClass]="{
-                'bg-[#F0FDF4] border-[#B9F8CF]': stockStatus() === 'in',
-                'bg-[#FFF7ED] border-[#FFD6A8]': stockStatus() === 'low',
-                'bg-[#FEF3F2] border-[#FFC9C9]': stockStatus() === 'out',
-              }"
-              class="w-[70%] py-1.5 px-3 rounded-md border flex items-center justify-between"
-            >
-              <span
-                [ngClass]="{
-                  'text-[#008236]': stockStatus() === 'in',
-                  'text-[#CA3500]': stockStatus() === 'low',
-                  'text-[#B42318]': stockStatus() === 'out',
-                }"
-                class="text-sm font-medium"
-                >{{ stockLabel() }}</span
-              >
-              <div
-                class="flex items-center justify-center px-4 py-1 text-sm rounded-md border border-[#E7E5E4] bg-white"
-              >
-                {{ quantity() }}
-              </div>
+          <td class="px-6 py-2">
+            <div class="w-[70%]">
+              <app-stock-badge [quantity]="item.quantity"></app-stock-badge>
             </div>
           </td>
 
-          <!-- Menu -->
-          <td class="px-6 py-4 text-right">
-            <button class="text-gray-500 hover:text-gray-700">•••</button>
+          <td class="px-6 py-2 text-right">
+            <button class="text-gray-500 hover:text-gray-700 cursor-pointer">•••</button>
+          </td>
+        </tr>
+      } @empty {
+        <tr>
+          <td colspan="7" class="px-6 py-10 text-center">
+            <div class="flex flex-col items-center justify-center gap-2 text-gray-400">
+              <span class="text-sm font-medium">No inventory found</span>
+              <span class="text-xs">Try adjusting your search or filters</span>
+            </div>
           </td>
         </tr>
       }

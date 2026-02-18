@@ -11,28 +11,8 @@
     </div>
     <span class="text-[#79716B] text-xs">{{ inventoryObject()!.sku }}</span>
     <div class="flex items-center justify-between gap-3 mt-3">
-      <div
-        [ngClass]="{
-          'bg-[#F0FDF4] border-[#B9F8CF]': stockStatus() === 'in',
-          'bg-[#FFF7ED] border-[#FFD6A8]': stockStatus() === 'low',
-          'bg-[#FEF3F2] border-[#FFC9C9]': stockStatus() === 'out',
-        }"
-        class="w-[70%] py-1.5 px-3 rounded-md border flex items-center justify-between"
-      >
-        <span
-          [ngClass]="{
-            'text-[#008236]': stockStatus() === 'in',
-            'text-[#CA3500]': stockStatus() === 'low',
-            'text-[#B42318]': stockStatus() === 'out',
-          }"
-          class="text-sm font-medium"
-          >{{ stockLabel() }}</span
-        >
-        <div
-          class="flex items-center justify-center px-4 py-1 text-sm rounded-md border border-[#E7E5E4] bg-white"
-        >
-          {{ quantity() }}
-        </div>
+      <div class="w-[70%]">
+        <app-stock-badge [quantity]="inventoryObject()!.quantity"></app-stock-badge>
       </div>
       <button
         class="flex items-center justify-center py-4 px-4 rounded-md border border-[#E7E5E4] cursor-pointer"

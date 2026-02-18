@@ -1,10 +1,11 @@
 import { Component, computed, input } from '@angular/core';
-import { NgClass, CurrencyPipe } from '@angular/common';
+import { CurrencyPipe } from '@angular/common';
 import { InventoryObject } from '../../../../core/services/inventory';
+import { StockBadge } from '../../details/components/stock-badge/stock-badge';
 
 @Component({
   selector: 'app-inventory-card',
-  imports: [NgClass, CurrencyPipe],
+  imports: [CurrencyPipe, StockBadge],
   templateUrl: './inventory-card.html',
 })
 export class InventoryCard {

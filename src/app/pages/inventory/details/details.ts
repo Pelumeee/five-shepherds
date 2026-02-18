@@ -4,7 +4,7 @@ import { CurrencyPipe } from '@angular/common';
 import { InventoryCard } from '../components/inventory-card/inventory-card';
 import { InventoryPayload, InventoryService } from '../../../core/services/inventory';
 import { DetailsSkeletonLoader } from './components/details-skeleton-loader/details-skeleton-loader';
-import { InventoryTable } from "./components/inventory-table/inventory-table";
+import { InventoryTable } from './components/inventory-table/inventory-table';
 
 @Component({
   selector: 'app-details',
@@ -73,16 +73,46 @@ export class Details {
     };
   });
 
+  isInventoryEmpty = computed(() => this.totalInventory().length === 0);
+
+  isFilteredEmpty = computed(
+    () => this.totalInventory().length > 0 && this.filteredInventory().length === 0,
+  );
+
+  searchTerm = signal('');
+  stockFilter = signal<'all' | 'in' | 'low' | 'out'>('all');
+
   page = signal(1);
   pageSize = signal(5);
 
-  totalPages = computed(() => Math.ceil(this.totalInventory().length / this.pageSize()));
+  totalPages = computed(() => Math.ceil(this.filteredInventory().length / this.pageSize()));
 
   paginatedInventory = computed(() => {
     const start = (this.page() - 1) * this.pageSize();
     const end = start + this.pageSize();
 
-    return this.totalInventory().slice(start, end);
+    return this.filteredInventory().slice(start, end);
+  });
+
+  filteredInventory = computed(() => {
+    const term = this.searchTerm().toLowerCase().trim();
+    const inventory = this.totalInventory();
+    const filter = this.stockFilter();
+
+    return inventory.filter((item) => {
+      const matchesSearch =
+        !term ||
+        item.productName?.toLowerCase().includes(term) ||
+        item.sku?.toLowerCase().includes(term);
+
+      let matchesStock = true;
+
+      if (filter === 'in') matchesStock = item.quantity > 5;
+      if (filter === 'low') matchesStock = item.quantity > 0 && item.quantity < 5;
+      if (filter === 'out') matchesStock = item.quantity === 0;
+
+      return matchesSearch && matchesStock;
+    });
   });
 
   visiblePages = computed(() => {
@@ -120,17 +150,31 @@ export class Details {
     const value = (event.target as HTMLSelectElement).value;
 
     if (value === 'all') {
-      this.pageSize.set(this.totalInventory().length);
+      this.pageSize.set(this.filteredInventory().length);
     } else {
       this.pageSize.set(Number(value));
     }
 
     this.page.set(1);
-  };
+  }
 
   changePage(p: number | string) {
     if (typeof p !== 'number') return;
     if (p < 1 || p > this.totalPages()) return;
     this.page.set(p);
+  }
+
+  handleInventorySearch(event: Event) {
+    const input = event.target as HTMLInputElement;
+    this.searchTerm.set(input.value);
+
+    this.page.set(1);
+  }
+
+  changeStockFilter(event: Event) {
+    const value = (event.target as HTMLSelectElement).value as 'all' | 'in' | 'low' | 'out';
+
+    this.stockFilter.set(value);
+    this.page.set(1);
   }
 }
