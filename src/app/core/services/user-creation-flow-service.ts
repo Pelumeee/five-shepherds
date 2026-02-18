@@ -1,21 +1,18 @@
 import { Injectable, signal } from '@angular/core';
 
-type ProductFlowStep = 'idle' | 'create' | 'confirmInventory' | 'done';
+type UserFlowStep = 'idle' | 'create' | 'done';
+
 @Injectable({
   providedIn: 'root',
 })
-export class ProductCreationFlowService {
-  step = signal<ProductFlowStep>('idle');
+export class UserCreationFlowService {
+  step = signal<UserFlowStep>('idle');
 
   startCreate() {
     this.step.set('create');
   }
 
-  productCreated() {
-    this.step.set('confirmInventory');
-  }
-
-  finish() {
+  userCreated() {
     this.step.set('done');
   }
 

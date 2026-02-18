@@ -4,6 +4,7 @@ import { CtaCards } from './components/cta-cards/cta-cards';
 import { SummaryCards } from './components/summary-cards/summary-cards';
 import { Session } from '../../core/services/session';
 import { ProductCreationFlowService } from '../../core/services/product-creation-flow-service';
+import { UserCreationFlowService } from '../../core/services/user-creation-flow-service';
 
 interface SummaryCard {
   name: string;
@@ -19,7 +20,8 @@ interface SummaryCard {
 export class Dashboard {
   session = inject(Session);
   router = inject(Router);
-  flow = inject(ProductCreationFlowService);
+  productflow = inject(ProductCreationFlowService);
+  userflow = inject(UserCreationFlowService);
 
   addNewProduct = signal(false);
 
@@ -35,7 +37,11 @@ export class Dashboard {
   ];
 
   redirectToCreateProduct() {
-    this.flow.startCreate();
+    this.productflow.startCreate();
     this.router.navigate(['/inventory/product']);
+  }
+  redirectToCreateUser() {
+    this.userflow.startCreate();
+    this.router.navigate(['/settings/team']);
   }
 }

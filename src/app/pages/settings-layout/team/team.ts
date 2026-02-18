@@ -3,6 +3,7 @@ import { TeamCard } from './components/team-card/team-card';
 import { AppUser } from '../../../shared/models/appUser';
 import { User } from '../../../core/services/user';
 import { NewUser } from './components/new-user/new-user';
+import { UserCreationFlowService } from '../../../core/services/user-creation-flow-service';
 
 @Component({
   selector: 'app-team',
@@ -10,11 +11,11 @@ import { NewUser } from './components/new-user/new-user';
   templateUrl: './team.html',
 })
 export class Team implements OnInit {
+  flow = inject(UserCreationFlowService);
   user = inject(User);
   users = signal<AppUser[]>([]);
   loading = signal(true);
 
-  showAddMemberForm = signal(false);
 
   async ngOnInit() {
     this.users.set(await this.user.getAllUsers());
@@ -22,11 +23,11 @@ export class Team implements OnInit {
     this.loading.set(false);
   }
 
-  showAddMemberFromBtn() {
-    this.showAddMemberForm.set(true);
+  showAddMemberForm() {
+    this.flow.startCreate();
   }
 
   closeDialog() {
-    this.showAddMemberForm.set(false);
+    this.flow.reset();
   }
 }
