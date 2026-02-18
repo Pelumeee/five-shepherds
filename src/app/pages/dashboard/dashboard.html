@@ -21,7 +21,7 @@
   </div>
 
   <div class="mt-10 grid md:grid-cols-4 gap-8">
-    @for (item of summaryItems; track item.name) {
+    @for (item of summaryItems(); track item.name) {
       <app-summary-cards
         name="{{ item.name }}"
         text="{{ item.text }}"
