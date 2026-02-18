@@ -8,10 +8,11 @@ import { ProductService } from '../../../core/services/product';
 import { ToastService } from '../../../core/services/toast';
 import { InventoryPayload, InventoryService } from '../../../core/services/inventory';
 import { Spinner } from '../../../shared/components/spinner/spinner';
+import { SkeletonLoader } from "./components/skeleton-loader/skeleton-loader";
 
 @Component({
   selector: 'app-new',
-  imports: [Notification, RouterLink, TitleCasePipe, FormsModule, Spinner],
+  imports: [Notification, RouterLink, TitleCasePipe, FormsModule, Spinner, SkeletonLoader],
   templateUrl: './new.html',
 })
 export class New {
@@ -25,6 +26,7 @@ export class New {
   issavingInventory = signal(false);
   isDeletingInventory = signal(false);
   isEditMode = signal(false);
+  isLoading = signal(true);
 
   sku = signal('');
   unit = signal<InventoryPayload['unit'] | null>(null);
@@ -38,37 +40,49 @@ export class New {
   productCategory = signal('');
 
   async ngOnInit() {
-    const sku = this.route.snapshot.queryParamMap.get('sku');
-    const mode = this.route.snapshot.data['mode'];
+    this.isLoading.set(true);
 
-    if (sku) {
-      this.isEditMode.set(false);
-      const product = await this.productService.getProductBySku(sku);
-      this.selectedProduct.set(product);
+    try {
+      const sku = this.route.snapshot.queryParamMap.get('sku');
+      const mode = this.route.snapshot.data['mode'];
 
-      if (mode === 'new') {
-        this.sku.set(product!.sku);
-        this.unit.set(product!.unit);
-        this.imageUrl.set(product!.imageUrl!);
-        this.productName.set(product!.name);
-        this.productCategory.set(product!.category);
+      if (sku) {
+        this.isEditMode.set(false);
+        const product = await this.productService.getProductBySku(sku);
+        this.selectedProduct.set(product);
+
+        if (mode === 'new') {
+          this.sku.set(product!.sku);
+          this.unit.set(product!.unit);
+          this.imageUrl.set(product!.imageUrl!);
+          this.productName.set(product!.name);
+          this.productCategory.set(product!.category);
+        }
       }
-    }
-    if (sku && mode === 'edit') {
-      const inventory = await this.inventoryService.getInventoryBySku(sku);
-      if (!inventory) {
-        this.toast.show('There was an error retrieving inventory details', 'error');
-        this.router.navigate(['/inventory']);
-        return;
+
+      if (sku && mode === 'edit') {
+        const inventory = await this.inventoryService.getInventoryBySku(sku);
+
+        if (!inventory) {
+          this.toast.show('There was an error retrieving inventory details', 'error');
+          this.router.navigate(['/inventory']);
+          return;
+        }
+
+        this.isEditMode.set(true);
+        this.sku.set(inventory.sku);
+        this.unit.set(inventory.unit);
+        this.quantity = inventory.quantity;
+        this.sellingPrice = inventory.sellingPrice;
+        this.costPrice = inventory.costPrice || 0;
+        this.barCode = inventory.barCode || '';
+        this.minStock = inventory.minStock || 1;
       }
-      this.isEditMode.set(true);
-      this.sku.set(inventory.sku);
-      this.unit.set(inventory.unit);
-      this.quantity = inventory.quantity;
-      this.sellingPrice = inventory.sellingPrice;
-      this.costPrice = inventory.costPrice || 0;
-      this.barCode = inventory.barCode || '';
-      this.minStock = inventory.minStock || 1;
+    } catch (error) {
+      console.error(error);
+      this.toast.show('Something went wrong while loading product', 'error');
+    } finally {
+      this.isLoading.set(false);
     }
   }
 

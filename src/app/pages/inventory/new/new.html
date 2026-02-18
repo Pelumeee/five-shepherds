@@ -1,213 +1,223 @@
-<div>
-  <a routerLink="../" class="flex items-center gap-2">
-    <svg width="13" height="10" viewBox="0 0 13 10" fill="none" xmlns="http://www.w3.org/2000/svg">
-      <path
-        d="M2.875 5.46917L5.25 7.84417C5.41667 8.01083 5.49653 8.20528 5.48958 8.4275C5.48264 8.64972 5.40278 8.84417 5.25 9.01083C5.08333 9.1775 4.88542 9.26431 4.65625 9.27125C4.42708 9.27819 4.22917 9.19833 4.0625 9.03167L0.25 5.21917C0.0833333 5.0525 0 4.85806 0 4.63583C0 4.41361 0.0833333 4.21917 0.25 4.0525L4.0625 0.24C4.22917 0.0733333 4.42708 -0.00652778 4.65625 0.000416667C4.88542 0.00736111 5.08333 0.0941667 5.25 0.260833C5.40278 0.4275 5.48264 0.621944 5.48958 0.844167C5.49653 1.06639 5.41667 1.26083 5.25 1.4275L2.875 3.8025H12.1667C12.4028 3.8025 12.6007 3.88236 12.7604 4.04208C12.9201 4.20181 13 4.39972 13 4.63583C13 4.87194 12.9201 5.06986 12.7604 5.22958C12.6007 5.38931 12.4028 5.46917 12.1667 5.46917H2.875Z"
-        fill="#57534D"
-      />
-    </svg>
-    <span class="text-sm font-medium text-[#3F3F46]">Back to Inventory</span>
-  </a>
-  <div class="my-10 flex items-center justify-between py-4 border-b border-[#E7E5E4]">
-    <div>
-      <h1 class="text-[#292524] font-medium text-lg">Configure product</h1>
-      <span class="text-[#57534D] font-light leading-6">Set your pricing and stock details</span>
-    </div>
-    <div class="flex items-center gap-4">
-      @if (isEditMode()) {
-        <button
-          (click)="deleteInventory(selectedProduct()!.sku)"
-          class="bg-red-500 text-white text-sm px-6 py-2.5 rounded flex items-center gap-2 hover:bg-red-500/50 transition-colors cursor-pointer"
-        >
-          Delete
-        </button>
-      }
-      <button
-        (click)="isEditMode() ? updateInventory() : addProdInventory()"
-        class="bg-[#2793E9] text-white text-sm px-6 py-2.5 rounded flex items-center gap-2 hover:bg-[#1E73C5] transition-colors cursor-pointer"
+@if (isLoading()) {
+  <app-skeleton-loader />
+} @else {
+  <div>
+    <a routerLink="../" class="flex items-center gap-2">
+      <svg
+        width="13"
+        height="10"
+        viewBox="0 0 13 10"
+        fill="none"
+        xmlns="http://www.w3.org/2000/svg"
       >
-        <svg
-          width="20"
-          height="20"
-          viewBox="0 0 20 20"
-          fill="none"
-          xmlns="http://www.w3.org/2000/svg"
-        >
-          <path
-            d="M15 10.625H5C4.65833 10.625 4.375 10.3417 4.375 10C4.375 9.65833 4.65833 9.375 5 9.375H15C15.3417 9.375 15.625 9.65833 15.625 10C15.625 10.3417 15.3417 10.625 15 10.625Z"
-            fill="white"
-          />
-          <path
-            d="M10 15.625C9.65833 15.625 9.375 15.3417 9.375 15V5C9.375 4.65833 9.65833 4.375 10 4.375C10.3417 4.375 10.625 4.65833 10.625 5V15C10.625 15.3417 10.3417 15.625 10 15.625Z"
-            fill="white"
-          />
-        </svg>
-        {{ isEditMode() ? 'Update inventory' : 'Add to inventory' }}
-      </button>
-    </div>
-  </div>
-  <div class="bg-[#DBEAFE] p-4 rounded-md">
-    <div class="bg-white rounded-md p-2.5 flex gap-5">
-      <div class="h-24 w-24 shrink-0 border border-[#E7E5E4] rounded-md bg-[#EFEBE4]">
-        <img [src]="selectedProduct()!.imageUrl" alt="" class="w-full h-full object-contain" />
-      </div>
-      <div class="">
-        <p class="text-[#44403B] font-medium">{{ selectedProduct()!.name }}</p>
-        <span class="text-[#A6A09B] font-light leading-6 text-sm"
-          >{{ selectedProduct()!.brandName | titlecase }} • {{
-            selectedProduct()!.category | titlecase
-          }}</span
-        >
-        <p class="text-[#79716B] text-xs">
-          {{ selectedProduct()!.description }}
-        </p>
-      </div>
-    </div>
-  </div>
-  <div class="grid grid-cols-3 items-start gap-10 my-10">
-    <div class="col-span-2 flex flex-col gap-10">
-      <div class="p-4 rounded-md bg-white">
-        <h3 class="text-[#44403B] font-medium mb-5">Pricing</h3>
-        <div class="grid grid-cols-2 gap-6 mb-3">
-          <div class="flex flex-col gap-1">
-            <label for="" class="text-sm font-medium text-[#44403B]">Selling price</label>
-            <input
-              [(ngModel)]="sellingPrice"
-              type="number"
-              required
-              class="p-2 border border-[#E7E5E4] rounded text-xs focus:outline-none text-[#A6A09B]"
-              placeholder="0.00"
-            />
-          </div>
-          <div class="flex flex-col gap-1">
-            <label for="" class="text-sm font-medium text-[#44403B]">Cost price (optional)</label>
-            <input
-              [(ngModel)]="costPrice"
-              type="number"
-              class="p-2 border border-[#E7E5E4] rounded text-xs focus:outline-none text-[#A6A09B]"
-              placeholder="0.00"
-            />
-          </div>
-        </div>
-        <span class="inline-block bg-[#DBEAFE] text-sm text-[#1447E6] px-3 py-2 rounded-2xl"
-          >Suggested price: ₦950,000</span
-        >
-      </div>
-      <div class="p-4 rounded-md bg-white">
-        <h3 class="text-[#44403B] font-medium mb-5">Stock</h3>
-        <div class="flex flex-col gap-1">
-          <label for="" class="text-sm font-medium text-[#44403B]">Initial quantity</label>
-          <input
-            [(ngModel)]="quantity"
-            required
-            type="number"
-            class="p-2 border border-[#E7E5E4] rounded text-xs focus:outline-none text-[#A6A09B]"
-            placeholder="0"
-          />
-        </div>
-      </div>
-      <div class="p-4 rounded-md bg-white">
-        <h3 class="text-[#44403B] font-medium mb-5">Product details</h3>
-        <div class="flex flex-col gap-1 mb-6">
-          <label for="" class="text-sm font-medium text-[#44403B]">SKU</label>
-          <input
-            [(ngModel)]="sku"
-            required
-            type="text"
-            class="p-2 border border-[#E7E5E4] rounded text-xs focus:outline-none text-[#A6A09B]"
-            placeholder="SAM-128-FG"
-            readonly
-          />
-        </div>
-        <div class="flex flex-col gap-1 mb-8">
-          <label for="" class="text-sm font-medium text-[#44403B]">Barcode (optional)</label>
-          <input
-            [(ngModel)]="barCode"
-            type="text"
-            class="p-2 border border-[#E7E5E4] rounded text-xs focus:outline-none text-[#A6A09B]"
-            placeholder="Enter barcode"
-          />
-        </div>
-        <div class="border-t border-[#F5F5F4] pt-4">
-          <h3 class="text-[#44403B] font-medium mb-5">Specifications</h3>
-          <div class="flex items-center justify-between py-4 border-b border-[#F5F5F4]">
-            <p class="text-sm text-[#79716B]">Storage:</p>
-            <p class="text-[#44403B] font-medium text-sm">512GB</p>
-          </div>
-          <div class="flex items-center justify-between py-4 border-b border-[#F5F5F4]">
-            <p class="text-sm text-[#79716B]">Color:</p>
-            <p class="text-[#44403B] font-medium text-sm">Natural Titanium</p>
-          </div>
-          <div class="flex items-center justify-between py-4 border-b border-[#F5F5F4]">
-            <p class="text-sm text-[#79716B]">Screen size:</p>
-            <p class="text-[#44403B] font-medium text-sm">6.8"</p>
-          </div>
-          <div class="flex items-center justify-between py-4 border-b border-[#F5F5F4]">
-            <p class="text-sm text-[#79716B]">Camera:</p>
-            <p class="text-[#44403B] font-medium text-sm">
-              200MP Main + 50MP Telephoto + 12MP Ultra Wide
-            </p>
-          </div>
-          <div class="flex items-center justify-between py-4">
-            <p class="text-sm text-[#79716B]">Processor:</p>
-            <p class="text-[#44403B] font-medium text-sm">Snapdragon 8 Gen 3</p>
-          </div>
-        </div>
-      </div>
-    </div>
-    <div class="p-4 rounded-md bg-white">
-      <h3 class="text-[#44403B] font-medium mb-6">Product images</h3>
-      <div class="p-3 bg-[#FAFAF9] border border-[#E7E5E4] rounded-xl mb-6">
-        <app-notification [notisObj]="testObj"></app-notification>
-      </div>
-      <div class="mb-6">
-        <h3 class="text-[#44403B] font-medium mb-6 text-sm">Catalog images</h3>
-        <div class="grid grid-cols-2 gap-4">
-          <div class="relative h-52 bg-[#EFEBE4] rounded-lg">
-            <img
-              [src]="selectedProduct()!.imageUrl"
-              [alt]="selectedProduct()!.name"
-              class="h-full w-full object-contain"
-            />
-            <span
-              class="absolute bottom-2 left-2 bg-[#2B7FFF] px-4 py-1 text-sm rounded-2xl text-white"
-              >Main</span
-            >
-          </div>
-          <div class="relative h-52 rounded-lg border border-[#E2E8F0]"></div>
-        </div>
-      </div>
+        <path
+          d="M2.875 5.46917L5.25 7.84417C5.41667 8.01083 5.49653 8.20528 5.48958 8.4275C5.48264 8.64972 5.40278 8.84417 5.25 9.01083C5.08333 9.1775 4.88542 9.26431 4.65625 9.27125C4.42708 9.27819 4.22917 9.19833 4.0625 9.03167L0.25 5.21917C0.0833333 5.0525 0 4.85806 0 4.63583C0 4.41361 0.0833333 4.21917 0.25 4.0525L4.0625 0.24C4.22917 0.0733333 4.42708 -0.00652778 4.65625 0.000416667C4.88542 0.00736111 5.08333 0.0941667 5.25 0.260833C5.40278 0.4275 5.48264 0.621944 5.48958 0.844167C5.49653 1.06639 5.41667 1.26083 5.25 1.4275L2.875 3.8025H12.1667C12.4028 3.8025 12.6007 3.88236 12.7604 4.04208C12.9201 4.20181 13 4.39972 13 4.63583C13 4.87194 12.9201 5.06986 12.7604 5.22958C12.6007 5.38931 12.4028 5.46917 12.1667 5.46917H2.875Z"
+          fill="#57534D"
+        />
+      </svg>
+      <span class="text-sm font-medium text-[#3F3F46]">Back to Inventory</span>
+    </a>
+    <div class="my-10 flex items-center justify-between py-4 border-b border-[#E7E5E4]">
       <div>
-        <h3 class="text-[#44403B] font-medium mb-6 text-sm">Additional images</h3>
-        <div
-          class="p-5 bg-[#FAFAF9] border border-dashed border-[#D6D3D1] flex flex-col items-center justify-center gap-3 mb-3"
+        <h1 class="text-[#292524] font-medium text-lg">Configure product</h1>
+        <span class="text-[#57534D] font-light leading-6">Set your pricing and stock details</span>
+      </div>
+      <div class="flex items-center gap-4">
+        @if (isEditMode()) {
+          <button
+            (click)="deleteInventory(selectedProduct()!.sku)"
+            class="bg-red-500 text-white text-sm px-6 py-2.5 rounded flex items-center gap-2 hover:bg-red-500/50 transition-colors cursor-pointer"
+          >
+            Delete
+          </button>
+        }
+        <button
+          (click)="isEditMode() ? updateInventory() : addProdInventory()"
+          class="bg-[#2793E9] text-white text-sm px-6 py-2.5 rounded flex items-center gap-2 hover:bg-[#1E73C5] transition-colors cursor-pointer"
         >
-          <img src="imageIcon.png" alt="upload image icon" class="w-6.75 h-6.75" />
-
-          <label for="fileUpload" class="text-sm text-[#78716C]">
-            <span class="text-[#A0610E] font-medium cursor-pointer hover:underline">
-              Click to upload
-            </span>
-            or drag and drop it here
-          </label>
-          <p class="text-xs text-[#A8A29E]">PNG, JPG or GIF (max. 10MB)</p>
-          <input
-            type="file"
-            accept="image/png,image/jpeg,image/gif"
-            class="hidden"
-            name="fileUpload"
-            id="fileUpload"
-          />
+          <svg
+            width="20"
+            height="20"
+            viewBox="0 0 20 20"
+            fill="none"
+            xmlns="http://www.w3.org/2000/svg"
+          >
+            <path
+              d="M15 10.625H5C4.65833 10.625 4.375 10.3417 4.375 10C4.375 9.65833 4.65833 9.375 5 9.375H15C15.3417 9.375 15.625 9.65833 15.625 10C15.625 10.3417 15.3417 10.625 15 10.625Z"
+              fill="white"
+            />
+            <path
+              d="M10 15.625C9.65833 15.625 9.375 15.3417 9.375 15V5C9.375 4.65833 9.65833 4.375 10 4.375C10.3417 4.375 10.625 4.65833 10.625 5V15C10.625 15.3417 10.3417 15.625 10 15.625Z"
+              fill="white"
+            />
+          </svg>
+          {{ isEditMode() ? 'Update inventory' : 'Add to inventory' }}
+        </button>
+      </div>
+    </div>
+    <div class="bg-[#DBEAFE] p-4 rounded-md">
+      <div class="bg-white rounded-md p-2.5 flex gap-5">
+        <div class="h-24 w-24 shrink-0 border border-[#E7E5E4] rounded-md bg-[#EFEBE4]">
+          <img [src]="selectedProduct()!.imageUrl" alt="" class="w-full h-full object-contain" />
         </div>
-        <p class="text-sm text-[#79716B]">
-          Catalog images will be used as primary photos. You can add your own photos as additional
-          images.
-        </p>
+        <div class="">
+          <p class="text-[#44403B] font-medium">{{ selectedProduct()!.name }}</p>
+          <span class="text-[#A6A09B] font-light leading-6 text-sm"
+            >{{ selectedProduct()!.brandName | titlecase }} • {{
+              selectedProduct()!.category | titlecase
+            }}</span
+          >
+          <p class="text-[#79716B] text-xs">
+            {{ selectedProduct()!.description }}
+          </p>
+        </div>
+      </div>
+    </div>
+    <div class="grid grid-cols-3 items-start gap-10 my-10">
+      <div class="col-span-2 flex flex-col gap-10">
+        <div class="p-4 rounded-md bg-white">
+          <h3 class="text-[#44403B] font-medium mb-5">Pricing</h3>
+          <div class="grid grid-cols-2 gap-6 mb-3">
+            <div class="flex flex-col gap-1">
+              <label for="" class="text-sm font-medium text-[#44403B]">Selling price</label>
+              <input
+                [(ngModel)]="sellingPrice"
+                type="number"
+                required
+                class="p-2 border border-[#E7E5E4] rounded text-xs focus:outline-none text-[#A6A09B]"
+                placeholder="0.00"
+              />
+            </div>
+            <div class="flex flex-col gap-1">
+              <label for="" class="text-sm font-medium text-[#44403B]">Cost price (optional)</label>
+              <input
+                [(ngModel)]="costPrice"
+                type="number"
+                class="p-2 border border-[#E7E5E4] rounded text-xs focus:outline-none text-[#A6A09B]"
+                placeholder="0.00"
+              />
+            </div>
+          </div>
+          <span class="inline-block bg-[#DBEAFE] text-sm text-[#1447E6] px-3 py-2 rounded-2xl"
+            >Suggested price: ₦950,000</span
+          >
+        </div>
+        <div class="p-4 rounded-md bg-white">
+          <h3 class="text-[#44403B] font-medium mb-5">Stock</h3>
+          <div class="flex flex-col gap-1">
+            <label for="" class="text-sm font-medium text-[#44403B]">Initial quantity</label>
+            <input
+              [(ngModel)]="quantity"
+              required
+              type="number"
+              class="p-2 border border-[#E7E5E4] rounded text-xs focus:outline-none text-[#A6A09B]"
+              placeholder="0"
+            />
+          </div>
+        </div>
+        <div class="p-4 rounded-md bg-white">
+          <h3 class="text-[#44403B] font-medium mb-5">Product details</h3>
+          <div class="flex flex-col gap-1 mb-6">
+            <label for="" class="text-sm font-medium text-[#44403B]">SKU</label>
+            <input
+              [(ngModel)]="sku"
+              required
+              type="text"
+              class="p-2 border border-[#E7E5E4] rounded text-xs focus:outline-none text-[#A6A09B]"
+              placeholder="SAM-128-FG"
+              readonly
+            />
+          </div>
+          <div class="flex flex-col gap-1 mb-8">
+            <label for="" class="text-sm font-medium text-[#44403B]">Barcode (optional)</label>
+            <input
+              [(ngModel)]="barCode"
+              type="text"
+              class="p-2 border border-[#E7E5E4] rounded text-xs focus:outline-none text-[#A6A09B]"
+              placeholder="Enter barcode"
+            />
+          </div>
+          <div class="border-t border-[#F5F5F4] pt-4">
+            <h3 class="text-[#44403B] font-medium mb-5">Specifications</h3>
+            <div class="flex items-center justify-between py-4 border-b border-[#F5F5F4]">
+              <p class="text-sm text-[#79716B]">Storage:</p>
+              <p class="text-[#44403B] font-medium text-sm">512GB</p>
+            </div>
+            <div class="flex items-center justify-between py-4 border-b border-[#F5F5F4]">
+              <p class="text-sm text-[#79716B]">Color:</p>
+              <p class="text-[#44403B] font-medium text-sm">Natural Titanium</p>
+            </div>
+            <div class="flex items-center justify-between py-4 border-b border-[#F5F5F4]">
+              <p class="text-sm text-[#79716B]">Screen size:</p>
+              <p class="text-[#44403B] font-medium text-sm">6.8"</p>
+            </div>
+            <div class="flex items-center justify-between py-4 border-b border-[#F5F5F4]">
+              <p class="text-sm text-[#79716B]">Camera:</p>
+              <p class="text-[#44403B] font-medium text-sm">
+                200MP Main + 50MP Telephoto + 12MP Ultra Wide
+              </p>
+            </div>
+            <div class="flex items-center justify-between py-4">
+              <p class="text-sm text-[#79716B]">Processor:</p>
+              <p class="text-[#44403B] font-medium text-sm">Snapdragon 8 Gen 3</p>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="p-4 rounded-md bg-white">
+        <h3 class="text-[#44403B] font-medium mb-6">Product images</h3>
+        <div class="p-3 bg-[#FAFAF9] border border-[#E7E5E4] rounded-xl mb-6">
+          <app-notification [notisObj]="testObj"></app-notification>
+        </div>
+        <div class="mb-6">
+          <h3 class="text-[#44403B] font-medium mb-6 text-sm">Catalog images</h3>
+          <div class="grid grid-cols-2 gap-4">
+            <div class="relative h-52 bg-[#EFEBE4] rounded-lg">
+              <img
+                [src]="selectedProduct()!.imageUrl"
+                [alt]="selectedProduct()!.name"
+                class="h-full w-full object-contain"
+              />
+              <span
+                class="absolute bottom-2 left-2 bg-[#2B7FFF] px-4 py-1 text-sm rounded-2xl text-white"
+                >Main</span
+              >
+            </div>
+            <div class="relative h-52 rounded-lg border border-[#E2E8F0]"></div>
+          </div>
+        </div>
+        <div>
+          <h3 class="text-[#44403B] font-medium mb-6 text-sm">Additional images</h3>
+          <div
+            class="p-5 bg-[#FAFAF9] border border-dashed border-[#D6D3D1] flex flex-col items-center justify-center gap-3 mb-3"
+          >
+            <img src="imageIcon.png" alt="upload image icon" class="w-6.75 h-6.75" />
+
+            <label for="fileUpload" class="text-sm text-[#78716C]">
+              <span class="text-[#A0610E] font-medium cursor-pointer hover:underline">
+                Click to upload
+              </span>
+              or drag and drop it here
+            </label>
+            <p class="text-xs text-[#A8A29E]">PNG, JPG or GIF (max. 10MB)</p>
+            <input
+              type="file"
+              accept="image/png,image/jpeg,image/gif"
+              class="hidden"
+              name="fileUpload"
+              id="fileUpload"
+            />
+          </div>
+          <p class="text-sm text-[#79716B]">
+            Catalog images will be used as primary photos. You can add your own photos as additional
+            images.
+          </p>
+        </div>
       </div>
     </div>
   </div>
-</div>
 
-@if (issavingInventory() || isDeletingInventory()) {
-  <app-spinner />
+  @if (issavingInventory() || isDeletingInventory()) {
+    <app-spinner />
+  }
 }
