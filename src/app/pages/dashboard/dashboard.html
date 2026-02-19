@@ -20,21 +20,51 @@
     ></app-cta-cards>
   </div>
 
-  <div class="mt-10 grid md:grid-cols-4 gap-8">
-    @for (item of summaryItems(); track item.name) {
-      <app-summary-cards
-        name="{{ item.name }}"
-        text="{{ item.text }}"
-        value="{{ item.value }}"
-      ></app-summary-cards>
-    }
-  </div>
-  <div class="w-full h-1.5 bg-[#E7E5E4] my-10"></div>
-  <h2 class="text-[#292524] font-medium text-xl">Overview</h2>
-  <div class="grid grid-cols-4 gap-8 mt-10">
-    <div class="h-[30rem] bg-white col-span-3 rounded-lg"></div>
-    <div class="h-[30rem] bg-white rounded-lg"></div>
-    <div class="h-[30rem] bg-white col-span-2 rounded-lg"></div>
-    <div class="h-[30rem] bg-white col-span-2 rounded-lg"></div>
-  </div>
+  @if (isLoading()) {
+    <app-dashboard-skeleton-loader />
+  } @else {
+    <div class="mt-10 grid md:grid-cols-4 gap-8">
+      @for (item of summaryItems(); track item.name) {
+        <app-summary-cards
+          name="{{ item.name }}"
+          text="{{ item.text }}"
+          value="{{ item.value }}"
+        ></app-summary-cards>
+      }
+    </div>
+    <div class="w-full h-1.5 bg-[#E7E5E4] my-10"></div>
+    <h2 class="text-[#292524] font-medium text-xl">Overview</h2>
+    <div class="grid grid-cols-4 gap-8 mt-10">
+      <div class="h-120 bg-white col-span-3 rounded-lg"></div>
+      <div class="h-120 bg-white rounded-lg p-6">
+        <div class="flex items-center justify-between">
+          <h2 class="font-medium text-sm text-[#292524]">Low stock alert</h2>
+          <button class="flex items-center gap-2 cursor-pointer">
+            <span class="text-[#2B7FFF] text-sm">See all </span>
+            <svg
+            class="-translate-y-[1px]"
+              width="12"
+              height="12"
+              viewBox="0 0 12 12"
+              fill="none"
+              xmlns="http://www.w3.org/2000/svg"
+            >
+              <path
+                d="M1 5.66667H10.3333M10.3333 5.66667L5.66667 1M10.3333 5.66667L5.66667 10.3333"
+                stroke="#2B7FFF"
+                stroke-width="2"
+                stroke-linecap="round"
+                stroke-linejoin="round"
+              />
+            </svg>
+          </button>
+        </div>
+        <div>
+          
+        </div>
+      </div>
+      <div class="h-120 bg-white col-span-2 rounded-lg"></div>
+      <div class="h-120 bg-white col-span-2 rounded-lg"></div>
+    </div>
+  }
 </div>

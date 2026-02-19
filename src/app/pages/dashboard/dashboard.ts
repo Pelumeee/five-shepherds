@@ -7,6 +7,7 @@ import { ProductCreationFlowService } from '../../core/services/product-creation
 import { UserCreationFlowService } from '../../core/services/user-creation-flow-service';
 import { ProductData, ProductService } from '../../core/services/product';
 import { InventoryObject, InventoryService } from '../../core/services/inventory';
+import { DashboardSkeletonLoader } from "./components/dashboard-skeleton-loader/dashboard-skeleton-loader";
 
 interface SummaryCard {
   name: string;
@@ -16,7 +17,7 @@ interface SummaryCard {
 
 @Component({
   selector: 'app-dashboard',
-  imports: [CtaCards, SummaryCards],
+  imports: [CtaCards, SummaryCards, DashboardSkeletonLoader],
   templateUrl: './dashboard.html',
 })
 
