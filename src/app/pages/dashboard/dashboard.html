@@ -65,7 +65,7 @@
           }
         </div>
       </div>
-      <div class="h-120 overflow-y-auto bg-white col-span-2 rounded-lg p-8">
+      <div class="h-120 overflow-y-auto bg-white col-span-2 rounded-lg p-8 no-scrollbar">
         <div class="flex items-center justify-between">
           <h2 class="font-medium text-sm text-[#292524]">Recent sales request</h2>
           <button class="flex items-center gap-2 cursor-pointer">
@@ -89,12 +89,57 @@
           </button>
         </div>
         <div class="flex flex-col gap-4 mt-6">
-          @for (item of lowStockItems(); track item.productName) {
-            <app-stock-alert-card [stockData]="item" />
+          @for (ind of [1, 2, 3, 4, 5]; track ind) {
+            <app-orders-card />
           }
         </div>
       </div>
-      <div class="h-120 overflow-y-auto bg-white col-span-2 rounded-lg p-8"></div>
+      <div class="h-120 overflow-y-auto bg-white col-span-2 rounded-lg p-8 no-scrollbar">
+        <div class="flex items-center justify-between">
+          <h2 class="font-medium text-sm text-[#292524]">Bestsellers</h2>
+          <div class="flex items-center gap-2 cursor-pointer">
+            <button class="rounded-md border border-[#E7E5E4] p-3 cursor-pointer">
+              <svg
+                width="12"
+                height="12"
+                viewBox="0 0 12 12"
+                fill="none"
+                xmlns="http://www.w3.org/2000/svg"
+              >
+                <path
+                  d="M10.3334 5.66667H1.00004M1.00004 5.66667L5.66671 1M1.00004 5.66667L5.66671 10.3333"
+                  stroke="#79716B"
+                  stroke-width="2"
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                />
+              </svg>
+            </button>
+            <button class="rounded-md border border-[#E7E5E4] p-3 cursor-pointer">
+              <svg
+                width="12"
+                height="12"
+                viewBox="0 0 12 12"
+                fill="none"
+                xmlns="http://www.w3.org/2000/svg"
+              >
+                <path
+                  d="M1 5.66667H10.3333M10.3333 5.66667L5.66667 1M10.3333 5.66667L5.66667 10.3333"
+                  stroke="#79716B"
+                  stroke-width="2"
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                />
+              </svg>
+            </button>
+          </div>
+        </div>
+        <div class="flex gap-4 mt-6 overflow-x-scroll no-scrollbar">
+          @for (ind of [1, 2, 3, 4, 5]; track ind) {
+            <app-best-selling-product-card />
+          }
+        </div>
+      </div>
     </div>
   }
 </div>

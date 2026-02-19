@@ -9,6 +9,8 @@ import { ProductData, ProductService } from '../../core/services/product';
 import { InventoryObject, InventoryService } from '../../core/services/inventory';
 import { DashboardSkeletonLoader } from './components/dashboard-skeleton-loader/dashboard-skeleton-loader';
 import { StockAlertCard } from './components/stock-alert-card/stock-alert-card';
+import { OrdersCard } from "./components/orders-card/orders-card";
+import { BestSellingProductCard } from "./components/best-selling-product-card/best-selling-product-card";
 
 interface SummaryCard {
   name: string;
@@ -18,7 +20,7 @@ interface SummaryCard {
 
 @Component({
   selector: 'app-dashboard',
-  imports: [CtaCards, SummaryCards, DashboardSkeletonLoader, StockAlertCard],
+  imports: [CtaCards, SummaryCards, DashboardSkeletonLoader, StockAlertCard, OrdersCard, BestSellingProductCard],
   templateUrl: './dashboard.html',
 })
 export class Dashboard {

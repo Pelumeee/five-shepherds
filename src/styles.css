@@ -60,3 +60,13 @@ label:has(+ textarea:required)::after {
 #inventory_stock_status.inStock span {
   color: #008236;
 }
+
+/* Hide scrollbar but keep scrolling */
+.no-scrollbar::-webkit-scrollbar {
+  display: none; /* Chrome, Safari */
+}
+
+.no-scrollbar {
+  -ms-overflow-style: none; /* IE, Edge */
+  scrollbar-width: none; /* Firefox */
+}
