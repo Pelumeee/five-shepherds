@@ -1,1 +1,22 @@
-<p>stock-alert-card works!</p>
+<div class="border border-[#F0F1F3] rounded-xl p-4 bg-[#FAFAF9]">
+  <div class="flex items-center justify-between mb-3.5">
+    <h3 class="font-medium text-sm text-[#292524]">{{ stockData()?.productName }}</h3>
+
+    <span class="font-medium text-sm text-[#292524]"
+      >{{ stockData()?.quantity }} <small class="text-xs text-[#737373]">units left</small></span
+    >
+  </div>
+
+  <div class="flex items-center justify-between">
+    <span class="text-xs text-[#737373]">Stock level</span>
+    <span class="text-xs text-[#737373]">{{ stockData()?.quantity }}/5 min</span>
+  </div>
+
+  <div class="w-full h-2 bg-[#E7E5E4] rounded-full mt-1.5 relative overflow-hidden">
+    <div
+      class="h-full"
+      [style.width.%]="getPercent(stockData()!.quantity)"
+      [style.background]="getColor(stockData()!.quantity)"
+    ></div>
+  </div>
+</div>

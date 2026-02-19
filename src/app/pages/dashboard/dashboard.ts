@@ -7,7 +7,8 @@ import { ProductCreationFlowService } from '../../core/services/product-creation
 import { UserCreationFlowService } from '../../core/services/user-creation-flow-service';
 import { ProductData, ProductService } from '../../core/services/product';
 import { InventoryObject, InventoryService } from '../../core/services/inventory';
-import { DashboardSkeletonLoader } from "./components/dashboard-skeleton-loader/dashboard-skeleton-loader";
+import { DashboardSkeletonLoader } from './components/dashboard-skeleton-loader/dashboard-skeleton-loader';
+import { StockAlertCard } from './components/stock-alert-card/stock-alert-card';
 
 interface SummaryCard {
   name: string;
@@ -17,10 +18,9 @@ interface SummaryCard {
 
 @Component({
   selector: 'app-dashboard',
-  imports: [CtaCards, SummaryCards, DashboardSkeletonLoader],
+  imports: [CtaCards, SummaryCards, DashboardSkeletonLoader, StockAlertCard],
   templateUrl: './dashboard.html',
 })
-
 export class Dashboard {
   session = inject(Session);
   router = inject(Router);
@@ -90,10 +90,16 @@ export class Dashboard {
     }
   }
 
+  lowStockItems = computed(() => {
+    const items = this.totalInventory()?.filter((item) => item.quantity > 0 && item.quantity < 5);
+    return items;
+  });
+
   redirectToCreateProduct() {
     this.productflow.startCreate();
     this.router.navigate(['/inventory/product']);
   }
+
   redirectToCreateUser() {
     this.userflow.startCreate();
     this.router.navigate(['/settings/team']);

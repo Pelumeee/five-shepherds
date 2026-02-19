@@ -60,11 +60,11 @@ export class InventoryService {
     return snap.exists() ? (snap.data() as InventoryPayload) : null;
   }
 
-  async getAllInventory(): Promise<InventoryPayload[]> {
+  async getAllInventory(): Promise<InventoryObject[]> {
     const ref = collection(this.firebase.firestore, 'inventory');
     const snap = await getDocs(ref);
 
-    return snap.docs.map((doc) => doc.data() as InventoryPayload);
+    return snap.docs.map((doc) => doc.data() as InventoryObject);
   }
 
   async updateInventory(sku: string, updates: Partial<InventoryPayload>): Promise<void> {
