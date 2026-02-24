@@ -1,0 +1,61 @@
+<dialog open class="fixed inset-0 m-auto border-none outline-none p-0 bg-transparent z-30">
+  <div class="bg-white rounded-xl p-6 w-100 2xl:w-120">
+    <div class="flex items-start justify-between mb-3">
+      <div>
+        <h2 class="text-[#292524] font-medium">Let's buy a product</h2>
+        <span class="text-[#57534D] font-light leading-6 text-sm"
+          >Fill in the details to purchase this product.</span
+        >
+      </div>
+      <button (click)="handleCloseForm()" class="cursor-pointer focus:outline-none">
+        <app-close-icon> </app-close-icon>
+      </button>
+    </div>
+
+    <form (ngSubmit)="handleFormSubmission()" class="flex flex-col gap-5">
+      <div class="flex flex-col gap-1">
+        <label for="full_name" class="text-sm font-medium text-[#292524]">Quantity</label>
+        <input
+          [value]="quantity()"
+          (input)="onQuantityChange($event)"
+          type="number"
+          name="quantity"
+          class="p-2 border border-[#E7E5E4] rounded text-xs focus:outline-none text-[#A6A09B]"
+          placeholder="1"
+        />
+      </div>
+      @if (showOfferPrice()) {
+        <div class="flex flex-col gap-1">
+          <label for="email" class="text-sm font-medium text-[#292524]">Offer Price</label>
+          <input
+            [(ngModel)]="offerPrice"
+            type="text"
+            name="email"
+            class="p-2 border border-[#E7E5E4] rounded text-xs focus:outline-none text-[#A6A09B]"
+            placeholder="500,000.00"
+          />
+        </div>
+      }
+
+      @if (error()) {
+        <p class="text-sm text-center text-red-500 italic">{{ errorText() }}</p>
+      }
+
+      <div class="flex items-center justify-end gap-6 mt-6">
+        <button
+          type="button"
+          (click)="handleCloseForm()"
+          class="w-full max-w-30 bg-inherit py-2.5 rounded text-[#57534D] text-sm font-medium cursor-pointer border border-[#E7E5E4]"
+        >
+          Cancel
+        </button>
+        <button
+          class="w-full max-w-30 bg-[#2793E9] py-2.5 rounded text-white text-sm font-medium cursor-pointer"
+        >
+          Submit
+        </button>
+      </div>
+    </form>
+  </div>
+</dialog>
+<div class="backdrop"></div>

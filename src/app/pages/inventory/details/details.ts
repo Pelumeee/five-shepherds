@@ -2,20 +2,34 @@ import { Component, inject, signal, computed } from '@angular/core';
 import { RouterLink } from '@angular/router';
 import { CurrencyPipe } from '@angular/common';
 import { InventoryCard } from '../components/inventory-card/inventory-card';
-import { InventoryPayload, InventoryService } from '../../../core/services/inventory';
+import {
+  InventoryObject,
+  InventoryPayload,
+  InventoryService,
+} from '../../../core/services/inventory';
 import { DetailsSkeletonLoader } from './components/details-skeleton-loader/details-skeleton-loader';
 import { InventoryTable } from './components/inventory-table/inventory-table';
+import { BuyProductForm } from './components/buy-product-form/buy-product-form';
 
 @Component({
   selector: 'app-details',
-  imports: [RouterLink, InventoryCard, DetailsSkeletonLoader, CurrencyPipe, InventoryTable],
+  imports: [
+    RouterLink,
+    InventoryCard,
+    DetailsSkeletonLoader,
+    CurrencyPipe,
+    InventoryTable,
+    BuyProductForm,
+  ],
   templateUrl: './details.html',
 })
 export class Details {
   private inventory = inject(InventoryService);
 
   isLoading = signal(false);
+  showBuyForm = signal(false);
   totalInventory = signal<InventoryPayload[]>([]);
+  selectedProduct = signal<InventoryObject | null>(null);
 
   view = signal<'list' | 'grid'>('grid');
 
@@ -176,5 +190,10 @@ export class Details {
 
     this.stockFilter.set(value);
     this.page.set(1);
+  }
+
+  showBuyProductForm(inventory: InventoryObject) {
+    this.selectedProduct.set(inventory);
+    this.showBuyForm.set(true);
   }
 }

@@ -192,7 +192,10 @@
         @if (view() === 'grid') {
           <div class="grid grid-cols-5 mt-10 gap-6">
             @for (inventory of paginatedInventory(); track inventory.sku) {
-              <app-inventory-card [inventoryObject]="inventory" />
+              <app-inventory-card
+                [inventoryObject]="inventory"
+                (simulateBuy)="showBuyProductForm($event)"
+              />
             } @empty {
               <div class="col-span-5 flex flex-col items-center justify-center py-16 text-gray-400">
                 @if (isInventoryEmpty()) {
@@ -298,4 +301,8 @@
       </div>
     </div>
   </div>
+}
+
+@if (showBuyForm()) {
+  <app-buy-product-form [productDetails]="selectedProduct()!" />
 }

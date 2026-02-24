@@ -1,4 +1,4 @@
-import { Component, computed, input, inject } from '@angular/core';
+import { Component, computed, input, inject, output } from '@angular/core';
 import { Router } from '@angular/router';
 
 import { CurrencyPipe } from '@angular/common';
@@ -13,6 +13,7 @@ import { StockBadge } from '../../details/components/stock-badge/stock-badge';
 export class InventoryCard {
   route = inject(Router);
   inventoryObject = input<InventoryObject>();
+  simulateBuy = output<InventoryObject>();
 
   quantity = computed(() => this.inventoryObject()?.quantity ?? 0);
 
@@ -38,5 +39,9 @@ export class InventoryCard {
         sku: this.inventoryObject()?.sku,
       },
     });
+  }
+
+  handleClick() {
+    this.simulateBuy.emit(this.inventoryObject()!);
   }
 }
