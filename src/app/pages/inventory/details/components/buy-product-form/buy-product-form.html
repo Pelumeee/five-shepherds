@@ -12,11 +12,11 @@
       </button>
     </div>
 
-    <form (ngSubmit)="handleFormSubmission()" class="flex flex-col gap-5">
+    <form (ngSubmit)="handleFormSubmission()" class="flex flex-col gap-3">
       <div class="flex flex-col gap-1">
         <label for="full_name" class="text-sm font-medium text-[#292524]">Quantity</label>
         <input
-          [value]="quantity()"
+          [(ngModel)]="quantity"
           (input)="onQuantityChange($event)"
           type="number"
           name="quantity"
@@ -38,23 +38,21 @@
       }
 
       @if (error()) {
-        <p class="text-sm text-center text-red-500 italic">{{ errorText() }}</p>
+        <p class="text-xs text-center text-red-500 italic">{{ errorText() }}</p>
       }
 
-      <div class="flex items-center justify-end gap-6 mt-6">
-        <button
-          type="button"
-          (click)="handleCloseForm()"
-          class="w-full max-w-30 bg-inherit py-2.5 rounded text-[#57534D] text-sm font-medium cursor-pointer border border-[#E7E5E4]"
-        >
-          Cancel
-        </button>
-        <button
-          class="w-full max-w-30 bg-[#2793E9] py-2.5 rounded text-white text-sm font-medium cursor-pointer"
-        >
-          Submit
-        </button>
-      </div>
+      <button
+        [disabled]="isOverBought() || isSubmitting()"
+        type="submit"
+        class="w-full flex items-center justify-center gap-3 bg-[#2793E9] py-2.5 rounded text-white text-sm font-medium cursor-pointer transition hover:bg-[#2793E9]/90 focus:outline-none disabled:cursor-not-allowed disabled:bg-[#2793E9]/50"
+      >
+        @if (isSubmitting()) {
+          <span
+            class="h-3 w-3 animate-spin rounded-full border-2 border-white border-t-transparent"
+          ></span>
+        }
+        {{ isSubmitting() ? 'Processing...' : 'Submit' }}
+      </button>
     </form>
   </div>
 </dialog>

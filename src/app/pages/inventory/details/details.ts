@@ -196,4 +196,9 @@ export class Details {
     this.selectedProduct.set(inventory);
     this.showBuyForm.set(true);
   }
+
+  handleCloseBuyForm() {
+    this.selectedProduct.set(null);
+    this.showBuyForm.set(false);
+  }
 }

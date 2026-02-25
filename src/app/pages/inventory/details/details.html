@@ -304,5 +304,5 @@
 }
 
 @if (showBuyForm()) {
-  <app-buy-product-form [productDetails]="selectedProduct()!" />
+  <app-buy-product-form  [productDetails]="selectedProduct()!" (closeForm)="handleCloseBuyForm()" />
 }
