@@ -47,9 +47,6 @@ export class OrderService {
   firebase = inject(Firebase);
   private ordersRef = collection(this.firebase.firestore, 'orders');
 
-  // ========================
-  // CREATE
-  // ========================
 
   async createOrder(
     inventory: InventoryObject,
@@ -108,7 +105,6 @@ export class OrderService {
 
   async getAllOrders() {
     const q = query(this.ordersRef, orderBy('createdAt', 'desc'));
-
     const snap = await getDocs(q);
 
     return snap.docs.map((doc) => ({
