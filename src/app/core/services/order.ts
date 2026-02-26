@@ -14,7 +14,7 @@ import {
 import { Firebase } from '../../core/services/firebase';
 import { InventoryObject } from './inventory';
 
-export interface Order {
+export interface OrderObject {
   id?: string;
 
   orderNumber: string;
@@ -46,7 +46,6 @@ export interface Order {
 export class OrderService {
   firebase = inject(Firebase);
   private ordersRef = collection(this.firebase.firestore, 'orders');
-
 
   async createOrder(
     inventory: InventoryObject,
@@ -103,14 +102,18 @@ export class OrderService {
   // GET ALL
   // ========================
 
-  async getAllOrders() {
+  async getAllOrders(): Promise<OrderObject[]> {
     const q = query(this.ordersRef, orderBy('createdAt', 'desc'));
     const snap = await getDocs(q);
 
-    return snap.docs.map((doc) => ({
-      id: doc.id,
-      ...doc.data(),
-    }));
+    return snap.docs.map((doc) => {
+      const data = doc.data() as Omit<OrderObject, 'id'>;
+
+      return {
+        id: doc.id,
+        ...data,
+      };
+    });
   }
 
   // ========================
