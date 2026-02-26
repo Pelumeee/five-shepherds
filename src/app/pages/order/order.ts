@@ -2,10 +2,11 @@ import { Component, signal, inject, computed } from '@angular/core';
 import { CounterOffer } from './components/counter-offer/counter-offer';
 import { OrderObject, OrderService } from '../../core/services/order';
 import { OrderSkeletonLoader } from './components/order-skeleton-loader/order-skeleton-loader';
+import { OrderCard } from './components/order-card/order-card';
 
 @Component({
   selector: 'app-order',
-  imports: [CounterOffer, OrderSkeletonLoader],
+  imports: [CounterOffer, OrderSkeletonLoader, OrderCard],
   templateUrl: './order.html',
 })
 export class Order {

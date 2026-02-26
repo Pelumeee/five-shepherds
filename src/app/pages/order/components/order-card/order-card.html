@@ -1,11 +1,17 @@
 <div class="bg-white rounded-lg px-8 py-6 border-l-4 border-blue-500">
   <div class="flex justify-between items-start">
     <div class="flex gap-4">
-      <div class="w-16 h-16 border border-gray-300"></div>
+      <div class="w-16 h-16 border border-gray-300">
+        <img
+          src="{{ order()!.productImage }}"
+          alt="Product Image"
+          class="w-full h-full object-contain"
+        />
+      </div>
       <div class="space-y-1">
-        <p class="text-[#292524] font-medium text-sm">{{ order().productName }}</p>
+        <p class="text-[#292524] font-medium text-sm">{{ order()!.productName }}</p>
         <span class="inline-block bg-[#DCF6FD] text-[10px] text-[#1E6381] px-1"
-          >SKU: {{ order().sku }}</span
+          >SKU: {{ order()!.sku }}</span
         >
         <div class="flex items-center gap-4">
           <div class="flex items-center gap-2">
@@ -22,7 +28,7 @@
               />
             </svg>
             <span class="text-[#79716B] font-light leading-6 text-xs">{{
-              order().orderNumber
+              order()!.orderNumber
             }}</span>
           </div>
           <div class="flex items-center gap-2">
@@ -39,7 +45,9 @@
               />
             </svg>
 
-            <span class="text-[#79716B] font-light leading-6 text-xs">2 minutes ago</span>
+            <span class="text-[#79716B] font-light leading-6 text-xs">{{
+              order()!.createdAt | timeAgo
+            }}</span>
           </div>
         </div>
       </div>
@@ -53,54 +61,74 @@
     <div class="space-y-2">
       <div class="flex items-center justify-between text-[#57534D]">
         <p>Listed price:</p>
-        <span class="font-medium">₦1,200,000</span>
+        <span class="font-medium">{{ order()!.price | currency: 'NGN' : 'symbol' : '1.2-2' }}</span>
       </div>
-      <div class="flex items-center justify-between text-[#57534D]">
+      <div
+        [class.hidden]="!order()!.offerPrice"
+        class="flex items-center justify-between text-[#57534D]"
+      >
         <p>Offer price:</p>
-        <span class="font-medium text-[#C10007]">₦1,200,000</span>
+        <span class="font-medium text-[#C10007]">{{
+          order()!.offerPrice | currency: 'NGN' : 'symbol' : '1.2-2'
+        }}</span>
       </div>
       <div class="flex items-center justify-between text-[#57534D]">
         <p>Quantity requested:</p>
-        <span class="font-medium">1 unit</span>
+        <span class="font-medium">{{ order()!.quantity }} units</span>
       </div>
     </div>
     <div class="mt-3 pt-3 space-y-2 border-t-2 border-[#F0F1F3]">
-      <div class="flex items-center justify-between text-[#57534D]">
+      <div
+        [class.hidden]="!order()!.offerPrice"
+        class="flex items-center justify-between text-[#57534D]"
+      >
         <p>Original value:</p>
-        <span class="font-medium text-[#79716B] text-sm line-through">₦1,200,000</span>
+        <span class="font-medium text-[#79716B] text-sm line-through">{{
+          order()!.price | currency: 'NGN' : 'symbol' : '1.2-2'
+        }}</span>
       </div>
       <div class="flex items-center justify-between text-[#57534D]">
         <p class="font-semibold">Offer total:</p>
-        <span class="font-medium text-[#C10007]">₦1,200,000</span>
+        <span class="font-medium text-[#C10007]">
+          {{
+            (order()?.offerPrice ?? 0) * (order()?.quantity ?? 0)
+              | currency: 'NGN' : 'symbol' : '1.2-2'
+          }}
+        </span>
       </div>
     </div>
   </div>
-  <div class="grid grid-cols-3 gap-5">
-    <button class="bg-[#2793E9] py-2.5 rounded text-white font-medium cursor-pointer">
-      Accept
-    </button>
-    <button
-      class="bg-inherit py-2.5 rounded text-[#57534D] font-medium cursor-pointer border border-[#E7E5E4]"
-    >
-      Send counter offfer
-    </button>
-    <button
-      class="bg-inherit py-2.5 rounded text-[#E7000B] font-medium cursor-pointer border border-[#FFC9C9]"
-    >
-      Reject
-    </button>
-  </div>
-  <!-- <div class="grid grid-cols-2 gap-5">
-          <button class="bg-[#2793E9] py-2.5 rounded text-white font-medium cursor-pointer">
-            Accept
-          </button>
 
-          <button
-            class="bg-inherit py-2.5 rounded text-[#E7000B] font-medium cursor-pointer border border-[#FFC9C9]"
-          >
-            Reject
-          </button>
-        </div> -->
+  @if (order()!.offerPrice) {
+    <div class="grid grid-cols-3 gap-5">
+      <button class="bg-[#2793E9] py-2.5 rounded text-white font-medium cursor-pointer">
+        Accept
+      </button>
+      <button
+        class="bg-inherit py-2.5 rounded text-[#57534D] font-medium cursor-pointer border border-[#E7E5E4]"
+      >
+        Send counter offfer
+      </button>
+      <button
+        class="bg-inherit py-2.5 rounded text-[#E7000B] font-medium cursor-pointer border border-[#FFC9C9]"
+      >
+        Reject
+      </button>
+    </div>
+  } @else {
+    <div class="grid grid-cols-2 gap-5">
+      <button class="bg-[#2793E9] py-2.5 rounded text-white font-medium cursor-pointer">
+        Accept
+      </button>
+
+      <button
+        class="bg-inherit py-2.5 rounded text-[#E7000B] font-medium cursor-pointer border border-[#FFC9C9]"
+      >
+        Reject
+      </button>
+    </div>
+  }
+
   <!-- <span class="block bg-[#EFF6FF] text-[#2563EB] p-4 border border-[#DBEAFE] rounded-md"
           >Counter offer sent, waiting for Five Shepherd’s response</span
         > -->
