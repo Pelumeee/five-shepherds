@@ -140,34 +140,26 @@
   </div>
 
   @if (order()!.status === 'pending') {
-    @if (order()!.offerPrice) {
-      <div class="grid grid-cols-3 gap-5">
-        <button class="bg-[#2793E9] py-2.5 rounded text-white text-sm cursor-pointer">
-          Accept
-        </button>
-        <button
-          class="bg-inherit py-2.5 rounded text-[#57534D] text-sm cursor-pointer border border-[#E7E5E4]"
-        >
-          Send counter offfer
-        </button>
-        <button
-          class="bg-inherit py-2.5 rounded text-[#E7000B] text-sm cursor-pointer border border-[#FFC9C9]"
-        >
-          Reject
-        </button>
-      </div>
-    } @else {
-      <div class="grid grid-cols-2 gap-5">
-        <button class="bg-[#2793E9] py-2.5 rounded text-white text-sm cursor-pointer">
-          Accept
-        </button>
-        <button
-          class="bg-inherit py-2.5 rounded text-[#E7000B] text-sm cursor-pointer border border-[#FFC9C9]"
-        >
-          Reject
-        </button>
-      </div>
-    }
+    <div
+      [ngClass]="{
+        'grid-cols-3': order()!.offerPrice,
+        'grid-cols-2': !order()!.offerPrice,
+      }"
+      class="grid gap-5"
+    >
+      <button class="bg-[#2793E9] py-2.5 rounded text-white text-sm cursor-pointer">Accept</button>
+      <button
+        [class.hidden]="!order()!.offerPrice"
+        class="bg-inherit py-2.5 rounded text-[#57534D] text-sm cursor-pointer border border-[#E7E5E4]"
+      >
+        Send counter offfer
+      </button>
+      <button
+        class="bg-inherit py-2.5 rounded text-[#E7000B] text-sm cursor-pointer border border-[#FFC9C9]"
+      >
+        Reject
+      </button>
+    </div>
   }
 
   @if (order()!.status === 'countered') {

@@ -15,6 +15,9 @@ export class Order {
   isLoading = signal(false);
   totalOrders = signal<OrderObject[]>([]);
 
+  searchTerm = signal('');
+  orderFilter = signal<'all' | 'pending' | 'accepted' | 'rejected' | 'countered'>('all');
+
   constructor() {
     this.loadInventory();
   }
@@ -46,5 +49,38 @@ export class Order {
     } finally {
       this.isLoading.set(false);
     }
+  }
+
+  filteredOrders = computed(() => {
+    const term = this.searchTerm().toLowerCase().trim();
+    const orders = this.totalOrders();
+    const filter = this.orderFilter();
+
+    return orders.filter((order) => {
+      const matchesSearch =
+        !term ||
+        order.productName?.toLowerCase().includes(term) ||
+        order.sku?.toLowerCase().includes(term);
+
+      const matchesFilter = filter === 'all' || order.status === filter;
+
+      return matchesSearch && matchesFilter;
+    });
+  });
+
+  handleOrderSearch(event: Event) {
+    const input = event.target as HTMLInputElement;
+    this.searchTerm.set(input.value);
+  }
+
+  changeOrderFilter(event: Event) {
+    const value = (event.target as HTMLSelectElement).value as
+      | 'all'
+      | 'pending'
+      | 'accepted'
+      | 'rejected'
+      | 'countered';
+
+    this.orderFilter.set(value);
   }
 }

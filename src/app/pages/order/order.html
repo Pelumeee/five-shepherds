@@ -50,26 +50,18 @@
 
     <div class="my-10">
       <div class="flex items-center justify-between">
-        <div class="flex items-center gap-5">
-          <select
-            name=""
-            id=""
-            class="bg-white focus:outline-none text-sm text-[#9CA3AF] py-2 px-10"
-          >
-            <option value="">Today</option>
-          </select>
-          <select
-            name=""
-            id=""
-            class="bg-white focus:outline-none text-sm text-[#9CA3AF] py-2 px-10"
-          >
-            <option value="">All orders</option>
-            <option value="">Pending</option>
-            <option value="">Accepted</option>
-            <option value="">Countered</option>
-            <option value="">Rejected</option>
-          </select>
-        </div>
+        <select
+          (change)="changeOrderFilter($event)"
+          name=""
+          id=""
+          class="bg-white focus:outline-none text-sm text-[#9CA3AF] py-2 px-10"
+        >
+          <option value="all">All orders</option>
+          <option value="pending">Pending</option>
+          <option value="accepted">Accepted</option>
+          <option value="countered">Countered</option>
+          <option value="rejected">Rejected</option>
+        </select>
         <div class="bg-[#F5F5F4] py-2 px-4 flex items-center gap-2 border border-[#E7E5E4] w-[30%]">
           <svg
             width="18"
@@ -84,17 +76,29 @@
             />
           </svg>
           <input
+            (input)="handleOrderSearch($event)"
             type="text"
             class="w-full bg-inherit focus:outline-none text-sm text-[#9CA3AF]"
             placeholder="Search by product name, SKU, or order ID..."
           />
         </div>
       </div>
-      <div class="my-10 flex flex-col gap-12">
-        @for (order of totalOrders(); track order.orderNumber) {
-          <app-order-card [order]="order"/>
-        }
-      </div>
+
+      @if (filteredOrders().length === 0) {
+        <div class="text-center py-20">
+          <!-- <img src="empty-orders.png" alt="" class="mx-auto mb-4" /> -->
+          <h3 class="text-[#292524] font-medium text-lg">No orders found</h3>
+          <span class="text-[#57534D] font-light leading-6 text-sm"
+            >Try adjusting your search or filter to find what you're looking for.</span
+          >
+        </div>
+      } @else {
+        <div class="my-10 flex flex-col gap-12">
+          @for (order of filteredOrders(); track order.orderNumber) {
+            <app-order-card [order]="order" />
+          }
+        </div>
+      }
     </div>
   </div>
 }
