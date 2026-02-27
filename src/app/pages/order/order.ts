@@ -40,6 +40,7 @@ export class Order {
     try {
       const data = await this.order.getAllOrders();
       this.totalOrders.set(data);
+      console.log('Orders loaded:', data);
     } catch (error) {
       console.error(error);
     } finally {
