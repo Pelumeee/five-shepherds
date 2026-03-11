@@ -9,6 +9,7 @@ import {
   serverTimestamp,
   query,
   orderBy,
+  runTransaction,
 } from 'firebase/firestore';
 
 import { Firebase } from '../../core/services/firebase';
@@ -133,27 +134,45 @@ export class OrderService {
   // ACCEPT ORDER
   // ========================
 
-  // async acceptOrder(order: Order) {
-  //   const ref = doc(this.firebase.firestore, 'orders', order.id!);
+  async acceptOrder(order: OrderObject) {
+    const firestore = this.firebase.firestore;
 
-  //   await updateDoc(ref, {
-  //     status: 'accepted',
-  //     updatedAt: serverTimestamp(),
-  //   });
+    const orderRef = doc(firestore, 'orders', order.id!);
+    const inventoryRef = doc(firestore, 'inventory', order.inventoryId);
 
-  //   // 🔥 Optional: deduct stock
-  //   const inventoryRef = doc(this.firebase.firestore, 'inventory', order.inventoryId);
+    await runTransaction(firestore, async (transaction) => {
+      const orderSnap = await transaction.get(orderRef);
 
-  //   const snap = await getDoc(inventoryRef);
+      if (!orderSnap.exists()) {
+        throw new Error('Order not found');
+      }
 
-  //   if (snap.exists()) {
-  //     const currentStock = snap.data()?.stock ?? 0;
+      const inventorySnap = await transaction.get(inventoryRef);
 
-  //     await updateDoc(inventoryRef, {
-  //       stock: currentStock - order.quantity,
-  //     });
-  //   }
-  // }
+      if (!inventorySnap.exists()) {
+        throw new Error('Inventory item not found');
+      }
+
+      const inventoryData = inventorySnap.data() as InventoryObject;
+      const currentStock = inventoryData?.quantity ?? 0;
+
+      if (currentStock < order.quantity) {
+        throw new Error('Not enough stock to accept this order');
+      }
+
+      // Deduct stock
+      transaction.update(inventoryRef, {
+        stock: currentStock - order.quantity,
+        updatedAt: serverTimestamp(),
+      });
+
+      // Update order
+      transaction.update(orderRef, {
+        status: 'accepted',
+        updatedAt: serverTimestamp(),
+      });
+    });
+  }
 
   // ========================
   // REJECT ORDER

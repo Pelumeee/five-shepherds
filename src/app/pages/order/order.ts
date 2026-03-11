@@ -9,6 +9,7 @@ import { OrderCard } from './components/order-card/order-card';
   imports: [CounterOffer, OrderSkeletonLoader, OrderCard],
   templateUrl: './order.html',
 })
+
 export class Order {
   private order = inject(OrderService);
   showCounterOffer = signal(false);
