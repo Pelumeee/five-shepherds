@@ -12,10 +12,23 @@ import { ToastService } from '../../../../core/services/toast';
 export class OrderCard {
   order = input<OrderObject>();
   isLoading = output<boolean>();
+  orderObject = output<OrderObject>();
+  showCounterOfferForm = output<boolean>();
   private orderService = inject(OrderService);
   private toastService = inject(ToastService);
 
-  rejectOrder() {}
+  async rejectOrder() {
+    this.isLoading.emit(true);
+    try {
+      await this.orderService.rejectOrder(this.order()!);
+      this.toastService.show('Order rejected successfully', 'success');
+      this.isLoading.emit(false);
+    } catch (err) {
+      console.log(err);
+      this.toastService.show('Error rejecting order', 'error');
+      this.isLoading.emit(false);
+    }
+  }
 
   async acceptOrder() {
     this.isLoading.emit(true);
@@ -28,6 +41,11 @@ export class OrderCard {
       this.toastService.show('Error accepting order', 'error');
       this.isLoading.emit(false);
     }
+  }
+
+  handleShowCounterOfferForm() {
+    this.showCounterOfferForm.emit(true);
+    this.orderObject.emit(this.order()!);
   }
 
   conterOffer() {}

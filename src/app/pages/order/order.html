@@ -3,7 +3,7 @@
 } @else {
   <div>
     @if (showCounterOffer()) {
-      <app-counter-offer></app-counter-offer>
+      <app-counter-offer [orderObject]="counterOfferObj()" ></app-counter-offer>
     }
     <div class="flex items-center justify-between">
       <div>
@@ -95,7 +95,12 @@
       } @else {
         <div class="my-10 flex flex-col gap-12">
           @for (order of filteredOrders(); track order.orderNumber) {
-            <app-order-card [order]="order" (isLoading)="showLoader($event)" />
+            <app-order-card
+              [order]="order"
+              (isLoading)="showLoader($event)"
+              (showCounterOfferForm)="handleshowCounterOfferForm($event)"
+              (orderObject)="this.counterOfferObj.set($event)"
+            />
           }
         </div>
       }

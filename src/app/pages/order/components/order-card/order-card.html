@@ -86,7 +86,7 @@
       <div class="flex items-center justify-between text-[#57534D]">
         <p class="text-[#57534D] text-sm">Listed price:</p>
         <span class="font-medium text-sm">{{
-          order()!.price | currency: 'NGN' : 'symbol' : '1.2-2'
+          order()!.price | currency: '₦' : 'symbol' : '1.2-2'
         }}</span>
       </div>
       <div
@@ -95,7 +95,7 @@
       >
         <p class="text-[#57534D] text-sm">Offer price:</p>
         <span class="font-medium text-[#C10007] text-sm">{{
-          order()!.offerPrice | currency: 'NGN' : 'symbol' : '1.2-2'
+          order()!.offerPrice | currency: '₦' : 'symbol' : '1.2-2'
         }}</span>
       </div>
       <div class="flex items-center justify-between text-[#57534D]">
@@ -110,7 +110,7 @@
       >
         <p>Original value:</p>
         <span class="font-medium text-[#79716B] text-sm line-through">{{
-          order()!.price * order()!.quantity | currency: 'NGN' : 'symbol' : '1.2-2'
+          order()!.price * order()!.quantity | currency: '₦' : 'symbol' : '1.2-2'
         }}</span>
       </div>
       <div
@@ -121,7 +121,7 @@
         <span class="font-medium text-[#C10007] text-sm">
           {{
             (order()?.offerPrice ?? 0) * (order()?.quantity ?? 0)
-              | currency: 'NGN' : 'symbol' : '1.2-2'
+              | currency: '₦' : 'symbol' : '1.2-2'
           }}
         </span>
       </div>
@@ -132,7 +132,7 @@
         <p class="font-semibold">Total value:</p>
         <span class="font-medium text-[#44403B] text-sm">
           {{
-            (order()?.price ?? 0) * (order()?.quantity ?? 0) | currency: 'NGN' : 'symbol' : '1.2-2'
+            (order()?.price ?? 0) * (order()?.quantity ?? 0) | currency: '₦' : 'symbol' : '1.2-2'
           }}
         </span>
       </div>
@@ -154,7 +154,7 @@
         Accept
       </button>
       <button
-        (click)="conterOffer()"
+        (click)="handleShowCounterOfferForm()"
         [class.hidden]="!order()!.offerPrice"
         class="bg-inherit py-2.5 rounded text-[#57534D] text-sm cursor-pointer border border-[#E7E5E4] hover:bg-[#57534D]/5 transition-colors duration-200"
       >

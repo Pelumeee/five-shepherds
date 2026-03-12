@@ -14,6 +14,8 @@ export class Order {
   private order = inject(OrderService);
   showCounterOffer = signal(false);
   orderSubmitting = signal(false);
+  counterOfferObj = signal<OrderObject | null>(null);
+
   // totalOrders = signal<OrderObject[]>([]);
 
   orders = this.order.totalOrders;
@@ -75,5 +77,9 @@ export class Order {
 
   showLoader(value: boolean) {
     this.orderSubmitting.set(value);
+  }
+
+  handleshowCounterOfferForm(value: boolean) {
+    this.showCounterOffer.set(value);
   }
 }

@@ -31,6 +31,7 @@ export interface OrderObject {
 
   offerPrice?: number | null;
   counterPrice?: number | null;
+  counterMessage?: string | null;
 
   status: 'pending' | 'accepted' | 'rejected' | 'countered';
 
@@ -87,26 +88,6 @@ export class OrderService {
     return ref.id;
   }
 
-  // ========================
-  // GET ONE
-  // ========================
-
-  async getOrder(id: string) {
-    const ref = doc(this.firebase.firestore, 'orders', id);
-    const snap = await getDoc(ref);
-
-    if (!snap.exists()) return null;
-
-    return {
-      id: snap.id,
-      ...snap.data(),
-    };
-  }
-
-  // ========================
-  // GET ALL
-  // ========================
-
   getAllOrders() {
     const q = query(this.ordersRef, orderBy('createdAt', 'desc'));
 
@@ -131,23 +112,6 @@ export class OrderService {
       },
     );
   }
-
-  // ========================
-  // UPDATE GENERIC
-  // ========================
-
-  // async updateOrder(id: string, data: Partial<Order>) {
-  //   const ref = doc(this.firebase.firestore, 'orders', id);
-
-  //   await updateDoc(ref, {
-  //     ...data,
-  //     updatedAt: serverTimestamp(),
-  //   });
-  // }
-
-  // ========================
-  // ACCEPT ORDER
-  // ========================
 
   async acceptOrder(order: OrderObject) {
     const firestore = this.firebase.firestore;
@@ -214,30 +178,30 @@ export class OrderService {
     });
   }
 
-  // ========================
-  // REJECT ORDER
-  // ========================
+  async counterOfferOrder(order: OrderObject, counterPrice: number, message?: string) {
+    const firestore = this.firebase.firestore;
 
-  // async rejectOrder(id: string) {
-  //   const ref = doc(this.firebase.firestore, 'orders', id);
+    const orderRef = doc(firestore, 'orders', order.id!);
 
-  //   await updateDoc(ref, {
-  //     status: 'rejected',
-  //     updatedAt: serverTimestamp(),
-  //   });
-  // }
+    await runTransaction(firestore, async (transaction) => {
+      const orderSnap = await transaction.get(orderRef);
 
-  // ========================
-  // COUNTER OFFER
-  // ========================
+      if (!orderSnap.exists()) {
+        throw new Error('Order not found');
+      }
 
-  // async counterOrder(id: string, counterPrice: number) {
-  //   const ref = doc(this.firebase.firestore, 'orders', id);
+      const orderData = orderSnap.data() as OrderObject;
 
-  //   await updateDoc(ref, {
-  //     status: 'countered',
-  //     counterPrice,
-  //     updatedAt: serverTimestamp(),
-  //   });
-  // }
+      if (orderData.status !== 'pending') {
+        throw new Error('Order already processed');
+      }
+
+      transaction.update(orderRef, {
+        status: 'countered',
+        counterPrice: counterPrice,
+        counterMessage: message ?? null,
+        updatedAt: serverTimestamp(),
+      });
+    });
+  }
 }
