@@ -13,15 +13,17 @@ import { Spinner } from '../../shared/components/spinner/spinner';
 export class Order {
   private order = inject(OrderService);
   showCounterOffer = signal(false);
-  isLoading = signal(false);
   orderSubmitting = signal(false);
-  totalOrders = signal<OrderObject[]>([]);
+  // totalOrders = signal<OrderObject[]>([]);
+
+  orders = this.order.totalOrders;
+  isLoading = this.order.isLoading;
 
   searchTerm = signal('');
   orderFilter = signal<'all' | 'pending' | 'accepted' | 'rejected' | 'countered'>('all');
 
   constructor() {
-    this.loadOrders();
+    this.order.getAllOrders();
   }
 
   orderStats = computed(() => {
@@ -32,33 +34,18 @@ export class Order {
       countered: 0,
     };
 
-    for (const order of this.totalOrders()) {
+    for (const order of this.orders()) {
       stats[order.status]++;
     }
 
     return stats;
   });
 
-  private async loadOrders() {
-    this.isLoading.set(true);
-
-    try {
-      const data = await this.order.getAllOrders();
-      this.totalOrders.set(data);
-      console.log('Orders loaded:', data);
-    } catch (error) {
-      console.error(error);
-    } finally {
-      this.isLoading.set(false);
-    }
-  }
-
   filteredOrders = computed(() => {
     const term = this.searchTerm().toLowerCase().trim();
-    const orders = this.totalOrders();
     const filter = this.orderFilter();
 
-    return orders.filter((order) => {
+    return this.orders().filter((order) => {
       const matchesSearch =
         !term ||
         order.productName?.toLowerCase().includes(term) ||

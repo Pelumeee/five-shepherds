@@ -1,4 +1,4 @@
-import { Injectable, inject } from '@angular/core';
+import { Injectable, inject, signal } from '@angular/core';
 import {
   collection,
   doc,
@@ -49,6 +49,8 @@ export class OrderService {
   private ordersRef = collection(this.firebase.firestore, 'orders');
   private unsubscribeOrders?: () => void;
 
+  isLoading = signal(false);
+  totalOrders = signal<OrderObject[]>([]);
 
   async createOrder(
     inventory: InventoryObject,
@@ -105,30 +107,26 @@ export class OrderService {
   // GET ALL
   // ========================
 
-  async getAllOrders(){
+  getAllOrders() {
     const q = query(this.ordersRef, orderBy('createdAt', 'desc'));
 
-    // Clear previous listener
-    this.unsubscribeOrders?.();
-
     this.isLoading.set(true);
+
+    this.unsubscribeOrders?.();
 
     this.unsubscribeOrders = onSnapshot(
       q,
       (snap) => {
-        const orders = snap.docs.map((doc) => {
-          const data = doc.data() as Omit<OrderObject, 'id'>;
-          return {
-            id: doc.id,
-            ...data,
-          };
-        });
+        const orders = snap.docs.map((doc) => ({
+          id: doc.id,
+          ...(doc.data() as Omit<OrderObject, 'id'>),
+        }));
 
         this.totalOrders.set(orders);
-        this.isLoading.set(false);
+        this.isLoading.set(false); // first snapshot arrived
       },
       (error) => {
-        console.error('Failed to load orders:', error);
+        console.error(error);
         this.isLoading.set(false);
       },
     );
@@ -179,13 +177,38 @@ export class OrderService {
 
       // Deduct stock
       transaction.update(inventoryRef, {
-        stock: currentStock - order.quantity,
+        quantity: currentStock - order.quantity,
         updatedAt: serverTimestamp(),
       });
 
       // Update order
       transaction.update(orderRef, {
         status: 'accepted',
+        updatedAt: serverTimestamp(),
+      });
+    });
+  }
+
+  async rejectOrder(order: OrderObject) {
+    const firestore = this.firebase.firestore;
+
+    const orderRef = doc(firestore, 'orders', order.id!);
+
+    await runTransaction(firestore, async (transaction) => {
+      const orderSnap = await transaction.get(orderRef);
+
+      if (!orderSnap.exists()) {
+        throw new Error('Order not found');
+      }
+
+      const orderData = orderSnap.data() as OrderObject;
+
+      if (orderData.status !== 'pending') {
+        throw new Error('Order already processed');
+      }
+
+      transaction.update(orderRef, {
+        status: 'rejected',
         updatedAt: serverTimestamp(),
       });
     });
