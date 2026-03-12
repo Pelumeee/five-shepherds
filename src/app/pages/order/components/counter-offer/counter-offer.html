@@ -7,7 +7,7 @@
           >Propose an alternative price for this order request.</span
         >
       </div>
-      <button class="cursor-pointer focus:outline-none">
+      <button [disabled]="isLoading()" class="cursor-pointer focus:outline-none">
         <app-close-icon />
       </button>
     </div>
@@ -46,7 +46,9 @@
       <div class="flex flex-col gap-1">
         <label for="" class="text-sm font-medium text-[#292524]">Your counter offer (₦)</label>
         <input
-          [(ngModel)]="counterOfferPrice"
+          [(ngModel)]="counterPrice"
+          name="counterPrice"
+          id="counterPrice"
           type="number"
           class="p-2 border border-[#E7E5E4] rounded text-xs focus:outline-none text-[#A6A09B]"
           placeholder="Enter your counter price"
@@ -56,25 +58,40 @@
         <label for="" class="text-sm font-medium text-[#292524]">Message (Optional)</label>
         <textarea
           [(ngModel)]="optionalMessage"
-          name=""
-          id=""
+          name="optionalMessage"
+          id="optionalMessage"
           class="p-2 border border-[#E7E5E4] rounded text-xs focus:outline-none text-[#A6A09B]"
           placeholder="Enter your counter price"
         ></textarea>
       </div>
-      <div class="flex items-center justify-end gap-6">
-        <button
-          type="button"
-          class="w-full max-w-30 bg-inherit py-2.5 rounded text-[#57534D] font-medium cursor-pointer border border-[#E7E5E4]"
-        >
-          Cancel
-        </button>
-        <button
-          type="submit"
-          class="w-full max-w-30 bg-[#2793E9] py-2.5 rounded text-white font-medium cursor-pointer"
-        >
-          Send
-        </button>
+      <div class="w-full">
+        @if (!isLoading()) {
+          <div class="flex items-center justify-end gap-6">
+            <button
+              type="button"
+              class="w-full max-w-30 bg-inherit py-2.5 rounded text-[#57534D] font-medium cursor-pointer border border-[#E7E5E4]"
+            >
+              Cancel
+            </button>
+            <button
+              type="submit"
+              class="w-full max-w-30 bg-[#2793E9] py-2.5 rounded text-white font-medium cursor-pointer"
+            >
+              Send
+            </button>
+          </div>
+        } @else {
+          <button
+            [disabled]="isLoading()"
+            type="button"
+            class="w-full flex items-center justify-center gap-3 bg-[#2793E9] py-2.5 rounded text-white text-sm font-medium cursor-pointer transition hover:bg-[#2793E9]/90 focus:outline-none disabled:cursor-not-allowed disabled:bg-[#2793E9]/50"
+          >
+            <span
+              class="h-3 w-3 animate-spin rounded-full border-2 border-white border-t-transparent"
+            ></span>
+            Processing...
+          </button>
+        }
       </div>
     </form>
   </div>

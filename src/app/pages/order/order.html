@@ -3,7 +3,7 @@
 } @else {
   <div>
     @if (showCounterOffer()) {
-      <app-counter-offer [orderObject]="counterOfferObj()" ></app-counter-offer>
+      <app-counter-offer [orderObject]="counterOfferObj()" (hideCounterOffer)="showCounterOffer.set(false)"></app-counter-offer>
     }
     <div class="flex items-center justify-between">
       <div>
