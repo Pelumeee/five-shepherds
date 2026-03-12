@@ -3,24 +3,25 @@ import { CounterOffer } from './components/counter-offer/counter-offer';
 import { OrderObject, OrderService } from '../../core/services/order';
 import { OrderSkeletonLoader } from './components/order-skeleton-loader/order-skeleton-loader';
 import { OrderCard } from './components/order-card/order-card';
+import { Spinner } from '../../shared/components/spinner/spinner';
 
 @Component({
   selector: 'app-order',
-  imports: [CounterOffer, OrderSkeletonLoader, OrderCard],
+  imports: [CounterOffer, OrderSkeletonLoader, OrderCard, Spinner],
   templateUrl: './order.html',
 })
-
 export class Order {
   private order = inject(OrderService);
   showCounterOffer = signal(false);
   isLoading = signal(false);
+  orderSubmitting = signal(false);
   totalOrders = signal<OrderObject[]>([]);
 
   searchTerm = signal('');
   orderFilter = signal<'all' | 'pending' | 'accepted' | 'rejected' | 'countered'>('all');
 
   constructor() {
-    this.loadInventory();
+    this.loadOrders();
   }
 
   orderStats = computed(() => {
@@ -38,7 +39,7 @@ export class Order {
     return stats;
   });
 
-  private async loadInventory() {
+  private async loadOrders() {
     this.isLoading.set(true);
 
     try {
@@ -83,5 +84,9 @@ export class Order {
       | 'countered';
 
     this.orderFilter.set(value);
+  }
+
+  showLoader(value: boolean) {
+    this.orderSubmitting.set(value);
   }
 }

@@ -95,10 +95,15 @@
       } @else {
         <div class="my-10 flex flex-col gap-12">
           @for (order of filteredOrders(); track order.orderNumber) {
-            <app-order-card [order]="order" />
+            <app-order-card [order]="order" (isLoading)="showLoader($event)" />
           }
         </div>
       }
     </div>
   </div>
+}
+
+
+@if (orderSubmitting()) {
+  <app-spinner />
 }

@@ -5,11 +5,11 @@ import {
   getDoc,
   getDocs,
   setDoc,
-  updateDoc,
   serverTimestamp,
   query,
   orderBy,
   runTransaction,
+  onSnapshot,
 } from 'firebase/firestore';
 
 import { Firebase } from '../../core/services/firebase';
@@ -47,6 +47,8 @@ export interface OrderObject {
 export class OrderService {
   firebase = inject(Firebase);
   private ordersRef = collection(this.firebase.firestore, 'orders');
+  private unsubscribeOrders?: () => void;
+
 
   async createOrder(
     inventory: InventoryObject,
@@ -103,18 +105,33 @@ export class OrderService {
   // GET ALL
   // ========================
 
-  async getAllOrders(): Promise<OrderObject[]> {
+  async getAllOrders(){
     const q = query(this.ordersRef, orderBy('createdAt', 'desc'));
-    const snap = await getDocs(q);
 
-    return snap.docs.map((doc) => {
-      const data = doc.data() as Omit<OrderObject, 'id'>;
+    // Clear previous listener
+    this.unsubscribeOrders?.();
 
-      return {
-        id: doc.id,
-        ...data,
-      };
-    });
+    this.isLoading.set(true);
+
+    this.unsubscribeOrders = onSnapshot(
+      q,
+      (snap) => {
+        const orders = snap.docs.map((doc) => {
+          const data = doc.data() as Omit<OrderObject, 'id'>;
+          return {
+            id: doc.id,
+            ...data,
+          };
+        });
+
+        this.totalOrders.set(orders);
+        this.isLoading.set(false);
+      },
+      (error) => {
+        console.error('Failed to load orders:', error);
+        this.isLoading.set(false);
+      },
+    );
   }
 
   // ========================

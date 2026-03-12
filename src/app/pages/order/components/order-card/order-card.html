@@ -147,17 +147,22 @@
       }"
       class="grid gap-5"
     >
-      <button (clisk)="acceptOrder()" class="bg-[#2793E9] py-2.5 rounded text-white text-sm cursor-pointer">Accept</button>
+      <button
+        (click)="acceptOrder()"
+        class="bg-[#2793E9] py-2.5 rounded text-white text-sm cursor-pointer hover:bg-[#2793E9]/80 transition-colors duration-200"
+      >
+        Accept
+      </button>
       <button
         (click)="conterOffer()"
         [class.hidden]="!order()!.offerPrice"
-        class="bg-inherit py-2.5 rounded text-[#57534D] text-sm cursor-pointer border border-[#E7E5E4]"
+        class="bg-inherit py-2.5 rounded text-[#57534D] text-sm cursor-pointer border border-[#E7E5E4] hover:bg-[#57534D]/5 transition-colors duration-200"
       >
         Send counter offfer
       </button>
       <button
-      (click)="rejectOrder()"
-        class="bg-inherit py-2.5 rounded text-[#E7000B] text-sm cursor-pointer border border-[#FFC9C9]"
+        (click)="rejectOrder()"
+        class="bg-inherit py-2.5 rounded text-[#E7000B] text-sm cursor-pointer border border-[#FFC9C9] hover:bg-[#E7000B]/5 transition-colors duration-200"
       >
         Reject
       </button>
